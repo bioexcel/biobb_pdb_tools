@@ -1,0 +1,104 @@
+working_dir_path: /tmp/biobb_pdb_tools/pdb_tools #/tmp/biobb/unitests
+
+pdb_fetch:
+  paths:
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_fetch.pdb
+  properties:
+    pdbid: '1nmr'
+    biounit: false
+    binary_path: pdb_fetch
+
+pdb_chain:
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_chain.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_chain.pdb
+  properties:
+    chain: A
+    binary_path: pdb_chain
+
+pdb_tidy: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_tidy.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_tidy.pdb
+  properties:
+    binary_path: pdb_tidy
+    strict: strict
+
+pdb_chainxseg: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_chainxseg.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_chainxseg.pdb
+  properties:
+    binary_path: pdb_chainxseg
+
+pdb_delhetatm: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_delhetatm.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_delhetatm.pdb
+  properties:
+    binary_path: pdb_delhetatm
+
+pdb_merge: 
+  paths:
+    input_file_path1: file:test_data_dir/pdb_tools/input_pdb_merge1.pdb
+    input_file_path2: file:test_data_dir/pdb_tools/input_pdb_merge2.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_merge.pdb
+  properties:
+    binary_path: pdb_merge
+
+pdb_mkensemble: 
+  paths:
+    input_file_path1: file:test_data_dir/pdb_tools/input_pdb_mkensemble1.pdb
+    input_file_path2: file:test_data_dir/pdb_tools/input_pdb_mkensemble2.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_mkensemble.pdb
+  properties:
+    binary_path: pdb_mkensemble
+
+pdb_reres: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_reres.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_reres.pdb
+  properties:
+    number: 4
+    binary_path: pdb_reres
+
+pdb_seg: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_seg.pdb
+    output_file_path: output.pdb 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_seg.pdb
+  properties:
+    segment: B
+    binary_path: pdb_seg
+
+pdb_splitmodel: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_splitmodel.pdb
+    output_file_path: output.zip 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_splitmodel.zip
+  properties:
+    binary_path: pdb_splitmodel
+
+pdb_splitseg: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_splitseg.pdb
+    output_file_path: output.zip 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_splitseg.zip
+  properties:
+    binary_path: pdb_splitseg
+
+pdb_tofasta: 
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/input_pdb_tofasta.pdb
+    output_file_path: output.fasta 
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_tofasta.pdb
+  properties:
+    binary_path: pdb_tofasta

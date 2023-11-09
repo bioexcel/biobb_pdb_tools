@@ -1,0 +1,32 @@
+{
+    "_id": "biobb_pdb_tools",
+    "desc": "Biobb PDB Tools is a swiss army knife for manipulating and editing PDB files.",
+    "github": "https://github.com/bioexcel/biobb_pdb_tools",
+    "readthedocs": "https://biobb-pdb-tools.readthedocs.io/en/latest/",
+    "conda": "",
+    "docker": "",
+    "singularity": "",
+    "version": "3.9.0",
+    "tools" : [
+        {
+            "block" : "Pdbchain", 
+            "tool" : "pdb_chain", 
+            "desc" : "Modifies the chain identifier column of a PDB file.",
+            "exec" : "biobb_pdb_chain",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/template.html#module-pdb-tools.biobb-pdb-chain"
+        }
+    ],
+    "dep_pypi" : [
+        "install_requires=['biobb_common==4.1.0', 'pdb-tools==2.5.0']", 
+        "python_requires='>=3.8'"
+    ], 
+    "dep_conda" : [
+        "python >=3.8", 
+        "biobb_common ==4.1.0"
+    ],
+    "keywords" : [
+        "pdb",
+        "chain",
+        "model"
+    ]
+}
