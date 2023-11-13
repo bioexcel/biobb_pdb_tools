@@ -1,5 +1,5 @@
 from biobb_common.tools import test_fixtures as fx
-from pdb_tools.biobb_pdb_merge import biobb_pdb_merge
+from biobb_pdb_tools.pdb_tools.biobb_pdb_merge import biobb_pdb_merge
 
 class TestPdbMerge():
     def setup_class(self):

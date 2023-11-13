@@ -1,5 +1,5 @@
 from biobb_common.tools import test_fixtures as fx
-from pdb_tools.biobb_pdb_splitseg import biobb_pdb_splitseg 
+from biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg import biobb_pdb_splitseg 
 
 class TestPdbpdbsplitseg():
     def setup_class(self):

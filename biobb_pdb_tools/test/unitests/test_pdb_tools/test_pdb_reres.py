@@ -1,5 +1,5 @@
 from biobb_common.tools import test_fixtures as fx
-from pdb_tools.biobb_pdb_reres import biobb_pdb_reres
+from biobb_pdb_tools.pdb_tools.biobb_pdb_reres import biobb_pdb_reres
 
 class TestPdbreres():
     def setup_class(self):

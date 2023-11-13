@@ -1,5 +1,5 @@
 from biobb_common.tools import test_fixtures as fx
-from pdb_tools.biobb_pdb_tidy import biobb_pdb_tidy 
+from biobb_pdb_tools.pdb_tools.biobb_pdb_tidy import biobb_pdb_tidy 
 
 class TestPdbTidy():
     def setup_class(self):
