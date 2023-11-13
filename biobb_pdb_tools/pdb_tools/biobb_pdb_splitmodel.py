@@ -41,7 +41,7 @@ class Pdbsplitmodel(BiobbObject):
         * wrapped_software:
             * name: pdb_tools
             * version: >=2.5.0
-            * license: Apache License 2.0
+            * license: Apache-2.0
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl

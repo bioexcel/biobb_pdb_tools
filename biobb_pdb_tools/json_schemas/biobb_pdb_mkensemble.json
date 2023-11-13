@@ -1,0 +1,98 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pdb_tools/json_schemas/1.0/biobb_pdb_mkensemble",
+    "name": "biobb_pdb_tools Mkensemble",
+    "title": "Merges several PDB files into one multi-model (ensemble) file.",
+    "description": null,
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "pdb_tools",
+            "version": ">=2.5.0",
+            "license": "Apache-2.0"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_file_path1",
+        "input_file_path2",
+        "output_file_path"
+    ],
+    "properties": {
+        "input_file_path1": {
+            "type": "string",
+            "description": "Description for the first input file path",
+            "filetype": "input",
+            "sample": "https://urlto.sample",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Description for the first input file path",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "input_file_path2": {
+            "type": "string",
+            "description": "Description for the second input file path",
+            "filetype": "input",
+            "sample": "https://urlto.sample",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Description for the second input file path",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "output_file_path": {
+            "type": "string",
+            "description": "Description for the output file path",
+            "filetype": "output",
+            "sample": "https://urlto.sample",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Description for the output file path",
+                    "edam": "format_3987"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "binary_path": {
+                    "type": "string",
+                    "default": "pdb_mkensemble",
+                    "wf_prop": false,
+                    "description": "Strips all HEADER information and adds REMARK statements with the provenance of each conformer."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

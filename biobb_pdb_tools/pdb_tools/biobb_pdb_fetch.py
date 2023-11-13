@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 
-"""Module containing the PdbFetch class and the command line interface."""
+"""Module containing the Pdbfetch class and the command line interface."""
 import argparse
-#import shutil
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import  settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
-# 1. Rename class as required
-class PdbFetch(BiobbObject):
+class Pdbfetch(BiobbObject):
     """
-    | biobb_pdb_tools PdbFetch
+    | biobb_pdb_tools Pdbfetch
     | Downloads a structure in PDB format from the RCSB website.
 
     Args:        
@@ -42,7 +39,7 @@ class PdbFetch(BiobbObject):
         * wrapped_software:
             * name: pdb_tools
             * version: >=2.5.0
-            * license: Apache License 2.0
+            * license: Apache-2.0
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
@@ -69,7 +66,7 @@ class PdbFetch(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`PdbFetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` object."""
+        """Execute the :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` object."""
 
         if self.check_restart(): return 0
         instructions = []
@@ -103,7 +100,7 @@ class PdbFetch(BiobbObject):
 def biobb_pdb_fetch(output_file_path: str,  properties: dict = None, **kwargs) -> int:
     """Create :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_fetch.launch>` method."""
-    return PdbFetch(output_file_path=output_file_path,
+    return Pdbfetch(output_file_path=output_file_path,
                     properties=properties, **kwargs).launch()
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
