@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg import biobb_pdb_splitseg
 
 class TestPdbpdbsplitseg():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_splitseg')
+        fx.test_setup(self, 'biobb_pdb_splitseg')
 
     def teardown_class(self):
         fx.test_teardown(self)

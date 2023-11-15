@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble import biobb_pdb_mkensemble
 
 class TestPdbMkensemble():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_mkensemble')
+        fx.test_setup(self, 'biobb_pdb_mkensemble')
 
     def teardown_class(self):
         fx.test_teardown(self)

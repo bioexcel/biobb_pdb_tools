@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_fetch import biobb_pdb_fetch
 
 class TestPdbFetch():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_fetch')
+        fx.test_setup(self, 'biobb_pdb_fetch')
 
     def teardown_class(self):
         fx.test_teardown(self)

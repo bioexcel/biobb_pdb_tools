@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_seg import biobb_pdb_seg
 
 class TestPdbseg():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_seg')
+        fx.test_setup(self, 'biobb_pdb_seg')
 
     def teardown_class(self):
         fx.test_teardown(self)

@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm import biobb_pdb_delhetatm
 
 class TestPdbdelhetatm():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_delhetatm')
+        fx.test_setup(self, 'biobb_pdb_delhetatm')
 
     def teardown_class(self):
         fx.test_teardown(self)

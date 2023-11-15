@@ -1,6 +1,6 @@
 working_dir_path: /tmp/biobb_pdb_tools/pdb_tools #/tmp/biobb/unitests
 
-pdb_fetch:
+biobb_pdb_fetch:
   paths:
     output_file_path: output.pdb 
     ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_fetch.pdb
@@ -9,7 +9,7 @@ pdb_fetch:
     biounit: false
     binary_path: pdb_fetch
 
-pdb_chain:
+biobb_pdb_chain:
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_chain.pdb
     output_file_path: output.pdb 
@@ -18,7 +18,7 @@ pdb_chain:
     chain: A
     binary_path: pdb_chain
 
-pdb_tidy: 
+biobb_pdb_tidy: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_tidy.pdb
     output_file_path: output.pdb 
@@ -27,7 +27,7 @@ pdb_tidy:
     binary_path: pdb_tidy
     strict: strict
 
-pdb_chainxseg: 
+biobb_pdb_chainxseg: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_chainxseg.pdb
     output_file_path: output.pdb 
@@ -35,7 +35,7 @@ pdb_chainxseg:
   properties:
     binary_path: pdb_chainxseg
 
-pdb_delhetatm: 
+biobb_pdb_delhetatm: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_delhetatm.pdb
     output_file_path: output.pdb 
@@ -43,7 +43,7 @@ pdb_delhetatm:
   properties:
     binary_path: pdb_delhetatm
 
-pdb_merge: 
+biobb_pdb_merge: 
   paths:
     input_file_path1: file:test_data_dir/pdb_tools/input_pdb_merge1.pdb
     input_file_path2: file:test_data_dir/pdb_tools/input_pdb_merge2.pdb
@@ -52,7 +52,7 @@ pdb_merge:
   properties:
     binary_path: pdb_merge
 
-pdb_mkensemble: 
+biobb_pdb_mkensemble: 
   paths:
     input_file_path1: file:test_data_dir/pdb_tools/input_pdb_mkensemble1.pdb
     input_file_path2: file:test_data_dir/pdb_tools/input_pdb_mkensemble2.pdb
@@ -61,7 +61,7 @@ pdb_mkensemble:
   properties:
     binary_path: pdb_mkensemble
 
-pdb_reres: 
+biobb_pdb_reres: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_reres.pdb
     output_file_path: output.pdb 
@@ -70,7 +70,7 @@ pdb_reres:
     number: 4
     binary_path: pdb_reres
 
-pdb_seg: 
+biobb_pdb_seg: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_seg.pdb
     output_file_path: output.pdb 
@@ -79,7 +79,7 @@ pdb_seg:
     segment: B
     binary_path: pdb_seg
 
-pdb_splitmodel: 
+biobb_pdb_splitmodel: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_splitmodel.pdb
     output_file_path: output.zip 
@@ -87,7 +87,7 @@ pdb_splitmodel:
   properties:
     binary_path: pdb_splitmodel
 
-pdb_splitseg: 
+biobb_pdb_splitseg: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_splitseg.pdb
     output_file_path: output.zip 
@@ -95,7 +95,7 @@ pdb_splitseg:
   properties:
     binary_path: pdb_splitseg
 
-pdb_tofasta: 
+biobb_pdb_tofasta: 
   paths:
     input_file_path: file:test_data_dir/pdb_tools/input_pdb_tofasta.pdb
     output_file_path: output.fasta 

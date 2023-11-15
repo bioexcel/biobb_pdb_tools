@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_merge import biobb_pdb_merge
 
 class TestPdbMerge():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_merge')
+        fx.test_setup(self, 'biobb_pdb_merge')
 
     def teardown_class(self):
         fx.test_teardown(self)

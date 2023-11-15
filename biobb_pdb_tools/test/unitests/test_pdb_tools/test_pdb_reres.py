@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_reres import biobb_pdb_reres
 
 class TestPdbreres():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_reres')
+        fx.test_setup(self, 'biobb_pdb_reres')
 
     def teardown_class(self):
         fx.test_teardown(self)

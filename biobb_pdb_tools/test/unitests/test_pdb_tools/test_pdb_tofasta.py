@@ -3,7 +3,7 @@ from biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta import biobb_pdb_tofasta
 
 class TestPdbTidy():
     def setup_class(self):
-        fx.test_setup(self, 'pdb_tofasta')
+        fx.test_setup(self, 'biobb_pdb_tofasta')
 
     def teardown_class(self):
         fx.test_teardown(self)
