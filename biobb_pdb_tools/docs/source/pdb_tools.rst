@@ -45,7 +45,7 @@ pdb_tools.biobb_pdb_merge module
     :show-inheritance:
 
 pdb_tools.biobb_pdb_mkensemble module
----------------------------------
+--------------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_mkensemble
     :members:
@@ -69,7 +69,7 @@ pdb_tools.biobb_pdb_seg module
     :show-inheritance:
 
 pdb_tools.biobb_pdb_splitmodel module
----------------------------------
+--------------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_splitmodel
     :members:
@@ -77,7 +77,7 @@ pdb_tools.biobb_pdb_splitmodel module
     :show-inheritance:
 
 pdb_tools.biobb_pdb_splitseg module
----------------------------------
+------------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_splitseg
     :members:
@@ -93,7 +93,7 @@ pdb_tools.biobb_pdb_tidy module
     :show-inheritance:
 
 pdb_tools.biobb_pdb_tofasta module
----------------------------------
+-----------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_tofasta
     :members:
