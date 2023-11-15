@@ -1,4 +1,4 @@
 properties:
-  pdbid: '1nmr'
-  biounit: false
   binary_path: pdb_fetch
+  biounit: false
+  pdbid: 1nmr
