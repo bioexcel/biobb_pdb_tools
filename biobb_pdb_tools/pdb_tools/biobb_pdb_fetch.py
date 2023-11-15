@@ -14,7 +14,7 @@ class Pdbfetch(BiobbObject):
     | Downloads a structure in PDB format from the RCSB website.
 
     Args:        
-        output_file_path (str): Description for the output file path. File type: output. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
+        output_file_path (str): PDB file of the protein selected. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **pdbid** (*string*) - ('1aki') ID of the protein.
             * **biounit** (*string*) - (False) Allows downloading the (first) biological structure if selected.

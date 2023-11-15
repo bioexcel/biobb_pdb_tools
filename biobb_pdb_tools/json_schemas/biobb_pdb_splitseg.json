@@ -23,32 +23,32 @@
     "properties": {
         "input_file_path": {
             "type": "string",
-            "description": "Description for the input file path",
+            "description": "PDB file",
             "filetype": "input",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the input file path",
+                    "description": "PDB file",
                     "edam": "format_1476"
                 }
             ]
         },
         "output_file_path": {
             "type": "string",
-            "description": "Description for the output file path",
+            "description": "ZIP file containing all PDB files splited by protein segment",
             "filetype": "output",
-            "sample": "https://urlto.sample",
+            "sample": "https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitseg.zip",
             "enum": [
                 ".*\\.zip$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.zip$",
-                    "description": "Description for the output file path",
+                    "description": "ZIP file containing all PDB files splited by protein segment",
                     "edam": "format_3987"
                 }
             ]

@@ -17,9 +17,9 @@ class Mkensemble(BiobbObject):
     | Merges several PDB files into one multi-model (ensemble) file.
 
     Args:        
-        input_file_path1 (str): Description for the first input file path. File type: input. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
-        input_file_path2 (str): Description for the second input file path. File type: input. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
-        output_file_path (str): Description for the output file path. File type: output. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_3987).
+        input_file_path1 (str): PDB file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path2 (str): PDB file for another selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        output_file_path (str): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb>`_. Accepted formats: pdb (edam:format_3987).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_mkensemble") Strips all HEADER information and adds REMARK statements with the provenance of each conformer.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.

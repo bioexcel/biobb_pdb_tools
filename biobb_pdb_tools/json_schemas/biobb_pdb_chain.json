@@ -23,32 +23,32 @@
     "properties": {
         "input_file_path": {
             "type": "string",
-            "description": "Description for the input file path",
+            "description": "PDB file",
             "filetype": "input",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the input file path",
+                    "description": "PDB file",
                     "edam": "format_1476"
                 }
             ]
         },
         "output_file_path": {
             "type": "string",
-            "description": "Description for the output file path",
+            "description": "PDB file with selected modified chain",
             "filetype": "output",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the output file path",
+                    "description": "PDB file with selected modified chain",
                     "edam": "format_1476"
                 }
             ]

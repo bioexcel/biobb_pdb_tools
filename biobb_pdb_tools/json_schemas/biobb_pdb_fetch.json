@@ -22,16 +22,16 @@
     "properties": {
         "output_file_path": {
             "type": "string",
-            "description": "Description for the output file path",
+            "description": "PDB file of the protein selected",
             "filetype": "output",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the output file path",
+                    "description": "PDB file of the protein selected",
                     "edam": "format_1476"
                 }
             ]

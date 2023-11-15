@@ -24,48 +24,48 @@
     "properties": {
         "input_file_path1": {
             "type": "string",
-            "description": "Description for the first input file path",
+            "description": "PDB file of selected protein",
             "filetype": "input",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the first input file path",
+                    "description": "PDB file of selected protein",
                     "edam": "format_1476"
                 }
             ]
         },
         "input_file_path2": {
             "type": "string",
-            "description": "Description for the second input file path",
+            "description": "PDB file for another selected protein",
             "filetype": "input",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the second input file path",
+                    "description": "PDB file for another selected protein",
                     "edam": "format_1476"
                 }
             ]
         },
         "output_file_path": {
             "type": "string",
-            "description": "Description for the output file path",
+            "description": "Multi-model (ensemble) PDB file with input PDBs merged",
             "filetype": "output",
-            "sample": "https://urlto.sample",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Description for the output file path",
+                    "description": "Multi-model (ensemble) PDB file with input PDBs merged",
                     "edam": "format_3987"
                 }
             ]

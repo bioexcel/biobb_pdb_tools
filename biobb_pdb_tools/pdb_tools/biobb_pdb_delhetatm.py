@@ -17,8 +17,8 @@ class Delhetatm(BiobbObject):
     | Removes all HETATM records in the PDB file.
 
     Args:      
-        input_file_path (str): Description for the first input file path. File type: input. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).  
-        output_file_path (str): Description for the output file path. File type: output. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).  
+        output_file_path (str): PDB file with all HETATM records removed. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_delhetatm") Removes all HETATM records in the PDB file.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.

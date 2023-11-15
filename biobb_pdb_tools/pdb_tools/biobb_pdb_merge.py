@@ -17,9 +17,9 @@ class Pdbmerge(BiobbObject):
     | Merges several PDB files into one.
 
     Args:       
-        input_file_path1 (str): Description for the first input file path. File type: input. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
-        input_file_path2 (str): Description for the second input file path. File type: input. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
-        output_file_path (str): Description for the output file path. File type: output. `Sample file <https://urlto.sample>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path1 (str): PDB file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path2 (str): PDB file for another selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        output_file_path (str): PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_merge") Example of executable binary property.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
