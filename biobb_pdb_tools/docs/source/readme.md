@@ -1,3 +1,27 @@
+[![](https://img.shields.io/github/v/tag/bioexcel/biobb_pdb_tools?label=Version)](https://GitHub.com/bioexcel/biobb_pdb_tools/tags/)
+[![](https://img.shields.io/pypi/v/biobb-pdb-tools.svg?label=Pypi)](https://pypi.python.org/pypi/biobb-pdb-tools/)
+[![](https://img.shields.io/conda/vn/bioconda/biobb_pdb_tools?label=Conda)](https://anaconda.org/bioconda/biobb_pdb_tools)
+[![](https://img.shields.io/conda/dn/bioconda/biobb_pdb_tools?label=Conda%20Downloads)](https://anaconda.org/bioconda/biobb_pdb_tools)
+[![](https://img.shields.io/badge/Docker-Quay.io-blue)](https://quay.io/repository/biocontainers/biobb_pdb_tools?tab=tags)
+[![](https://img.shields.io/badge/Singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_pdb_tools:4.1.0--pyhdfd78af_0)
+
+[![](https://img.shields.io/badge/OS-Unix%20%7C%20MacOS-blue)](https://github.com/bioexcel/biobb_pdb_tools)
+[![](https://img.shields.io/pypi/pyversions/biobb-pdb-tools.svg?label=Python%20Versions)](https://pypi.org/project/biobb-pdb-tools/)
+[![](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![](https://img.shields.io/badge/Open%20Source%3f-Yes!-blue)](https://github.com/bioexcel/biobb_pdb_tools)
+
+[![](https://readthedocs.org/projects/biobb-pdb-tools/badge/?version=latest&label=Docs)](https://biobb-pdb-tools.readthedocs.io/en/latest/?badge=latest)
+[![](https://img.shields.io/website?down_message=Offline&label=Biobb%20Website&up_message=Online&url=https%3A%2F%2Fmmb.irbbarcelona.org%2Fbiobb%2F)](https://mmb.irbbarcelona.org/biobb/)
+[![](https://img.shields.io/badge/Youtube-tutorial-blue?logo=youtube&logoColor=red)](https://www.youtube.com/watch?v=ou1DOGNs0xM)
+[![](https://zenodo.org/badge/DOI/10.1038/s41597-019-0177-4.svg)](https://doi.org/10.1038/s41597-019-0177-4)
+[![](https://img.shields.io/endpoint?color=brightgreen&url=https%3A%2F%2Fapi.juleskreuer.eu%2Fcitation-badge.php%3Fshield%26doi%3D10.1038%2Fs41597-019-0177-4)](https://www.nature.com/articles/s41597-019-0177-4#citeas)
+
+[![](https://docs.bioexcel.eu/biobb_pdb_tools/junit/testsbadge.svg)](https://docs.bioexcel.eu/biobb_pdb_tools/junit/report.html)
+[![](https://docs.bioexcel.eu/biobb_pdb_tools/coverage/coveragebadge.svg)](https://docs.bioexcel.eu/biobb_pdb_tools/coverage/)
+[![](https://docs.bioexcel.eu/biobb_pdb_tools/flake8/flake8badge.svg)](https://docs.bioexcel.eu/biobb_pdb_tools/flake8/)
+[![](https://img.shields.io/github/last-commit/bioexcel/biobb_pdb_tools?label=Last%20Commit)](https://github.com/bioexcel/biobb_pdb_tools/commits/master)
+[![](https://img.shields.io/github/issues/bioexcel/biobb_pdb_tools.svg?color=brightgreen&label=Issues)](https://GitHub.com/bioexcel/biobb_pdb_tools/issues/)
+
 # biobb_pdb_tools
 
 ## Introduction
