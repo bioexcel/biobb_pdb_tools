@@ -39,7 +39,33 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fetch.yml)
+```python
+properties:
+  binary_path: pdb_fetch
+  biounit: false
+  pdbid: 1nmr
+
+```
+#### Command line
+```python
+biobb_pdb_fetch --config config_biobb_pdb_fetch.yml --output_file_path ref_pdb_fetch.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fetch.json)
+```python
+{
+  "properties": {
+    "pdbid": "1nmr",
+    "biounit": false,
+    "binary_path": "pdb_fetch"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_fetch --config config_biobb_pdb_fetch.json --output_file_path ref_pdb_fetch.pdb
+```
 
 ## Biobb_pdb_delhetatm
 Removes all HETATM records in the PDB file.
@@ -75,7 +101,29 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_delhetatm.yml)
+```python
+properties:
+  binary_path: pdb_delhetatm
+
+```
+#### Command line
+```python
+biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.yml --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_delhetatm.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_delhetatm"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.json --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+```
 
 ## Biobb_pdb_tidy
 Modifies the file to adhere (as much as possible) to the format specifications.
@@ -112,7 +160,31 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tidy.yml)
+```python
+properties:
+  binary_path: pdb_tidy
+  strict: strict
+
+```
+#### Command line
+```python
+biobb_pdb_tidy --config config_biobb_pdb_tidy.yml --input_file_path input_pdb_tidy.pdb --output_file_path ref_pdb_tidy.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tidy.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_tidy",
+    "strict": "strict"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_tidy --config config_biobb_pdb_tidy.json --input_file_path input_pdb_tidy.pdb --output_file_path ref_pdb_tidy.pdb
+```
 
 ## Biobb_pdb_chain
 Modifies the chain identifier column of a PDB file.
@@ -149,7 +221,31 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chain.yml)
+```python
+properties:
+  binary_path: pdb_chain
+  chain: A
+
+```
+#### Command line
+```python
+biobb_pdb_chain --config config_biobb_pdb_chain.yml --input_file_path input_pdb_chain.pdb --output_file_path ref_pdb_chain.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chain.json)
+```python
+{
+  "properties": {
+    "chain": "A",
+    "binary_path": "pdb_chain"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_chain --config config_biobb_pdb_chain.json --input_file_path input_pdb_chain.pdb --output_file_path ref_pdb_chain.pdb
+```
 
 ## Biobb_pdb_seg
 Modifies the segment identifier column of a PDB file.
@@ -186,7 +282,31 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_seg.yml)
+```python
+properties:
+  binary_path: pdb_seg
+  segment: B
+
+```
+#### Command line
+```python
+biobb_pdb_seg --config config_biobb_pdb_seg.yml --input_file_path input_pdb_seg.pdb --output_file_path ref_pdb_seg.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_seg.json)
+```python
+{
+  "properties": {
+    "segment": "B",
+    "binary_path": "pdb_seg"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_seg --config config_biobb_pdb_seg.json --input_file_path input_pdb_seg.pdb --output_file_path ref_pdb_seg.pdb
+```
 
 ## Biobb_pdb_mkensemble
 Merges several PDB files into one multi-model (ensemble) file.
@@ -225,7 +345,29 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_mkensemble.yml)
+```python
+properties:
+  binary_path: pdb_mkensemble
+
+```
+#### Command line
+```python
+biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.yml --input_file_path1 input_pdb_mkensemble1.pdb --input_file_path2 input_pdb_mkensemble2.pdb --output_file_path ref_pdb_mkensemble.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_mkensemble.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_mkensemble"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.json --input_file_path1 input_pdb_mkensemble1.pdb --input_file_path2 input_pdb_mkensemble2.pdb --output_file_path ref_pdb_mkensemble.pdb
+```
 
 ## Biobb_pdb_merge
 Merges several PDB files into one.
@@ -264,7 +406,29 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_merge.yml)
+```python
+properties:
+  binary_path: pdb_merge
+
+```
+#### Command line
+```python
+biobb_pdb_merge --config config_biobb_pdb_merge.yml --input_file_path1 input_pdb_merge1.pdb --input_file_path2 input_pdb_merge2.pdb --output_file_path ref_pdb_merge.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_merge.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_merge"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_merge --config config_biobb_pdb_merge.json --input_file_path1 input_pdb_merge1.pdb --input_file_path2 input_pdb_merge2.pdb --output_file_path ref_pdb_merge.pdb
+```
 
 ## Biobb_pdb_reres
 Renumbers the residues of the PDB file starting from a given number (default 1).
@@ -301,7 +465,31 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_reres.yml)
+```python
+properties:
+  binary_path: pdb_reres
+  number: 4
+
+```
+#### Command line
+```python
+biobb_pdb_reres --config config_biobb_pdb_reres.yml --input_file_path input_pdb_reres.pdb --output_file_path ref_pdb_reres.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_reres.json)
+```python
+{
+  "properties": {
+    "number": 4,
+    "binary_path": "pdb_reres"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_reres --config config_biobb_pdb_reres.json --input_file_path input_pdb_reres.pdb --output_file_path ref_pdb_reres.pdb
+```
 
 ## Biobb_pdb_splitseg
 Splits a PDB file into several, each containing one segment.
@@ -337,7 +525,29 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitseg.yml)
+```python
+properties:
+  binary_path: pdb_splitseg
+
+```
+#### Command line
+```python
+biobb_pdb_splitseg --config config_biobb_pdb_splitseg.yml --input_file_path input_pdb_splitseg.pdb --output_file_path ref_pdb_splitseg.zip
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitseg.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_splitseg"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_splitseg --config config_biobb_pdb_splitseg.json --input_file_path input_pdb_splitseg.pdb --output_file_path ref_pdb_splitseg.zip
+```
 
 ## Biobb_pdb_splitmodel
 Splits a PDB file into several, each containing one MODEL.
@@ -373,7 +583,29 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitmodel.yml)
+```python
+properties:
+  binary_path: pdb_splitmodel
+
+```
+#### Command line
+```python
+biobb_pdb_splitmodel --config config_biobb_pdb_splitmodel.yml --input_file_path input_pdb_splitmodel.pdb --output_file_path ref_pdb_splitmodel.zip
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitmodel.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_splitmodel"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_splitmodel --config config_biobb_pdb_splitmodel.json --input_file_path input_pdb_splitmodel.pdb --output_file_path ref_pdb_splitmodel.zip
+```
 
 ## Biobb_pdb_chainxseg
 Swaps the segment identifier for the chain identifier.
@@ -409,4 +641,26 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chainxseg.yml)
+```python
+properties:
+  binary_path: pdb_chainxseg
+
+```
+#### Command line
+```python
+biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.yml --input_file_path input_pdb_chainxseg.pdb --output_file_path ref_pdb_chainxseg.pdb
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chainxseg.json)
+```python
+{
+  "properties": {
+    "binary_path": "pdb_chainxseg"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.json --input_file_path input_pdb_chainxseg.pdb --output_file_path ref_pdb_chainxseg.pdb
+```
