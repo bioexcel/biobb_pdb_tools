@@ -25,7 +25,7 @@
 # biobb_pdb_tools
 
 ## Introduction
-biobb_pdb_tools is TODO
+biobb_pdb_tools is a swiss army knife for manipulating and editing PDB files. 
 The latest documentation of this package can be found in our readthedocs site:
 [latest API documentation](http://biobb-pdb-tools.readthedocs.io/en/latest/).
 
