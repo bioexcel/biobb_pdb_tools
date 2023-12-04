@@ -4,8 +4,8 @@
     "github": "https://github.com/bioexcel/biobb_pdb_tools",
     "readthedocs": "https://biobb-pdb-tools.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pdb_tools",
-    "docker": "https://quay.io/biocontainers/biobb_pdb_tools:4.1.0--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pdb_tools:4.1.0--pyhdfd78af_0",
+    "docker": "",
+    "singularity": "",
     "version": "4.1.0",
     "tools" : [
         {
