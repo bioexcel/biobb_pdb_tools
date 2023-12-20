@@ -20,21 +20,17 @@ class Delhetatm(BiobbObject):
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).  
         output_file_path (str): PDB file with all HETATM records removed. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
-            * **binary_path** (*str*) - ("pdb_delhetatm") Removes all HETATM records in the PDB file.
+            * **binary_path** (*str*) - ("pdb_delhetatm") Path to the pdb_delhetatm executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm import Delhetatm
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm import biobb_pdb_delhetatm
 
-            prop = { 
-                'binary_path': pdb_delhetatm 
-            }
             biobb_pdb_delhetatm(input_file_path='/path/to/input.pdb',
-                    output_file_path='/path/to/output.pdb',
-                    properties=prop)
+                    output_file_path='/path/to/output.pdb')
 
     Info:
         * wrapped_software:

@@ -21,18 +21,17 @@ class Pdbseg(BiobbObject):
         output_file_path (str): PDB file with segment identifier column modified. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_seg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **segment** (*string*) - ('B') Default is an empty segment.
-            * **binary_path** (*str*) - ("pdb_seg") Modifies the segment identifier column of a PDB file.
+            * **binary_path** (*str*) - ("pdb_seg") Path to the pdb_seg executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_seg import Pdbseg
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_seg import biobb_pdb_seg
 
             prop = { 
-                'binary_path': pdb_seg,
-                'segment': A 
+                'segment': 'A' 
             }
             biobb_pdb_seg(input_file_path='/path/to/input.pdb',
                     output_file_path='/path/to/output.pdb',

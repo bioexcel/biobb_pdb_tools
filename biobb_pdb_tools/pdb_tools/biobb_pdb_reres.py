@@ -21,17 +21,16 @@ class Pdbreres(BiobbObject):
         output_file_path (str): Renumbered PDB file by number of redisue selected. File type: output. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **number** (*string*) - (4) Number of the protein residue.
-            * **binary_path** (*str*) - ("reres") Renumbers the residues of the PDB file starting from a given number (default 1).
+            * **binary_path** (*str*) - ("reres") Path to the pdb_reres executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_reres import Pdbreres
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_reres import biobb_pdb_reres
 
             prop = { 
-                'binary_path': pdb_reres,
                 'number': 4 
             }
             biobb_pdb_reres(input_file_path='/path/to/input.pdb',

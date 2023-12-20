@@ -19,18 +19,17 @@ class Pdbtidy(BiobbObject):
         output_file_path (str): PDB file modified according to the specifications. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **strict** (*string*) - ('strict') Does not add TER on chain breaks.
-            * **binary_path** (*str*) - ("pdb_tidy") Will remove all original TER/END statements from the file.
+            * **binary_path** (*str*) - ("pdb_tidy") Path to the pdb_tidy executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_tidy import Pdbtidy
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_tidy import biobb_pdb_tidy
 
             prop = { 
-                'binary_path': pdb_tidy,
-                'strict': strict 
+                'strict': 'strict' 
             }
             biobb_pdb_tidy(input_file_path='/path/to/input.pdb',
                     output_file_path='/path/to/output.pdb',

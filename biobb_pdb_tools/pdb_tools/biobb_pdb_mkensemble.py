@@ -21,22 +21,18 @@ class Mkensemble(BiobbObject):
         input_file_path2 (str): PDB file for another selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb>`_. Accepted formats: pdb (edam:format_3987).
         properties (dic):
-            * **binary_path** (*str*) - ("pdb_mkensemble") Strips all HEADER information and adds REMARK statements with the provenance of each conformer.
+            * **binary_path** (*str*) - ("pdb_mkensemble") Path to the pdb_mkensemble executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble import Mkensemble
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble import biobb_pdb_mkensemble
 
-            prop = { 
-                'binary_path': pdb_mkensemble
-            }
             biobb_pdb_mkensemble(input_file_path1='/path/to/input1.pdb',
                     input_file_path2='/path/to/input2.pdb',
-                    output_file_path='/path/to/output.pdb',
-                    properties=prop)
+                    output_file_path='/path/to/output.pdb')
 
     Info:
         * wrapped_software:

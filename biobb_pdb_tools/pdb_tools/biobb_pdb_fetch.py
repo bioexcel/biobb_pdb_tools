@@ -18,17 +18,16 @@ class Pdbfetch(BiobbObject):
         properties (dic):
             * **pdbid** (*string*) - ('1aki') ID of the protein.
             * **biounit** (*string*) - (False) Allows downloading the (first) biological structure if selected.
-            * **binary_path** (*str*) - ("pdb_fetch") Downloads a structure in PDB format from the RCSB website.
+            * **binary_path** (*str*) - ("pdb_fetch") Path to the pdb_fetch executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_fetch import Pdbfetch
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_fetch import biobb_pdb_fetch
 
             prop = { 
-                'binary_path': pdb_fetch,
                 'biounit': False,
                 'pdbid': '1aki'
             }

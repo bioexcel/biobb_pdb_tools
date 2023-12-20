@@ -22,18 +22,15 @@ class Pdbsplitmodel(BiobbObject):
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): ZIP file containing all PDB files splited by protein model. File type: output. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitmodel.zip>`_. Accepted formats: zip (edam:format_3987).
         properties (dic):
-            * **binary_path** (*str*) - ("pdb_splitmodel") Splits a PDB file into several, each containing one MODEL.
+            * **binary_path** (*str*) - ("pdb_splitmodel") Path to the pdb_splitmodel executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel import Pdbsplitmodel
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel import biobb_pdb_splitmodel
 
-            prop = { 
-                'binary_path': pdb_splitmodel 
-            }
             biobb_pdb_splitmodel(input_file_path='/path/to/input.pdb',
                     output_file_path='/path/to/output.zip)
 

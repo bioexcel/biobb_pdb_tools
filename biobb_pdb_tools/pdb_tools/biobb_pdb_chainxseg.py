@@ -20,21 +20,18 @@ class Chainxseg(BiobbObject):
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with exchanged segment and string identifier. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
-            * **binary_path** (*str*) - ("pdb_chainxseg") Swaps the segment identifier for the chain identifier.
+            * **binary_path** (*str*) - ("pdb_chainxseg") Path to the pdb_chainxseg executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg import Chainxseg
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg import biobb_pdb_chainxseg
 
-            prop = { 
-                'binary_path': pdb_chainxseg
-            }
+            
             biobb_pdb_chainxseg(input_file_path='/path/to/input.pdb',
-                    output_file_path='/path/to/output.pdb',
-                    properties=prop)
+                    output_file_path='/path/to/output.pdb')
 
     Info:
         * wrapped_software:
@@ -46,19 +43,19 @@ class Chainxseg(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
 
     """
-    def __init__(self, input_file_path, output_file_path, 
-                 properties = None, **kwargs) -> None:
+    def __init__(self, input_file_path, output_file_path,
+                 properties=None, **kwargs) -> None:
         properties = properties or {}
 
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
 
         self.io_dict = { 
-            'in': { 'input_file_path': input_file_path }, 
-            'out': { 'output_file_path': output_file_path } 
+            'in': { 'input_file_path': input_file_path },
+            'out': { 'output_file_path': output_file_path }
         }
 
-        self.binary_path = properties.get('binary_path', 'pdb_reres')
+        self.binary_path = properties.get('binary_path', 'pdb_chainxseg')
         self.properties = properties
 
         self.check_properties(properties)
@@ -80,10 +77,10 @@ class Chainxseg(BiobbObject):
                 self.io_dict['in']['input_file_path'],
                 '>',
                 self.io_dict['out']['output_file_path']
-        ]
+                ]
 
         print(self.cmd)
-        
+
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
 
         self.run_biobb()

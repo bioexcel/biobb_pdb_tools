@@ -21,22 +21,18 @@ class Pdbmerge(BiobbObject):
         input_file_path2 (str): PDB file for another selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
-            * **binary_path** (*str*) - ("pdb_merge") Example of executable binary property.
+            * **binary_path** (*str*) - ("pdb_merge") Path to the pdb_merge executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
 
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_merge import Pdbmerge
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_merge import biobb_pdb_merge
 
-            prop = { 
-                'binary_path': pdb_merge
-            }
             biobb_pdb_merge(input_file_path1='/path/to/input1.pdb',
                     input_file_path2='/path/to/input2.pdb',
-                    output_file_path='/path/to/output.pdb',
-                    properties=prop)
+                    output_file_path='/path/to/output.pdb')
 
     Info:
         * wrapped_software:
