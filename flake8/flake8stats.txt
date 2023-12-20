@@ -6,13 +6,13 @@
 17    E225 missing whitespace around operator
 20    E231 missing whitespace after ','
 12    E241 multiple spaces after ','
-24    E251 unexpected spaces around keyword / parameter equals
+22    E251 unexpected spaces around keyword / parameter equals
 2     E265 block comment should start with '# '
 12    E271 multiple spaces after keyword
 39    E302 expected 2 blank lines, found 1
 12    E305 expected 2 blank lines after class or function definition, found 1
 12    E701 multiple statements on one line (colon)
 9     F401 'pathlib.PurePath' imported but unused
-107   W291 trailing whitespace
+94    W291 trailing whitespace
 11    W292 no newline at end of file
-14    W293 blank line contains whitespace
+13    W293 blank line contains whitespace

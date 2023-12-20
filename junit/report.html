@@ -2,933 +2,769 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>report.html</title>
-    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
-  <body onLoad="init()">
-    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-
-function toArray(iter) {
-    if (iter === null) {
-        return null;
-    }
-    return Array.prototype.slice.call(iter);
-}
-
-function find(selector, elem) { // eslint-disable-line no-redeclare
-    if (!elem) {
-        elem = document;
-    }
-    return elem.querySelector(selector);
-}
-
-function findAll(selector, elem) {
-    if (!elem) {
-        elem = document;
-    }
-    return toArray(elem.querySelectorAll(selector));
-}
-
-function sortColumn(elem) {
-    toggleSortStates(elem);
-    const colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
-    let key;
-    if (elem.classList.contains('result')) {
-        key = keyResult;
-    } else if (elem.classList.contains('links')) {
-        key = keyLink;
-    } else {
-        key = keyAlpha;
-    }
-    sortTable(elem, key(colIndex));
-}
-
-function showAllExtras() { // eslint-disable-line no-unused-vars
-    findAll('.col-result').forEach(showExtras);
-}
-
-function hideAllExtras() { // eslint-disable-line no-unused-vars
-    findAll('.col-result').forEach(hideExtras);
-}
-
-function showExtras(colresultElem) {
-    const extras = colresultElem.parentNode.nextElementSibling;
-    const expandcollapse = colresultElem.firstElementChild;
-    extras.classList.remove('collapsed');
-    expandcollapse.classList.remove('expander');
-    expandcollapse.classList.add('collapser');
-}
-
-function hideExtras(colresultElem) {
-    const extras = colresultElem.parentNode.nextElementSibling;
-    const expandcollapse = colresultElem.firstElementChild;
-    extras.classList.add('collapsed');
-    expandcollapse.classList.remove('collapser');
-    expandcollapse.classList.add('expander');
-}
-
-function showFilters() {
-    let visibleString = getQueryParameter('visible') || 'all';
-    visibleString = visibleString.toLowerCase();
-    const checkedItems = visibleString.split(',');
-
-    const filterItems = document.getElementsByClassName('filter');
-    for (let i = 0; i < filterItems.length; i++) {
-        filterItems[i].hidden = false;
-
-        if (visibleString != 'all') {
-            filterItems[i].checked = checkedItems.includes(filterItems[i].getAttribute('data-test-result'));
-            filterTable(filterItems[i]);
-        }
-    }
-}
-
-function addCollapse() {
-    // Add links for show/hide all
-    const resulttable = find('table#results-table');
-    const showhideall = document.createElement('p');
-    showhideall.innerHTML = '<a href="javascript:showAllExtras()">Show all details</a> / ' +
-                            '<a href="javascript:hideAllExtras()">Hide all details</a>';
-    resulttable.parentElement.insertBefore(showhideall, resulttable);
-
-    // Add show/hide link to each result
-    findAll('.col-result').forEach(function(elem) {
-        const collapsed = getQueryParameter('collapsed') || 'Passed';
-        const extras = elem.parentNode.nextElementSibling;
-        const expandcollapse = document.createElement('span');
-        if (extras.classList.contains('collapsed')) {
-            expandcollapse.classList.add('expander');
-        } else if (collapsed.includes(elem.innerHTML)) {
-            extras.classList.add('collapsed');
-            expandcollapse.classList.add('expander');
-        } else {
-            expandcollapse.classList.add('collapser');
-        }
-        elem.appendChild(expandcollapse);
-
-        elem.addEventListener('click', function(event) {
-            if (event.currentTarget.parentNode.nextElementSibling.classList.contains('collapsed')) {
-                showExtras(event.currentTarget);
-            } else {
-                hideExtras(event.currentTarget);
-            }
-        });
-    });
-}
-
-function getQueryParameter(name) {
-    const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-}
-
-function init () { // eslint-disable-line no-unused-vars
-    resetSortHeaders();
-
-    addCollapse();
-
-    showFilters();
-
-    sortColumn(find('.initial-sort'));
-
-    findAll('.sortable').forEach(function(elem) {
-        elem.addEventListener('click',
-            function() {
-                sortColumn(elem);
-            }, false);
-    });
-}
-
-function sortTable(clicked, keyFunc) {
-    const rows = findAll('.results-table-row');
-    const reversed = !clicked.classList.contains('asc');
-    const sortedRows = sort(rows, keyFunc, reversed);
-    /* Whole table is removed here because browsers acts much slower
-     * when appending existing elements.
-     */
-    const thead = document.getElementById('results-table-head');
-    document.getElementById('results-table').remove();
-    const parent = document.createElement('table');
-    parent.id = 'results-table';
-    parent.appendChild(thead);
-    sortedRows.forEach(function(elem) {
-        parent.appendChild(elem);
-    });
-    document.getElementsByTagName('BODY')[0].appendChild(parent);
-}
-
-function sort(items, keyFunc, reversed) {
-    const sortArray = items.map(function(item, i) {
-        return [keyFunc(item), i];
-    });
-
-    sortArray.sort(function(a, b) {
-        const keyA = a[0];
-        const keyB = b[0];
-
-        if (keyA == keyB) return 0;
-
-        if (reversed) {
-            return keyA < keyB ? 1 : -1;
-        } else {
-            return keyA > keyB ? 1 : -1;
-        }
-    });
-
-    return sortArray.map(function(item) {
-        const index = item[1];
-        return items[index];
-    });
-}
-
-function keyAlpha(colIndex) {
-    return function(elem) {
-        return elem.childNodes[1].childNodes[colIndex].firstChild.data.toLowerCase();
-    };
-}
-
-function keyLink(colIndex) {
-    return function(elem) {
-        const dataCell = elem.childNodes[1].childNodes[colIndex].firstChild;
-        return dataCell == null ? '' : dataCell.innerText.toLowerCase();
-    };
-}
-
-function keyResult(colIndex) {
-    return function(elem) {
-        const strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
-            'Skipped', 'Passed'];
-        return strings.indexOf(elem.childNodes[1].childNodes[colIndex].firstChild.data);
-    };
-}
-
-function resetSortHeaders() {
-    findAll('.sort-icon').forEach(function(elem) {
-        elem.parentNode.removeChild(elem);
-    });
-    findAll('.sortable').forEach(function(elem) {
-        const icon = document.createElement('div');
-        icon.className = 'sort-icon';
-        icon.textContent = 'vvv';
-        elem.insertBefore(icon, elem.firstChild);
-        elem.classList.remove('desc', 'active');
-        elem.classList.add('asc', 'inactive');
-    });
-}
-
-function toggleSortStates(elem) {
-    //if active, toggle between asc and desc
-    if (elem.classList.contains('active')) {
-        elem.classList.toggle('asc');
-        elem.classList.toggle('desc');
-    }
-
-    //if inactive, reset all other functions and add ascending active
-    if (elem.classList.contains('inactive')) {
-        resetSortHeaders();
-        elem.classList.remove('inactive');
-        elem.classList.add('active');
-    }
-}
-
-function isAllRowsHidden(value) {
-    return value.hidden == false;
-}
-
-function filterTable(elem) { // eslint-disable-line no-unused-vars
-    const outcomeAtt = 'data-test-result';
-    const outcome = elem.getAttribute(outcomeAtt);
-    const classOutcome = outcome + ' results-table-row';
-    const outcomeRows = document.getElementsByClassName(classOutcome);
-
-    for(let i = 0; i < outcomeRows.length; i++){
-        outcomeRows[i].hidden = !elem.checked;
-    }
-
-    const rows = findAll('.results-table-row').filter(isAllRowsHidden);
-    const allRowsHidden = rows.length == 0 ? true : false;
-    const notFoundMessage = document.getElementById('not-found-message');
-    notFoundMessage.hidden = !allRowsHidden;
-}
-</script>
-    <h1>report.html</h1>
-    <p>Report generated on 16-Nov-2023 at 09:24:04 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
-    <h2>Summary</h2>
-    <p>12 tests ran in 5.77 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">12 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
-    <h2>Results</h2>
+    <title id="head-title">report.html</title>
+      <link href="assets/style.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <h1 id="title">report.html</h1>
+    <p>Report generated on 20-Dec-2023 at 16:22:52 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a>
+        v4.1.1</p>
+    <div id="environment-header">
+      <h2>Environment</h2>
+    </div>
+    <table id="environment"></table>
+    <!-- TEMPLATES -->
+      <template id="template_environment_row">
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    </template>
+    <template id="template_results-table__body--empty">
+      <tbody class="results-table-row">
+        <tr id="not-found-message">
+          <td colspan="4">No results found. Check the filters.</th>
+        </tr>
+    </template>
+    <template id="template_results-table__tbody">
+      <tbody class="results-table-row">
+        <tr class="collapsible">
+        </tr>
+        <tr class="extras-row">
+          <td class="extra" colspan="4">
+            <div class="extraHTML"></div>
+            <div class="media">
+              <div class="media-container">
+                  <div class="media-container__nav--left"><</div>
+                  <div class="media-container__viewport">
+                    <img src="" />
+                    <video controls>
+                      <source src="" type="video/mp4">
+                    </video>
+                  </div>
+                  <div class="media-container__nav--right">></div>
+                </div>
+                <div class="media__name"></div>
+                <div class="media__counter"></div>
+            </div>
+            <div class="logwrapper">
+              <div class="logexpander"></div>
+              <div class="log"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+    <!-- END TEMPLATES -->
+    <div class="summary">
+      <div class="summary__data">
+        <h2>Summary</h2>
+        <div class="additional-summary prefix">
+        </div>
+        <p class="run-count">12 tests took 00:00:05.</p>
+        <p class="filter">(Un)check the boxes to filter the results.</p>
+        <div class="summary__reload">
+          <div class="summary__reload__button hidden" onclick="location.reload()">
+            <div>There are still tests running. <br />Reload this page to get the latest results!</div>
+          </div>
+        </div>
+        <div class="summary__spacer"></div>
+        <div class="controls">
+          <div class="filters">
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="failed" disabled/>
+            <span class="failed">0 Failed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="passed" />
+            <span class="passed">12 Passed,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="skipped" disabled/>
+            <span class="skipped">0 Skipped,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xfailed" disabled/>
+            <span class="xfailed">0 Expected failures,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="xpassed" disabled/>
+            <span class="xpassed">0 Unexpected passes,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="error" disabled/>
+            <span class="error">0 Errors,</span>
+            <input checked="true" class="filter" name="filter_checkbox" type="checkbox" data-test-result="rerun" disabled/>
+            <span class="rerun">0 Reruns</span>
+          </div>
+          <div class="collapse">
+            <button id="show_all_details">Show all details</button>&nbsp;/&nbsp;<button id="hide_all_details">Hide all details</button>
+          </div>
+        </div>
+      </div>
+      <div class="additional-summary summary">
+      </div>
+      <div class="additional-summary postfix">
+      </div>
+    </div>
     <table id="results-table">
       <thead id="results-table-head">
         <tr>
-          <th class="sortable result initial-sort" col="result">Result</th>
-          <th class="sortable" col="name">Test</th>
-          <th class="sortable" col="duration">Duration</th>
-          <th class="sortable links" col="links">Links</th></tr>
-        <tr hidden="true" id="not-found-message">
-          <th colspan="4">No results found. Try to check the filters</th></tr></thead>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chain.py::TestPdbChain::test_pdbchain</td>
-          <td class="col-duration">0.25</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:23:58,681 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chain Version: 4.1.0
-2023-11-16 09:23:58,681 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/3f49c38b-e0d1-486b-94ac-f15ecff1fd01
-2023-11-16 09:23:58,682 [MainThread  ] [INFO ]  Creating bbde2ffd-5d37-46df-8c2d-5de5d1ae4e41 temporary folder
-2023-11-16 09:23:58,682 [MainThread  ] [INFO ]  Appending optional boolean property
-[&#x27;pdb_chain&#x27;, &#x27;-A&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb&#x27;]
-2023-11-16 09:23:58,682 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:23:58,682 [MainThread  ] [INFO ]  pdb_chain -A /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb
+          <th class="sortable" data-column-type="result">Result</th>
+          <th class="sortable" data-column-type="testId">Test</th>
+          <th class="sortable" data-column-type="duration">Duration</th>
+          <th>Links</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+  <footer>
+    <div id="data-container" data-jsonblob="{&#34;environment&#34;: {&#34;Python&#34;: &#34;3.10.13&#34;, &#34;Platform&#34;: &#34;Linux-5.4.0-159-generic-x86_64-with-glibc2.31&#34;, &#34;Packages&#34;: {&#34;pytest&#34;: &#34;7.4.3&#34;, &#34;pluggy&#34;: &#34;1.3.0&#34;}, &#34;Plugins&#34;: {&#34;cov&#34;: &#34;4.1.0&#34;, &#34;html&#34;: &#34;4.1.1&#34;, &#34;metadata&#34;: &#34;3.0.0&#34;}, &#34;CI&#34;: &#34;true&#34;}, &#34;tests&#34;: {&#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chain.py::TestPdbChain::test_pdbchain&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chain.py::TestPdbChain::test_pdbchain&#34;, &#34;duration&#34;: &#34;185 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chain.py::TestPdbChain::test_pdbchain&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;185 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:47,212 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chain Version: 4.1.0\n2023-12-20 16:22:47,213 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/f3b412c7-fe6a-4879-8abe-7711dce5b0ad\n2023-12-20 16:22:47,213 [MainThread  ] [INFO ]  Creating a0d0b1f3-3a61-49ec-8600-c5f2dde3e30d temporary folder\n2023-12-20 16:22:47,213 [MainThread  ] [INFO ]  Appending optional boolean property\n[&amp;#x27;pdb_chain&amp;#x27;, &amp;#x27;-A&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb&amp;#x27;]\n2023-12-20 16:22:47,213 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:47,214 [MainThread  ] [INFO ]  pdb_chain -A /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb\n\n2023-12-20 16:22:47,311 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:47,312 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/f3b412c7-fe6a-4879-8abe-7711dce5b0ad&amp;#x27;, &amp;#x27;a0d0b1f3-3a61-49ec-8600-c5f2dde3e30d&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chain Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/f3b412c7-fe6a-4879-8abe-7711dce5b0ad\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Creating a0d0b1f3-3a61-49ec-8600-c5f2dde3e30d temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Appending optional boolean property\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:cmd_wrapper.py:33 pdb_chain -A /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/f3b412c7-fe6a-4879-8abe-7711dce5b0ad&amp;#x27;, &amp;#x27;a0d0b1f3-3a61-49ec-8600-c5f2dde3e30d&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chainxseg.py::TestPdbChainxseg::test_chainxseg&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chainxseg.py::TestPdbChainxseg::test_chainxseg&#34;, &#34;duration&#34;: &#34;172 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chainxseg.py::TestPdbChainxseg::test_chainxseg&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;172 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:47,401 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg Version: 4.1.0\n2023-12-20 16:22:47,401 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/337cac4b-a558-4ee4-80ef-265330432647\n2023-12-20 16:22:47,401 [MainThread  ] [INFO ]  Creating d01afc18-4591-4a67-b709-ef859fafba9c temporary folder\n/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb\n[&amp;#x27;pdb_chainxseg&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb&amp;#x27;]\n2023-12-20 16:22:47,402 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:47,402 [MainThread  ] [INFO ]  pdb_chainxseg /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb\n\n2023-12-20 16:22:47,497 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:47,498 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/337cac4b-a558-4ee4-80ef-265330432647&amp;#x27;, &amp;#x27;d01afc18-4591-4a67-b709-ef859fafba9c&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/337cac4b-a558-4ee4-80ef-265330432647\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Creating d01afc18-4591-4a67-b709-ef859fafba9c temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:cmd_wrapper.py:33 pdb_chainxseg /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/337cac4b-a558-4ee4-80ef-265330432647&amp;#x27;, &amp;#x27;d01afc18-4591-4a67-b709-ef859fafba9c&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_delhetatm.py::TestPdbdelhetatm::test_delhetatm&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_delhetatm.py::TestPdbdelhetatm::test_delhetatm&#34;, &#34;duration&#34;: &#34;168 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_delhetatm.py::TestPdbdelhetatm::test_delhetatm&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;168 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:47,577 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm Version: 4.1.0\n2023-12-20 16:22:47,577 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/a72616ab-8b85-486d-a16b-1ffd46b2269e\n2023-12-20 16:22:47,577 [MainThread  ] [INFO ]  Creating bed5b169-c317-41c5-a864-c83590460c9a temporary folder\n[&amp;#x27;pdb_delhetatm&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb&amp;#x27;]\n2023-12-20 16:22:47,578 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:47,578 [MainThread  ] [INFO ]  pdb_delhetatm /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb\n\n2023-12-20 16:22:47,675 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:47,676 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/a72616ab-8b85-486d-a16b-1ffd46b2269e&amp;#x27;, &amp;#x27;bed5b169-c317-41c5-a864-c83590460c9a&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1001\n     Atoms ALIGNED in PDB_B: 1001\n     RMS: 1.4828848083881487e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/a72616ab-8b85-486d-a16b-1ffd46b2269e\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Creating bed5b169-c317-41c5-a864-c83590460c9a temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:cmd_wrapper.py:33 pdb_delhetatm /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/a72616ab-8b85-486d-a16b-1ffd46b2269e&amp;#x27;, &amp;#x27;bed5b169-c317-41c5-a864-c83590460c9a&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_fetch.py::TestPdbFetch::test_pdbfetch&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_fetch.py::TestPdbFetch::test_pdbfetch&#34;, &#34;duration&#34;: &#34;00:00:02&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_fetch.py::TestPdbFetch::test_pdbfetch&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:02&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:47,744 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_fetch Version: 4.1.0\n[&amp;#x27;pdb_fetch&amp;#x27;, &amp;#x27;&amp;#x27;, &amp;#x27;1nmr&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb&amp;#x27;]\n2023-12-20 16:22:47,744 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:47,745 [MainThread  ] [INFO ]  pdb_fetch  1nmr &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb\n\n2023-12-20 16:22:48,835 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:48,835 [MainThread  ] [INFO ]  Removed: []\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.262008214811879e-15\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_fetch Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:cmd_wrapper.py:33 pdb_fetch  1nmr &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Removed: []\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_merge.py::TestPdbMerge::test_pdbmerge&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_merge.py::TestPdbMerge::test_pdbmerge&#34;, &#34;duration&#34;: &#34;175 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_merge.py::TestPdbMerge::test_pdbmerge&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;175 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:50,009 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_merge Version: 4.1.0\n2023-12-20 16:22:50,010 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d\n2023-12-20 16:22:50,010 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d\n2023-12-20 16:22:50,011 [MainThread  ] [INFO ]  Creating bb6a39ea-7203-4d87-8abf-2334fbcb1239 temporary folder\n[&amp;#x27;pdb_merge&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb&amp;#x27;]\n2023-12-20 16:22:50,011 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:50,011 [MainThread  ] [INFO ]  Appending optional argument to command line\n2023-12-20 16:22:50,011 [MainThread  ] [INFO ]  pdb_merge /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb bb6a39ea-7203-4d87-8abf-2334fbcb1239/input_pdb_merge2.pdb\n\n2023-12-20 16:22:50,110 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:50,111 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d&amp;#x27;, &amp;#x27;bb6a39ea-7203-4d87-8abf-2334fbcb1239&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_merge Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Creating bb6a39ea-7203-4d87-8abf-2334fbcb1239 temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Appending optional argument to command line\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:cmd_wrapper.py:33 pdb_merge /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb bb6a39ea-7203-4d87-8abf-2334fbcb1239/input_pdb_merge2.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/2fc60aca-32a2-4759-86fb-86f7091a716d&amp;#x27;, &amp;#x27;bb6a39ea-7203-4d87-8abf-2334fbcb1239&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_mkensemble.py::TestPdbMkensemble::test_mkensemble&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_mkensemble.py::TestPdbMkensemble::test_mkensemble&#34;, &#34;duration&#34;: &#34;203 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_mkensemble.py::TestPdbMkensemble::test_mkensemble&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;203 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:50,186 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble Version: 4.1.0\n2023-12-20 16:22:50,187 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a\n2023-12-20 16:22:50,187 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a\n2023-12-20 16:22:50,187 [MainThread  ] [INFO ]  Creating 99b39be5-d127-4ca7-9b4a-e5310378fe32 temporary folder\n[&amp;#x27;pdb_mkensemble&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb&amp;#x27;]\n2023-12-20 16:22:50,187 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:50,188 [MainThread  ] [INFO ]  Appending optional argument to command line\n2023-12-20 16:22:50,188 [MainThread  ] [INFO ]  pdb_mkensemble /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb 99b39be5-d127-4ca7-9b4a-e5310378fe32/input_pdb_mkensemble2.pdb\n\n2023-12-20 16:22:50,285 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:50,286 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a&amp;#x27;, &amp;#x27;99b39be5-d127-4ca7-9b4a-e5310378fe32&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Creating 99b39be5-d127-4ca7-9b4a-e5310378fe32 temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Appending optional argument to command line\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:cmd_wrapper.py:33 pdb_mkensemble /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb 99b39be5-d127-4ca7-9b4a-e5310378fe32/input_pdb_mkensemble2.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f5c541a5-f331-4981-bbdb-446dc668461a&amp;#x27;, &amp;#x27;99b39be5-d127-4ca7-9b4a-e5310378fe32&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_reres.py::TestPdbreres::test_pdbreres&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_reres.py::TestPdbreres::test_pdbreres&#34;, &#34;duration&#34;: &#34;273 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_reres.py::TestPdbreres::test_pdbreres&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;273 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:50,390 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_reres Version: 4.1.0\n2023-12-20 16:22:50,391 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/5b09cddf-9dd5-4bef-89da-89c72234b410\n2023-12-20 16:22:50,391 [MainThread  ] [INFO ]  Creating c1e6f626-ab68-4886-acc1-7a494e1fc4a0 temporary folder\n2023-12-20 16:22:50,391 [MainThread  ] [INFO ]  Appending optional boolean property\n[&amp;#x27;pdb_reres&amp;#x27;, &amp;#x27;-4&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb&amp;#x27;]\n2023-12-20 16:22:50,391 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:50,391 [MainThread  ] [INFO ]  pdb_reres -4 /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb\n\n2023-12-20 16:22:50,488 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:50,488 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/5b09cddf-9dd5-4bef-89da-89c72234b410&amp;#x27;, &amp;#x27;c1e6f626-ab68-4886-acc1-7a494e1fc4a0&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_reres Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/5b09cddf-9dd5-4bef-89da-89c72234b410\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Creating c1e6f626-ab68-4886-acc1-7a494e1fc4a0 temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Appending optional boolean property\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:cmd_wrapper.py:33 pdb_reres -4 /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/5b09cddf-9dd5-4bef-89da-89c72234b410&amp;#x27;, &amp;#x27;c1e6f626-ab68-4886-acc1-7a494e1fc4a0&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_seg.py::TestPdbseg::test_pdbseg&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_seg.py::TestPdbseg::test_pdbseg&#34;, &#34;duration&#34;: &#34;429 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_seg.py::TestPdbseg::test_pdbseg&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;429 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:50,665 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_seg Version: 4.1.0\n2023-12-20 16:22:50,666 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/f0ebb485-6fad-4a03-84af-c6c9d3e6bb75\n2023-12-20 16:22:50,666 [MainThread  ] [INFO ]  Creating 70c20069-223e-479f-baf6-06256a36759a temporary folder\n2023-12-20 16:22:50,667 [MainThread  ] [INFO ]  Appending optional boolean property\n[&amp;#x27;pdb_seg&amp;#x27;, &amp;#x27;-B&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb&amp;#x27;]\n2023-12-20 16:22:50,667 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:50,667 [MainThread  ] [INFO ]  pdb_seg -B /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb\n\n2023-12-20 16:22:50,783 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:50,783 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/f0ebb485-6fad-4a03-84af-c6c9d3e6bb75&amp;#x27;, &amp;#x27;70c20069-223e-479f-baf6-06256a36759a&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_seg.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 5825\n     Atoms ALIGNED in PDB_B: 5825\n     RMS: 1.808183839061579e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_seg Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/f0ebb485-6fad-4a03-84af-c6c9d3e6bb75\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Creating 70c20069-223e-479f-baf6-06256a36759a temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Appending optional boolean property\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:cmd_wrapper.py:33 pdb_seg -B /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/f0ebb485-6fad-4a03-84af-c6c9d3e6bb75&amp;#x27;, &amp;#x27;70c20069-223e-479f-baf6-06256a36759a&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitmodel.py::TestPdbpdbsplitmodel::test_splitmodel&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitmodel.py::TestPdbpdbsplitmodel::test_splitmodel&#34;, &#34;duration&#34;: &#34;00:00:01&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitmodel.py::TestPdbpdbsplitmodel::test_splitmodel&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;00:00:01&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:51,095 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel Version: 4.1.0\n2023-12-20 16:22:51,097 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65\n[&amp;#x27;cd&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65&amp;#x27;, &amp;#x27;;&amp;#x27;, &amp;#x27;pdb_splitmodel&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65/input_pdb_splitmodel.pdb&amp;#x27;]\n2023-12-20 16:22:51,097 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:51,098 [MainThread  ] [INFO ]  cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65 ; pdb_splitmodel /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65/input_pdb_splitmodel.pdb\n\n2023-12-20 16:22:51,215 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:51,216 [MainThread  ] [INFO ]  Saving 20 pdb model files in a zip\n2023-12-20 16:22:51,224 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/output.zip\nThis is a ZIP comparison!\nUnzipping:\nCreating a unique_dir for: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/output.zip\nCreating a unique_dir for: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitmodel.zip\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_3.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_3.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 9.005707413287946e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_19.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_19.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 7.103048350314591e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_4.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_4.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 4.212245047944799e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_14.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_14.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 8.166687956859025e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_10.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_10.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.723433027284445e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_8.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_8.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 6.3659295347095436e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_5.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_5.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.004504784924739e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_15.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_15.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 1.394312951674733e-14\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_12.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_12.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 4.541879928319523e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_20.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_20.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.1338693406497264e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_17.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_17.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 7.325314307711472e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_2.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_2.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.663666769398783e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_1.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_1.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.262008214811879e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_7.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_7.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.6193476768190775e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_9.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_9.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 1.0906479600561428e-14\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_6.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_6.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 4.528314979571221e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_11.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_11.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 2.679977287626091e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_16.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_16.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 5.3221574599718654e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_18.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_18.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 6.02419518022054e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 231ab1f4-3ba0-49ba-9d34-0a44b3d95dbe/input_pdb_splitmodel_13.pdb\n     PDB_B: 3d203bd2-81f7-4180-b7bb-5b461d1df492/input_pdb_splitmodel_13.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 636\n     Atoms ALIGNED in PDB_B: 636\n     RMS: 6.2081690127687695e-15\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:cmd_wrapper.py:33 cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65 ; pdb_splitmodel /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65/input_pdb_splitmodel.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Saving 20 pdb model files in a zip\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/294cef14-80d8-4861-b1a7-a2dbcd43ca65&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitseg.py::TestPdbpdbsplitseg::test_splitseg&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitseg.py::TestPdbpdbsplitseg::test_splitseg&#34;, &#34;duration&#34;: &#34;117 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitseg.py::TestPdbpdbsplitseg::test_splitseg&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;117 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:52,277 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg Version: 4.1.0\n2023-12-20 16:22:52,277 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b\n[&amp;#x27;cd&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b&amp;#x27;, &amp;#x27;;&amp;#x27;, &amp;#x27;pdb_splitseg&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b/input_pdb_splitseg.pdb&amp;#x27;]\n2023-12-20 16:22:52,277 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:52,277 [MainThread  ] [INFO ]  cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b ; pdb_splitseg /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b/input_pdb_splitseg.pdb\n\n2023-12-20 16:22:52,371 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:52,372 [MainThread  ] [INFO ]  Saving 2 pdb segment files in a zip\n2023-12-20 16:22:52,373 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/output.zip\nThis is a ZIP comparison!\nUnzipping:\nCreating a unique_dir for: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/output.zip\nCreating a unique_dir for: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitseg.zip\nChecking RMSD between:\n     PDB_A: 518d2a3f-55bb-47bf-9d5b-ba49ace83109/input_pdb_splitseg_A.pdb\n     PDB_B: d8b9983d-1716-436b-adac-2cdcb47f0e9a/input_pdb_splitseg_A.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 9\n     Atoms ALIGNED in PDB_B: 9\n     RMS: 5.102196573270515e-15\n     RMS_CUTOFF: 1\nChecking RMSD between:\n     PDB_A: 518d2a3f-55bb-47bf-9d5b-ba49ace83109/input_pdb_splitseg_B.pdb\n     PDB_B: d8b9983d-1716-436b-adac-2cdcb47f0e9a/input_pdb_splitseg_B.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 7\n     Atoms ALIGNED in PDB_B: 7\n     RMS: 1.3427995533605042e-15\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:cmd_wrapper.py:33 cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b ; pdb_splitseg /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b/input_pdb_splitseg.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Saving 2 pdb segment files in a zip\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/b66d0cab-fcbc-4f75-b2eb-bee7d187515b&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tidy.py::TestPdbTidy::test_pdbtidy&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tidy.py::TestPdbTidy::test_pdbtidy&#34;, &#34;duration&#34;: &#34;167 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tidy.py::TestPdbTidy::test_pdbtidy&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;167 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:52,395 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tidy Version: 4.1.0\n2023-12-20 16:22:52,396 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/d23ad3d8-8108-4933-8197-11f045dfc4b4\n2023-12-20 16:22:52,396 [MainThread  ] [INFO ]  Creating a33cff04-1802-4831-887b-67ee8620a3d7 temporary folder\n2023-12-20 16:22:52,396 [MainThread  ] [INFO ]  Appending optional boolean property\n[&amp;#x27;pdb_tidy&amp;#x27;, &amp;#x27;-strict&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb&amp;#x27;]\n2023-12-20 16:22:52,397 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:52,397 [MainThread  ] [INFO ]  pdb_tidy -strict /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb\n\n2023-12-20 16:22:52,491 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:52,492 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/d23ad3d8-8108-4933-8197-11f045dfc4b4&amp;#x27;, &amp;#x27;a33cff04-1802-4831-887b-67ee8620a3d7&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb\nChecking RMSD between:\n     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb\n     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb\n     Ignoring HETAMT in RMSD\n     Ignoring Hydrogen atoms in RMSD\n     Atoms ALIGNED in PDB_A: 1079\n     Atoms ALIGNED in PDB_B: 1079\n     RMS: 1.212094551631224e-14\n     RMS_CUTOFF: 1\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tidy Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/d23ad3d8-8108-4933-8197-11f045dfc4b4\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Creating a33cff04-1802-4831-887b-67ee8620a3d7 temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Appending optional boolean property\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:cmd_wrapper.py:33 pdb_tidy -strict /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/d23ad3d8-8108-4933-8197-11f045dfc4b4&amp;#x27;, &amp;#x27;a33cff04-1802-4831-887b-67ee8620a3d7&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}], &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tofasta.py::TestPdbTidy::test_pdbtofasta&#34;: [{&#34;extras&#34;: [], &#34;result&#34;: &#34;Passed&#34;, &#34;testId&#34;: &#34;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tofasta.py::TestPdbTidy::test_pdbtofasta&#34;, &#34;duration&#34;: &#34;110 ms&#34;, &#34;resultsTableRow&#34;: [&#34;&lt;td class=\&#34;col-result\&#34;&gt;Passed&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-testId\&#34;&gt;biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tofasta.py::TestPdbTidy::test_pdbtofasta&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-duration\&#34;&gt;110 ms&lt;/td&gt;&#34;, &#34;&lt;td class=\&#34;col-links\&#34;&gt;&lt;/td&gt;&#34;], &#34;log&#34;: &#34;----------------------------- Captured stdout call -----------------------------\n2023-12-20 16:22:52,563 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta Version: 4.1.0\n2023-12-20 16:22:52,563 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/e944b0d8-a4c9-47d8-a56d-9008fe7facbe\n2023-12-20 16:22:52,564 [MainThread  ] [INFO ]  Creating 44c6572f-40bd-4e5f-a839-833095e1d50c temporary folder\n[&amp;#x27;pdb_tofasta&amp;#x27;, &amp;#x27;&amp;#x27;, &amp;#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb&amp;#x27;, &amp;#x27;&amp;gt;&amp;#x27;, &amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta&amp;#x27;]\n2023-12-20 16:22:52,564 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments\n2023-12-20 16:22:52,564 [MainThread  ] [INFO ]  pdb_tofasta  /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta\n\n2023-12-20 16:22:52,655 [MainThread  ] [INFO ]  Exit code 0\n\n2023-12-20 16:22:52,655 [MainThread  ] [INFO ]  Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/e944b0d8-a4c9-47d8-a56d-9008fe7facbe&amp;#x27;, &amp;#x27;44c6572f-40bd-4e5f-a839-833095e1d50c&amp;#x27;]\nChecking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta\nComparing: \n        File_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta\n        File_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb\n        File_A hash: b&amp;#x27;\\xc4no^H\\xc6\\xcc\\xbb\\x9b\\xec=h\\xe2\\xf0g\\xa8p%\\x9a\\xc8UK\\xa0\\xc5\\xe3&amp;quot;BD5\\xaa\\xe2\\xd4&amp;#x27;\n        File_B hash: b&amp;#x27;\\xc4no^H\\xc6\\xcc\\xbb\\x9b\\xec=h\\xe2\\xf0g\\xa8p%\\x9a\\xc8UK\\xa0\\xc5\\xe3&amp;quot;BD5\\xaa\\xe2\\xd4&amp;#x27;\n\n------------------------------ Captured log call -------------------------------\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta Version: 4.1.0\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/e944b0d8-a4c9-47d8-a56d-9008fe7facbe\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Creating 44c6572f-40bd-4e5f-a839-833095e1d50c temporary folder\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Creating command line with instructions and required arguments\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:cmd_wrapper.py:33 pdb_tofasta  /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb &amp;gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:cmd_wrapper.py:50 Exit code 0\n\nINFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Removed: [&amp;#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/e944b0d8-a4c9-47d8-a56d-9008fe7facbe&amp;#x27;, &amp;#x27;44c6572f-40bd-4e5f-a839-833095e1d50c&amp;#x27;]\n\n--------------------------- Captured stdout teardown ---------------------------\n\nRemoving: /tmp/biobb_pdb_tools/pdb_tools\n&#34;}]}, &#34;renderCollapsed&#34;: [&#34;passed&#34;], &#34;initialSort&#34;: &#34;result&#34;, &#34;title&#34;: &#34;report.html&#34;}"></div>
+    <script>
+      (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { getCollapsedCategory, setCollapsedIds } = require('./storage.js')
 
-2023-11-16 09:23:58,776 [MainThread  ] [INFO ]  Exit code 0
+class DataManager {
+    setManager(data) {
+        const collapsedCategories = [...getCollapsedCategory(data.renderCollapsed)]
+        const collapsedIds = []
+        const tests = Object.values(data.tests).flat().map((test, index) => {
+            const collapsed = collapsedCategories.includes(test.result.toLowerCase())
+            const id = `test_${index}`
+            if (collapsed) {
+                collapsedIds.push(id)
+            }
+            return {
+                ...test,
+                id,
+                collapsed,
+            }
+        })
+        const dataBlob = { ...data, tests }
+        this.data = { ...dataBlob }
+        this.renderData = { ...dataBlob }
+        setCollapsedIds(collapsedIds)
+    }
 
-2023-11-16 09:23:58,777 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/3f49c38b-e0d1-486b-94ac-f15ecff1fd01&#x27;, &#x27;bbde2ffd-5d37-46df-8c2d-5de5d1ae4e41&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chain Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/3f49c38b-e0d1-486b-94ac-f15ecff1fd01
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Creating bbde2ffd-5d37-46df-8c2d-5de5d1ae4e41 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Appending optional boolean property
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:cmd_wrapper.py:33 pdb_chain -A /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/output.pdb
+    get allData() {
+        return { ...this.data }
+    }
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:cmd_wrapper.py:50 Exit code 0
+    resetRender() {
+        this.renderData = { ...this.data }
+    }
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/biobb_pdb_chain_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chain/3f49c38b-e0d1-486b-94ac-f15ecff1fd01&#x27;, &#x27;bbde2ffd-5d37-46df-8c2d-5de5d1ae4e41&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_chainxseg.py::TestPdbChainxseg::test_chainxseg</td>
-          <td class="col-duration">0.17</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:23:58,953 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg Version: 4.1.0
-2023-11-16 09:23:58,954 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/db06ad06-4c6e-4172-bcdf-69e862763877
-2023-11-16 09:23:58,954 [MainThread  ] [INFO ]  Creating 2960af5e-177d-4637-8cec-a9a74dbfc5ef temporary folder
-/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb
-[&#x27;pdb_chainxseg&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb&#x27;]
-2023-11-16 09:23:58,954 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:23:58,954 [MainThread  ] [INFO ]  pdb_chainxseg /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb
+    setRender(data) {
+        this.renderData.tests = [...data]
+    }
 
-2023-11-16 09:23:59,054 [MainThread  ] [INFO ]  Exit code 0
+    toggleCollapsedItem(id) {
+        this.renderData.tests = this.renderData.tests.map((test) =>
+            test.id === id ? { ...test, collapsed: !test.collapsed } : test,
+        )
+    }
 
-2023-11-16 09:23:59,055 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/db06ad06-4c6e-4172-bcdf-69e862763877&#x27;, &#x27;2960af5e-177d-4637-8cec-a9a74dbfc5ef&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/db06ad06-4c6e-4172-bcdf-69e862763877
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Creating 2960af5e-177d-4637-8cec-a9a74dbfc5ef temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:cmd_wrapper.py:33 pdb_chainxseg /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/output.pdb
+    set allCollapsed(collapsed) {
+        this.renderData = { ...this.renderData, tests: [...this.renderData.tests.map((test) => (
+            { ...test, collapsed }
+        ))] }
+    }
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:cmd_wrapper.py:50 Exit code 0
+    get testSubset() {
+        return [...this.renderData.tests]
+    }
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/biobb_pdb_chainxseg_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_chainxseg/db06ad06-4c6e-4172-bcdf-69e862763877&#x27;, &#x27;2960af5e-177d-4637-8cec-a9a74dbfc5ef&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_delhetatm.py::TestPdbdelhetatm::test_delhetatm</td>
-          <td class="col-duration">0.16</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:23:59,132 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm Version: 4.1.0
-2023-11-16 09:23:59,132 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/061b99e4-54a3-4602-afab-0bef099f5ffc
-2023-11-16 09:23:59,132 [MainThread  ] [INFO ]  Creating f64c6404-7bbc-4938-96c1-74188eaea8d0 temporary folder
-[&#x27;pdb_delhetatm&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb&#x27;]
-2023-11-16 09:23:59,133 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:23:59,133 [MainThread  ] [INFO ]  pdb_delhetatm /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb
+    get environment() {
+        return this.renderData.environment
+    }
 
-2023-11-16 09:23:59,230 [MainThread  ] [INFO ]  Exit code 0
+    get initialSort() {
+        return this.data.initialSort
+    }
+}
 
-2023-11-16 09:23:59,231 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/061b99e4-54a3-4602-afab-0bef099f5ffc&#x27;, &#x27;f64c6404-7bbc-4938-96c1-74188eaea8d0&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1001
-     Atoms ALIGNED in PDB_B: 1001
-     RMS: 1.4828848083881487e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/061b99e4-54a3-4602-afab-0bef099f5ffc
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Creating f64c6404-7bbc-4938-96c1-74188eaea8d0 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:cmd_wrapper.py:33 pdb_delhetatm /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/output.pdb
+module.exports = {
+    manager: new DataManager(),
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:cmd_wrapper.py:50 Exit code 0
+},{"./storage.js":8}],2:[function(require,module,exports){
+const mediaViewer = require('./mediaviewer.js')
+const templateEnvRow = document.getElementById('template_environment_row')
+const templateResult = document.getElementById('template_results-table__tbody')
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/biobb_pdb_delhetatm_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_delhetatm/061b99e4-54a3-4602-afab-0bef099f5ffc&#x27;, &#x27;f64c6404-7bbc-4938-96c1-74188eaea8d0&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_fetch.py::TestPdbFetch::test_pdbfetch</td>
-          <td class="col-duration">1.99</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:23:59,301 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_fetch Version: 4.1.0
-[&#x27;pdb_fetch&#x27;, &#x27;&#x27;, &#x27;1nmr&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb&#x27;]
-2023-11-16 09:23:59,301 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:23:59,302 [MainThread  ] [INFO ]  pdb_fetch  1nmr &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb
+function htmlToElements(html) {
+    const temp = document.createElement('template')
+    temp.innerHTML = html
+    return temp.content.childNodes
+}
 
-2023-11-16 09:24:00,277 [MainThread  ] [INFO ]  Exit code 0
+const find = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return elem.querySelector(selector)
+}
 
-2023-11-16 09:24:00,277 [MainThread  ] [INFO ]  Removed: []
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.262008214811879e-15
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_fetch Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:cmd_wrapper.py:33 pdb_fetch  1nmr &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/output.pdb
+const findAll = (selector, elem) => {
+    if (!elem) {
+        elem = document
+    }
+    return [...elem.querySelectorAll(selector)]
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:cmd_wrapper.py:50 Exit code 0
+const dom = {
+    getStaticRow: (key, value) => {
+        const envRow = templateEnvRow.content.cloneNode(true)
+        const isObj = typeof value === 'object' && value !== null
+        const values = isObj ? Object.keys(value).map((k) => `${k}: ${value[k]}`) : null
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_fetch/biobb_pdb_fetch_log.out:file_utils.py:390 Removed: []<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_merge.py::TestPdbMerge::test_pdbmerge</td>
-          <td class="col-duration">0.17</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:01,299 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_merge Version: 4.1.0
-2023-11-16 09:24:01,300 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06
-2023-11-16 09:24:01,300 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06
-2023-11-16 09:24:01,300 [MainThread  ] [INFO ]  Creating 0c5c443c-0ffb-4140-9930-8e882527a915 temporary folder
-[&#x27;pdb_merge&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb&#x27;]
-2023-11-16 09:24:01,300 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:01,301 [MainThread  ] [INFO ]  Appending optional argument to command line
-2023-11-16 09:24:01,301 [MainThread  ] [INFO ]  pdb_merge /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb 0c5c443c-0ffb-4140-9930-8e882527a915/input_pdb_merge2.pdb
+        const valuesElement = htmlToElements(
+            values ? `<ul>${values.map((val) => `<li>${val}</li>`).join('')}<ul>` : `<div>${value}</div>`)[0]
+        const td = findAll('td', envRow)
+        td[0].textContent = key
+        td[1].appendChild(valuesElement)
 
-2023-11-16 09:24:01,394 [MainThread  ] [INFO ]  Exit code 0
+        return envRow
+    },
+    getResultTBody: ({ testId, id, log, extras, resultsTableRow, tableHtml, result, collapsed }) => {
+        const resultBody = templateResult.content.cloneNode(true)
+        resultBody.querySelector('tbody').classList.add(result.toLowerCase())
+        resultBody.querySelector('tbody').id = testId
+        resultBody.querySelector('.collapsible').dataset.id = id
 
-2023-11-16 09:24:01,395 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06&#x27;, &#x27;0c5c443c-0ffb-4140-9930-8e882527a915&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_merge Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Creating 0c5c443c-0ffb-4140-9930-8e882527a915 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Appending optional argument to command line
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:cmd_wrapper.py:33 pdb_merge /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/output.pdb 0c5c443c-0ffb-4140-9930-8e882527a915/input_pdb_merge2.pdb
+        resultsTableRow.forEach((html) => {
+            const t = document.createElement('template')
+            t.innerHTML = html
+            resultBody.querySelector('.collapsible').appendChild(t.content)
+        })
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:cmd_wrapper.py:50 Exit code 0
+        if (log) {
+            // Wrap lines starting with "E" with span.error to color those lines red
+            const wrappedLog = log.replace(/^E.*$/gm, (match) => `<span class="error">${match}</span>`)
+            resultBody.querySelector('.log').innerHTML = wrappedLog
+        } else {
+            resultBody.querySelector('.log').remove()
+        }
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/biobb_pdb_merge_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_merge/6555019c-8e0b-4031-9ec3-0afbb7a3ad06&#x27;, &#x27;0c5c443c-0ffb-4140-9930-8e882527a915&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_mkensemble.py::TestPdbMkensemble::test_mkensemble</td>
-          <td class="col-duration">0.20</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:01,476 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble Version: 4.1.0
-2023-11-16 09:24:01,477 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa
-2023-11-16 09:24:01,477 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa
-2023-11-16 09:24:01,477 [MainThread  ] [INFO ]  Creating 1c6daf4e-8b1e-4eca-bc28-57bbf0295473 temporary folder
-[&#x27;pdb_mkensemble&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb&#x27;]
-2023-11-16 09:24:01,477 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:01,478 [MainThread  ] [INFO ]  Appending optional argument to command line
-2023-11-16 09:24:01,478 [MainThread  ] [INFO ]  pdb_mkensemble /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb 1c6daf4e-8b1e-4eca-bc28-57bbf0295473/input_pdb_mkensemble2.pdb
+        if (collapsed) {
+            resultBody.querySelector('.collapsible > td')?.classList.add('collapsed')
+            resultBody.querySelector('.extras-row').classList.add('hidden')
+        } else {
+            resultBody.querySelector('.collapsible > td')?.classList.remove('collapsed')
+        }
 
-2023-11-16 09:24:01,572 [MainThread  ] [INFO ]  Exit code 0
+        const media = []
+        extras?.forEach(({ name, format_type, content }) => {
+            if (['image', 'video'].includes(format_type)) {
+                media.push({ path: content, name, format_type })
+            }
 
-2023-11-16 09:24:01,573 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa&#x27;, &#x27;1c6daf4e-8b1e-4eca-bc28-57bbf0295473&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Creating 1c6daf4e-8b1e-4eca-bc28-57bbf0295473 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Appending optional argument to command line
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:cmd_wrapper.py:33 pdb_mkensemble /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/output.pdb 1c6daf4e-8b1e-4eca-bc28-57bbf0295473/input_pdb_mkensemble2.pdb
+            if (format_type === 'html') {
+                resultBody.querySelector('.extraHTML').insertAdjacentHTML('beforeend', `<div>${content}</div>`)
+            }
+        })
+        mediaViewer.setup(resultBody, media)
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:cmd_wrapper.py:50 Exit code 0
+        // Add custom html from the pytest_html_results_table_html hook
+        tableHtml?.forEach((item) => {
+            resultBody.querySelector('td[class="extra"]').insertAdjacentHTML('beforeend', item)
+        })
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/biobb_pdb_mkensemble_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_mkensemble/f96b3c69-aa40-41af-a222-adc436d0faaa&#x27;, &#x27;1c6daf4e-8b1e-4eca-bc28-57bbf0295473&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_reres.py::TestPdbreres::test_pdbreres</td>
-          <td class="col-duration">0.27</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:01,678 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_reres Version: 4.1.0
-2023-11-16 09:24:01,678 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/6d1ef954-cffa-494a-a538-04f42dccfefc
-2023-11-16 09:24:01,678 [MainThread  ] [INFO ]  Creating 8273c1d9-7256-458d-90a2-9f999b3279bf temporary folder
-2023-11-16 09:24:01,679 [MainThread  ] [INFO ]  Appending optional boolean property
-[&#x27;pdb_reres&#x27;, &#x27;-4&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb&#x27;]
-2023-11-16 09:24:01,679 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:01,679 [MainThread  ] [INFO ]  pdb_reres -4 /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb
+        return resultBody
+    },
+}
 
-2023-11-16 09:24:01,776 [MainThread  ] [INFO ]  Exit code 0
+module.exports = {
+    dom,
+    htmlToElements,
+    find,
+    findAll,
+}
 
-2023-11-16 09:24:01,776 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/6d1ef954-cffa-494a-a538-04f42dccfefc&#x27;, &#x27;8273c1d9-7256-458d-90a2-9f999b3279bf&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_reres Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/6d1ef954-cffa-494a-a538-04f42dccfefc
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Creating 8273c1d9-7256-458d-90a2-9f999b3279bf temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Appending optional boolean property
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:cmd_wrapper.py:33 pdb_reres -4 /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/output.pdb
+},{"./mediaviewer.js":6}],3:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const storageModule = require('./storage.js')
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:cmd_wrapper.py:50 Exit code 0
+const getFilteredSubSet = (filter) =>
+    manager.allData.tests.filter(({ result }) => filter.includes(result.toLowerCase()))
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/biobb_pdb_reres_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_reres/6d1ef954-cffa-494a-a538-04f42dccfefc&#x27;, &#x27;8273c1d9-7256-458d-90a2-9f999b3279bf&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_seg.py::TestPdbseg::test_pdbseg</td>
-          <td class="col-duration">0.37</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:01,951 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_seg Version: 4.1.0
-2023-11-16 09:24:01,952 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/a4f3710c-9a35-4c6a-9936-09b6a8460bc7
-2023-11-16 09:24:01,952 [MainThread  ] [INFO ]  Creating e772243a-a071-4f1e-bac9-b45c7fab9025 temporary folder
-2023-11-16 09:24:01,953 [MainThread  ] [INFO ]  Appending optional boolean property
-[&#x27;pdb_seg&#x27;, &#x27;-B&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb&#x27;]
-2023-11-16 09:24:01,953 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:01,953 [MainThread  ] [INFO ]  pdb_seg -B /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb
+const doInitFilter = () => {
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
+}
 
-2023-11-16 09:24:02,055 [MainThread  ] [INFO ]  Exit code 0
+const doFilter = (type, show) => {
+    if (show) {
+        storageModule.showCategory(type)
+    } else {
+        storageModule.hideCategory(type)
+    }
 
-2023-11-16 09:24:02,055 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/a4f3710c-9a35-4c6a-9936-09b6a8460bc7&#x27;, &#x27;e772243a-a071-4f1e-bac9-b45c7fab9025&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_seg.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 5825
-     Atoms ALIGNED in PDB_B: 5825
-     RMS: 1.808183839061579e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_seg Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/a4f3710c-9a35-4c6a-9936-09b6a8460bc7
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Creating e772243a-a071-4f1e-bac9-b45c7fab9025 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Appending optional boolean property
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:cmd_wrapper.py:33 pdb_seg -B /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/output.pdb
+    const currentFilter = storageModule.getVisible()
+    const filteredSubset = getFilteredSubSet(currentFilter)
+    manager.setRender(filteredSubset)
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:cmd_wrapper.py:50 Exit code 0
+    const sortColumn = storageModule.getSort()
+    doSort(sortColumn, true)
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/biobb_pdb_seg_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_seg/a4f3710c-9a35-4c6a-9936-09b6a8460bc7&#x27;, &#x27;e772243a-a071-4f1e-bac9-b45c7fab9025&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitmodel.py::TestPdbpdbsplitmodel::test_splitmodel</td>
-          <td class="col-duration">1.21</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:02,332 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel Version: 4.1.0
-2023-11-16 09:24:02,334 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b
-[&#x27;cd&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b&#x27;, &#x27;;&#x27;, &#x27;pdb_splitmodel&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b/input_pdb_splitmodel.pdb&#x27;]
-2023-11-16 09:24:02,334 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:02,334 [MainThread  ] [INFO ]  cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b ; pdb_splitmodel /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b/input_pdb_splitmodel.pdb
+module.exports = {
+    doFilter,
+    doInitFilter,
+}
 
-2023-11-16 09:24:02,448 [MainThread  ] [INFO ]  Exit code 0
+},{"./datamanager.js":1,"./sort.js":7,"./storage.js":8}],4:[function(require,module,exports){
+const { redraw, bindEvents, renderStatic } = require('./main.js')
+const { doInitFilter } = require('./filter.js')
+const { doInitSort } = require('./sort.js')
+const { manager } = require('./datamanager.js')
+const data = JSON.parse(document.getElementById('data-container').dataset.jsonblob)
 
-2023-11-16 09:24:02,449 [MainThread  ] [INFO ]  Saving 20 pdb model files in a zip
-2023-11-16 09:24:02,457 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/output.zip
-This is a ZIP comparison!
-Unzipping:
-Creating a unique_dir for: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/output.zip
-Creating a unique_dir for: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitmodel.zip
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_3.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_3.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 9.005707413287946e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_19.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_19.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 7.103048350314591e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_4.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_4.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 4.212245047944799e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_14.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_14.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 8.166687956859025e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_10.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_10.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.723433027284445e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_8.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_8.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 6.3659295347095436e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_5.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_5.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.004504784924739e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_15.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_15.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 1.394312951674733e-14
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_12.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_12.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 4.541879928319523e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_20.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_20.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.1338693406497264e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_17.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_17.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 7.325314307711472e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_2.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_2.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.663666769398783e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_1.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_1.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.262008214811879e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_7.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_7.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.6193476768190775e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_9.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_9.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 1.0906479600561428e-14
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_6.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_6.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 4.528314979571221e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_11.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_11.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 2.679977287626091e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_16.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_16.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 5.3221574599718654e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_18.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_18.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 6.02419518022054e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: 2e7e87ad-ee3e-476d-8411-e8a2bd6b73bf/input_pdb_splitmodel_13.pdb
-     PDB_B: 264a8bb5-746e-4690-a2ba-c58d04f074f1/input_pdb_splitmodel_13.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 636
-     Atoms ALIGNED in PDB_B: 636
-     RMS: 6.2081690127687695e-15
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:cmd_wrapper.py:33 cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b ; pdb_splitmodel /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b/input_pdb_splitmodel.pdb
+function init() {
+    manager.setManager(data)
+    doInitFilter()
+    doInitSort()
+    renderStatic()
+    redraw()
+    bindEvents()
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:cmd_wrapper.py:50 Exit code 0
+init()
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Saving 20 pdb model files in a zip
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/biobb_pdb_splitmodel_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitmodel/20b1323e-8056-4075-9be9-d23e1de8dc0b&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_splitseg.py::TestPdbpdbsplitseg::test_splitseg</td>
-          <td class="col-duration">0.11</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:03,546 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg Version: 4.1.0
-2023-11-16 09:24:03,547 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c
-[&#x27;cd&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c&#x27;, &#x27;;&#x27;, &#x27;pdb_splitseg&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c/input_pdb_splitseg.pdb&#x27;]
-2023-11-16 09:24:03,547 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:03,547 [MainThread  ] [INFO ]  cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c ; pdb_splitseg /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c/input_pdb_splitseg.pdb
+},{"./datamanager.js":1,"./filter.js":3,"./main.js":5,"./sort.js":7}],5:[function(require,module,exports){
+const { dom, find, findAll } = require('./dom.js')
+const { manager } = require('./datamanager.js')
+const { doSort } = require('./sort.js')
+const { doFilter } = require('./filter.js')
+const {
+    getVisible,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    getSortDirection,
+    possibleFilters,
+} = require('./storage.js')
 
-2023-11-16 09:24:03,639 [MainThread  ] [INFO ]  Exit code 0
+const removeChildren = (node) => {
+    while (node.firstChild) {
+        node.removeChild(node.firstChild)
+    }
+}
 
-2023-11-16 09:24:03,640 [MainThread  ] [INFO ]  Saving 2 pdb segment files in a zip
-2023-11-16 09:24:03,641 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/output.zip
-This is a ZIP comparison!
-Unzipping:
-Creating a unique_dir for: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/output.zip
-Creating a unique_dir for: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitseg.zip
-Checking RMSD between:
-     PDB_A: af475cf8-73eb-4fee-8005-73c8372b5864/input_pdb_splitseg_A.pdb
-     PDB_B: e0a14724-cc84-4f87-950e-d5307ca3e851/input_pdb_splitseg_A.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 9
-     Atoms ALIGNED in PDB_B: 9
-     RMS: 5.102196573270515e-15
-     RMS_CUTOFF: 1
-Checking RMSD between:
-     PDB_A: af475cf8-73eb-4fee-8005-73c8372b5864/input_pdb_splitseg_B.pdb
-     PDB_B: e0a14724-cc84-4f87-950e-d5307ca3e851/input_pdb_splitseg_B.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 7
-     Atoms ALIGNED in PDB_B: 7
-     RMS: 1.3427995533605042e-15
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:cmd_wrapper.py:33 cd /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c ; pdb_splitseg /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c/input_pdb_splitseg.pdb
+const renderStatic = () => {
+    const renderEnvironmentTable = () => {
+        const environment = manager.environment
+        const rows = Object.keys(environment).map((key) => dom.getStaticRow(key, environment[key]))
+        const table = document.getElementById('environment')
+        removeChildren(table)
+        rows.forEach((row) => table.appendChild(row))
+    }
+    renderEnvironmentTable()
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:cmd_wrapper.py:50 Exit code 0
+const addItemToggleListener = (elem) => {
+    elem.addEventListener('click', ({ target }) => {
+        const id = target.parentElement.dataset.id
+        manager.toggleCollapsedItem(id)
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Saving 2 pdb segment files in a zip
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/biobb_pdb_splitseg_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_splitseg/99206edd-2b06-400f-ac00-f3bd042b3f9c&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tidy.py::TestPdbTidy::test_pdbtidy</td>
-          <td class="col-duration">0.16</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:03,663 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tidy Version: 4.1.0
-2023-11-16 09:24:03,664 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/6fdb9c94-bb77-44d3-8910-4eb102a9764c
-2023-11-16 09:24:03,664 [MainThread  ] [INFO ]  Creating 5fa594c2-f0d6-4710-acf2-201cd9270f9f temporary folder
-2023-11-16 09:24:03,664 [MainThread  ] [INFO ]  Appending optional boolean property
-[&#x27;pdb_tidy&#x27;, &#x27;-strict&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb&#x27;]
-2023-11-16 09:24:03,664 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:03,664 [MainThread  ] [INFO ]  pdb_tidy -strict /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb
+        const collapsedIds = getCollapsedIds()
+        if (collapsedIds.includes(id)) {
+            const updated = collapsedIds.filter((item) => item !== id)
+            setCollapsedIds(updated)
+        } else {
+            collapsedIds.push(id)
+            setCollapsedIds(collapsedIds)
+        }
+        redraw()
+    })
+}
 
-2023-11-16 09:24:03,757 [MainThread  ] [INFO ]  Exit code 0
+const renderContent = (tests) => {
+    const sortAttr = getSort(manager.initialSort)
+    const sortAsc = JSON.parse(getSortDirection())
+    const rows = tests.map(dom.getResultTBody)
+    const table = document.getElementById('results-table')
+    const tableHeader = document.getElementById('results-table-head')
 
-2023-11-16 09:24:03,757 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/6fdb9c94-bb77-44d3-8910-4eb102a9764c&#x27;, &#x27;5fa594c2-f0d6-4710-acf2-201cd9270f9f&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb
-Checking RMSD between:
-     PDB_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb
-     PDB_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb
-     Ignoring HETAMT in RMSD
-     Ignoring Hydrogen atoms in RMSD
-     Atoms ALIGNED in PDB_A: 1079
-     Atoms ALIGNED in PDB_B: 1079
-     RMS: 1.212094551631224e-14
-     RMS_CUTOFF: 1
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tidy Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/6fdb9c94-bb77-44d3-8910-4eb102a9764c
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Creating 5fa594c2-f0d6-4710-acf2-201cd9270f9f temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Appending optional boolean property
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:cmd_wrapper.py:33 pdb_tidy -strict /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/output.pdb
+    const newTable = document.createElement('table')
+    newTable.id = 'results-table'
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:cmd_wrapper.py:50 Exit code 0
+    // remove all sorting classes and set the relevant
+    findAll('.sortable', tableHeader).forEach((elem) => elem.classList.remove('asc', 'desc'))
+    tableHeader.querySelector(`.sortable[data-column-type="${sortAttr}"]`)?.classList.add(sortAsc ? 'desc' : 'asc')
+    newTable.appendChild(tableHeader)
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/biobb_pdb_tidy_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tidy/6fdb9c94-bb77-44d3-8910-4eb102a9764c&#x27;, &#x27;5fa594c2-f0d6-4710-acf2-201cd9270f9f&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">biobb_pdb_tools/test/unitests/test_pdb_tools/test_pdb_tofasta.py::TestPdbTidy::test_pdbtofasta</td>
-          <td class="col-duration">0.19</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>2023-11-16 09:24:03,908 [MainThread  ] [INFO ]  Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta Version: 4.1.0
-2023-11-16 09:24:03,909 [MainThread  ] [INFO ]  Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/3b7b04a0-371e-4a09-b459-105fc71ca913
-2023-11-16 09:24:03,909 [MainThread  ] [INFO ]  Creating 6b867861-882f-40a8-8d71-47e057513ef2 temporary folder
-[&#x27;pdb_tofasta&#x27;, &#x27;&#x27;, &#x27;/home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb&#x27;, &#x27;&gt;&#x27;, &#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta&#x27;]
-2023-11-16 09:24:03,909 [MainThread  ] [INFO ]  Creating command line with instructions and required arguments
-2023-11-16 09:24:03,909 [MainThread  ] [INFO ]  pdb_tofasta  /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta
+    if (!rows.length) {
+        const emptyTable = document.getElementById('template_results-table__body--empty').content.cloneNode(true)
+        newTable.appendChild(emptyTable)
+    } else {
+        rows.forEach((row) => {
+            if (!!row) {
+                findAll('.collapsible td:not(.col-links', row).forEach(addItemToggleListener)
+                find('.logexpander', row).addEventListener('click',
+                    (evt) => evt.target.parentNode.classList.toggle('expanded'),
+                )
+                newTable.appendChild(row)
+            }
+        })
+    }
 
-2023-11-16 09:24:04,002 [MainThread  ] [INFO ]  Exit code 0
+    table.replaceWith(newTable)
+}
 
-2023-11-16 09:24:04,002 [MainThread  ] [INFO ]  Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/3b7b04a0-371e-4a09-b459-105fc71ca913&#x27;, &#x27;6b867861-882f-40a8-8d71-47e057513ef2&#x27;]
-Checking if empty file: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta
-Comparing: 
-        File_A: /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta
-        File_B: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb
-        File_A hash: b&#x27;\xc4no^H\xc6\xcc\xbb\x9b\xec=h\xe2\xf0g\xa8p%\x9a\xc8UK\xa0\xc5\xe3&quot;BD5\xaa\xe2\xd4&#x27;
-        File_B hash: b&#x27;\xc4no^H\xc6\xcc\xbb\x9b\xec=h\xe2\xf0g\xa8p%\x9a\xc8UK\xa0\xc5\xe3&quot;BD5\xaa\xe2\xd4&#x27;
-<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Executing biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta Version: 4.1.0
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Copy: /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb to /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/3b7b04a0-371e-4a09-b459-105fc71ca913
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Creating 6b867861-882f-40a8-8d71-47e057513ef2 temporary folder
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Creating command line with instructions and required arguments
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:cmd_wrapper.py:33 pdb_tofasta  /home/user/actions-runner/_work/biobb_pdb_tools/biobb_pdb_tools/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb &gt; /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/output.fasta
+const renderDerived = () => {
+    const currentFilter = getVisible()
+    possibleFilters.forEach((result) => {
+        const input = document.querySelector(`input[data-test-result="${result}"]`)
+        input.checked = currentFilter.includes(result)
+    })
+}
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:cmd_wrapper.py:50 Exit code 0
+const bindEvents = () => {
+    const filterColumn = (evt) => {
+        const { target: element } = evt
+        const { testResult } = element.dataset
 
-INFO     /tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/biobb_pdb_tofasta_log.out:file_utils.py:390 Removed: [&#x27;/tmp/biobb_pdb_tools/pdb_tools/biobb_pdb_tofasta/3b7b04a0-371e-4a09-b459-105fc71ca913&#x27;, &#x27;6b867861-882f-40a8-8d71-47e057513ef2&#x27;]<br/> ----------------------------Captured stdout teardown---------------------------- <br/>
-Removing: /tmp/biobb_pdb_tools/pdb_tools
-<br/></div></td></tr></tbody></table></body></html>
+        doFilter(testResult, element.checked)
+        const collapsedIds = getCollapsedIds()
+        const updated = manager.renderData.tests.map((test) => {
+            return {
+                ...test,
+                collapsed: collapsedIds.includes(test.id),
+            }
+        })
+        manager.setRender(updated)
+        redraw()
+    }
+
+    const header = document.getElementById('environment-header')
+    header.addEventListener('click', () => {
+        const table = document.getElementById('environment')
+        table.classList.toggle('hidden')
+        header.classList.toggle('collapsed')
+    })
+
+    findAll('input[name="filter_checkbox"]').forEach((elem) => {
+        elem.addEventListener('click', filterColumn)
+    })
+
+    findAll('.sortable').forEach((elem) => {
+        elem.addEventListener('click', (evt) => {
+            const { target: element } = evt
+            const { columnType } = element.dataset
+            doSort(columnType)
+            redraw()
+        })
+    })
+
+    document.getElementById('show_all_details').addEventListener('click', () => {
+        manager.allCollapsed = false
+        setCollapsedIds([])
+        redraw()
+    })
+    document.getElementById('hide_all_details').addEventListener('click', () => {
+        manager.allCollapsed = true
+        const allIds = manager.renderData.tests.map((test) => test.id)
+        setCollapsedIds(allIds)
+        redraw()
+    })
+}
+
+const redraw = () => {
+    const { testSubset } = manager
+
+    renderContent(testSubset)
+    renderDerived()
+}
+
+module.exports = {
+    redraw,
+    bindEvents,
+    renderStatic,
+}
+
+},{"./datamanager.js":1,"./dom.js":2,"./filter.js":3,"./sort.js":7,"./storage.js":8}],6:[function(require,module,exports){
+class MediaViewer {
+    constructor(assets) {
+        this.assets = assets
+        this.index = 0
+    }
+
+    nextActive() {
+        this.index = this.index === this.assets.length - 1 ? 0 : this.index + 1
+        return [this.activeFile, this.index]
+    }
+
+    prevActive() {
+        this.index = this.index === 0 ? this.assets.length - 1 : this.index -1
+        return [this.activeFile, this.index]
+    }
+
+    get currentIndex() {
+        return this.index
+    }
+
+    get activeFile() {
+        return this.assets[this.index]
+    }
+}
+
+
+const setup = (resultBody, assets) => {
+    if (!assets.length) {
+        resultBody.querySelector('.media').classList.add('hidden')
+        return
+    }
+
+    const mediaViewer = new MediaViewer(assets)
+    const container = resultBody.querySelector('.media-container')
+    const leftArrow = resultBody.querySelector('.media-container__nav--left')
+    const rightArrow = resultBody.querySelector('.media-container__nav--right')
+    const mediaName = resultBody.querySelector('.media__name')
+    const counter = resultBody.querySelector('.media__counter')
+    const imageEl = resultBody.querySelector('img')
+    const sourceEl = resultBody.querySelector('source')
+    const videoEl = resultBody.querySelector('video')
+
+    const setImg = (media, index) => {
+        if (media?.format_type === 'image') {
+            imageEl.src = media.path
+
+            imageEl.classList.remove('hidden')
+            videoEl.classList.add('hidden')
+        } else if (media?.format_type === 'video') {
+            sourceEl.src = media.path
+
+            videoEl.classList.remove('hidden')
+            imageEl.classList.add('hidden')
+        }
+
+        mediaName.innerText = media?.name
+        counter.innerText = `${index + 1} / ${assets.length}`
+    }
+    setImg(mediaViewer.activeFile, mediaViewer.currentIndex)
+
+    const moveLeft = () => {
+        const [media, index] = mediaViewer.prevActive()
+        setImg(media, index)
+    }
+    const doRight = () => {
+        const [media, index] = mediaViewer.nextActive()
+        setImg(media, index)
+    }
+    const openImg = () => {
+        window.open(mediaViewer.activeFile.path, '_blank')
+    }
+    if (assets.length === 1) {
+        container.classList.add('media-container--fullscreen')
+    } else {
+        leftArrow.addEventListener('click', moveLeft)
+        rightArrow.addEventListener('click', doRight)
+    }
+    imageEl.addEventListener('click', openImg)
+}
+
+module.exports = {
+    setup,
+}
+
+},{}],7:[function(require,module,exports){
+const { manager } = require('./datamanager.js')
+const storageModule = require('./storage.js')
+
+const genericSort = (list, key, ascending, customOrder) => {
+    let sorted
+    if (customOrder) {
+        sorted = list.sort((a, b) => {
+            const aValue = a.result.toLowerCase()
+            const bValue = b.result.toLowerCase()
+
+            const aIndex = customOrder.findIndex((item) => item.toLowerCase() === aValue)
+            const bIndex = customOrder.findIndex((item) => item.toLowerCase() === bValue)
+
+            // Compare the indices to determine the sort order
+            return aIndex - bIndex
+        })
+    } else {
+        sorted = list.sort((a, b) => a[key] === b[key] ? 0 : a[key] > b[key] ? 1 : -1)
+    }
+
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const durationSort = (list, ascending) => {
+    const parseDuration = (duration) => {
+        if (duration.includes(':')) {
+            // If it's in the format "HH:mm:ss"
+            const [hours, minutes, seconds] = duration.split(':').map(Number)
+            return (hours * 3600 + minutes * 60 + seconds) * 1000
+        } else {
+            // If it's in the format "nnn ms"
+            return parseInt(duration)
+        }
+    }
+    const sorted = list.sort((a, b) => parseDuration(a['duration']) - parseDuration(b['duration']))
+    if (ascending) {
+        sorted.reverse()
+    }
+    return sorted
+}
+
+const doInitSort = () => {
+    const type = storageModule.getSort(manager.initialSort)
+    const ascending = storageModule.getSortDirection()
+    const list = manager.testSubset
+    const initialOrder = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed', 'Skipped', 'Passed']
+
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    if (type?.toLowerCase() === 'original') {
+        manager.setRender(list)
+    } else {
+        let sortedList
+        switch (type) {
+        case 'duration':
+            sortedList = durationSort(list, ascending)
+            break
+        case 'result':
+            sortedList = genericSort(list, type, ascending, initialOrder)
+            break
+        default:
+            sortedList = genericSort(list, type, ascending)
+            break
+        }
+        manager.setRender(sortedList)
+    }
+}
+
+const doSort = (type, skipDirection) => {
+    const newSortType = storageModule.getSort(manager.initialSort) !== type
+    const currentAsc = storageModule.getSortDirection()
+    let ascending
+    if (skipDirection) {
+        ascending = currentAsc
+    } else {
+        ascending = newSortType ? false : !currentAsc
+    }
+    storageModule.setSort(type)
+    storageModule.setSortDirection(ascending)
+
+    const list = manager.testSubset
+    const sortedList = type === 'duration' ? durationSort(list, ascending) : genericSort(list, type, ascending)
+    manager.setRender(sortedList)
+}
+
+module.exports = {
+    doInitSort,
+    doSort,
+}
+
+},{"./datamanager.js":1,"./storage.js":8}],8:[function(require,module,exports){
+const possibleFilters = [
+    'passed',
+    'skipped',
+    'failed',
+    'error',
+    'xfailed',
+    'xpassed',
+    'rerun',
+]
+
+const getVisible = () => {
+    const url = new URL(window.location.href)
+    const settings = new URLSearchParams(url.search).get('visible')
+    const lower = (item) => {
+        const lowerItem = item.toLowerCase()
+        if (possibleFilters.includes(lowerItem)) {
+            return lowerItem
+        }
+        return null
+    }
+    return settings === null ?
+        possibleFilters :
+        [...new Set(settings?.split(',').map(lower).filter((item) => item))]
+}
+
+const hideCategory = (categoryToHide) => {
+    const url = new URL(window.location.href)
+    const visibleParams = new URLSearchParams(url.search).get('visible')
+    const currentVisible = visibleParams ? visibleParams.split(',') : [...possibleFilters]
+    const settings = [...new Set(currentVisible)].filter((f) => f !== categoryToHide).join(',')
+
+    url.searchParams.set('visible', settings)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const showCategory = (categoryToShow) => {
+    if (typeof window === 'undefined') {
+        return
+    }
+    const url = new URL(window.location.href)
+    const currentVisible = new URLSearchParams(url.search).get('visible')?.split(',').filter(Boolean) ||
+        [...possibleFilters]
+    const settings = [...new Set([categoryToShow, ...currentVisible])]
+    const noFilter = possibleFilters.length === settings.length || !settings.length
+
+    noFilter ? url.searchParams.delete('visible') : url.searchParams.set('visible', settings.join(','))
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getSort = (initialSort) => {
+    const url = new URL(window.location.href)
+    let sort = new URLSearchParams(url.search).get('sort')
+    if (!sort) {
+        sort = initialSort || 'result'
+    }
+    return sort
+}
+
+const setSort = (type) => {
+    const url = new URL(window.location.href)
+    url.searchParams.set('sort', type)
+    window.history.pushState({}, null, unescape(url.href))
+}
+
+const getCollapsedCategory = (renderCollapsed) => {
+    let categories
+    if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        const collapsedItems = new URLSearchParams(url.search).get('collapsed')
+        switch (true) {
+        case !renderCollapsed && collapsedItems === null:
+            categories = ['passed']
+            break
+        case collapsedItems?.length === 0 || /^["']{2}$/.test(collapsedItems):
+            categories = []
+            break
+        case /^all$/.test(collapsedItems) || collapsedItems === null && /^all$/.test(renderCollapsed):
+            categories = [...possibleFilters]
+            break
+        default:
+            categories = collapsedItems?.split(',').map((item) => item.toLowerCase()) || renderCollapsed
+            break
+        }
+    } else {
+        categories = []
+    }
+    return categories
+}
+
+const getSortDirection = () => JSON.parse(sessionStorage.getItem('sortAsc')) || false
+const setSortDirection = (ascending) => sessionStorage.setItem('sortAsc', ascending)
+
+const getCollapsedIds = () => JSON.parse(sessionStorage.getItem('collapsedIds')) || []
+const setCollapsedIds = (list) => sessionStorage.setItem('collapsedIds', JSON.stringify(list))
+
+module.exports = {
+    getVisible,
+    hideCategory,
+    showCategory,
+    getCollapsedIds,
+    setCollapsedIds,
+    getSort,
+    setSort,
+    getSortDirection,
+    setSortDirection,
+    getCollapsedCategory,
+    possibleFilters,
+}
+
+},{}]},{},[4]);
+    </script>
+  </footer>
+</html>
