@@ -3,20 +3,18 @@
 """Module containing the Chainxseg class and the command line interface."""
 import argparse
 import shutil
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import  settings
+from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
-# 1. Rename class as required
 class Chainxseg(BiobbObject):
     """
     | biobb_pdb_tools Pdbtidy
     | Swaps the segment identifier for the chain identifier.
 
-    Args:        
+    Args:
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with exchanged segment and string identifier. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
@@ -29,7 +27,6 @@ class Chainxseg(BiobbObject):
 
             from biobb_pdb_tools.pdb_tools.biobb_pdb_chainxseg import biobb_pdb_chainxseg
 
-            
             biobb_pdb_chainxseg(input_file_path='/path/to/input.pdb',
                     output_file_path='/path/to/output.pdb')
 
@@ -50,9 +47,9 @@ class Chainxseg(BiobbObject):
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
 
-        self.io_dict = { 
-            'in': { 'input_file_path': input_file_path },
-            'out': { 'output_file_path': output_file_path }
+        self.io_dict = {
+            'in': {'input_file_path': input_file_path},
+            'out': {'output_file_path': output_file_path}
         }
 
         self.binary_path = properties.get('binary_path', 'pdb_chainxseg')
@@ -65,7 +62,8 @@ class Chainxseg(BiobbObject):
     def launch(self) -> int:
         """Execute the :class:`Chainxseg <biobb_pdb_tools.pdb_tools.pdb_chainxseg>` object."""
 
-        if self.check_restart(): return 0
+        if self.check_restart():
+            return 0
         self.stage_files()
 
         self.tmp_folder = fu.create_unique_dir()
@@ -73,11 +71,7 @@ class Chainxseg(BiobbObject):
         shutil.copy(self.io_dict['in']['input_file_path'], self.tmp_folder)
 
         print(self.io_dict['in']['input_file_path'])
-        self.cmd = [self.binary_path,
-                self.io_dict['in']['input_file_path'],
-                '>',
-                self.io_dict['out']['output_file_path']
-                ]
+        self.cmd = [self.binary_path, self.io_dict['in']['input_file_path'], '>', self.io_dict['out']['output_file_path']]
 
         print(self.cmd)
 
@@ -97,11 +91,12 @@ class Chainxseg(BiobbObject):
 
         return self.return_code
 
+
 def biobb_pdb_chainxseg(input_file_path: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
     """Create :class:`biobb_pdb_tools.pdb_tools.pdb_chainxseg>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_chainxseg.launch>` method."""
-    return Chainxseg(input_file_path=input_file_path,output_file_path=output_file_path,
-                    properties=properties, **kwargs).launch()
+    return Chainxseg(input_file_path=input_file_path, output_file_path=output_file_path, properties=properties, **kwargs).launch()
+
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
@@ -116,9 +111,8 @@ def main():
     args.config = args.config or "{}"
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
-    biobb_pdb_chainxseg(input_file_path=args.input_file_path, 
-            output_file_path=args.output_file_path, 
-            properties=properties)
+    biobb_pdb_chainxseg(input_file_path=args.input_file_path, output_file_path=args.output_file_path, properties=properties)
+
 
 if __name__ == '__main__':
     main()

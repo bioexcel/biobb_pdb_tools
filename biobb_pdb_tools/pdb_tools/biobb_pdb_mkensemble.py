@@ -5,7 +5,7 @@ import argparse
 import shutil
 from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import  settings
+from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
@@ -16,7 +16,7 @@ class Mkensemble(BiobbObject):
     | biobb_pdb_tools Mkensemble
     | Merges several PDB files into one multi-model (ensemble) file.
 
-    Args:        
+    Args:
         input_file_path1 (str): PDB file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb>`_. Accepted formats: pdb (edam:format_1476).
         input_file_path2 (str): PDB file for another selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble2.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb>`_. Accepted formats: pdb (edam:format_3987).
@@ -45,15 +45,14 @@ class Mkensemble(BiobbObject):
 
     """
 
-    def __init__(self,  input_file_path1, input_file_path2, output_file_path,
-                 properties = None, **kwargs) -> None:
+    def __init__(self, input_file_path1, input_file_path2, output_file_path, properties=None, **kwargs) -> None:
         properties = properties or {}
 
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
-        self.io_dict = { 
-            'in': { 'input_file_path1': input_file_path1, 'input_file_path2': input_file_path2 }, 
-            'out': { 'output_file_path': output_file_path } 
+        self.io_dict = {
+            'in': {'input_file_path1': input_file_path1, 'input_file_path2': input_file_path2},
+            'out': {'output_file_path': output_file_path}
         }
 
         self.binary_path = properties.get('binary_path', 'pdb_mkensemble')
@@ -66,22 +65,18 @@ class Mkensemble(BiobbObject):
     def launch(self) -> int:
         """Execute the :class:`Mkensemble <biobb_pdb_tools.pdb_tools.pdb_mkensemble>` object."""
 
-        if self.check_restart(): return 0
+        if self.check_restart():
+            return 0
         self.stage_files()
 
         self.tmp_folder = fu.create_unique_dir()
         fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
         shutil.copy(self.io_dict['in']['input_file_path1'], self.tmp_folder)
 
-        self.cmd = [self.binary_path,
-                self.io_dict['in']['input_file_path1'],
-                self.io_dict['in']['input_file_path2'],
-                '>',
-                self.io_dict['out']['output_file_path']
-        ]
+        self.cmd = [self.binary_path, self.io_dict['in']['input_file_path1'], self.io_dict['in']['input_file_path2'], '>', self.io_dict['out']['output_file_path']]
 
         print(self.cmd)
-        
+
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
 
         if self.io_dict['in']['input_file_path2']:
@@ -101,13 +96,12 @@ class Mkensemble(BiobbObject):
 
         return self.return_code
 
-def biobb_pdb_mkensemble(input_file_path1: str,input_file_path2: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
+
+def biobb_pdb_mkensemble(input_file_path1: str, input_file_path2: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
     """Create :class:`Mkensemble <biobb_pdb_tools.pdb_tools.pdb_mkensemble>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_mkensemble.launch>` method."""
-    return Mkensemble(input_file_path1=input_file_path1, 
-                    input_file_path2=input_file_path2,
-                    output_file_path=output_file_path,
-                    properties=properties, **kwargs).launch()
+    return Mkensemble(input_file_path1=input_file_path1, input_file_path2=input_file_path2, output_file_path=output_file_path, properties=properties, **kwargs).launch()
+
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
@@ -122,10 +116,8 @@ def main():
     args.config = args.config or "{}"
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
-    biobb_pdb_mkensemble(input_file_path1=args.input_file_path1, 
-            input_file_path2=args.input_file_path2,
-            output_file_path=args.output_file_path, 
-            properties=properties)
+    biobb_pdb_mkensemble(input_file_path1=args.input_file_path1, input_file_path2=args.input_file_path2, output_file_path=args.output_file_path, properties=properties)
+
 
 if __name__ == '__main__':
     main()

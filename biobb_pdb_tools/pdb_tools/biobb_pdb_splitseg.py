@@ -2,23 +2,22 @@
 
 """Module containing the Pdbsplitseg class and the command line interface."""
 import argparse
-import shutil
 from pathlib import Path
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import  settings
+from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 import os
 import glob
 import zipfile
 
-# 1. Rename class as required
+
 class Pdbsplitseg(BiobbObject):
     """
     | biobb_pdb_tools Pdbsplitseg
     | Splits a PDB file into several, each containing one segment.
 
-    Args:        
+    Args:
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): ZIP file containing all PDB files splited by protein segment. File type: output. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitseg.zip>`_. Accepted formats: zip (edam:format_3987).
         properties (dic):
@@ -45,16 +44,15 @@ class Pdbsplitseg(BiobbObject):
 
     """
 
-    def __init__(self, input_file_path, output_file_path, 
-                 properties = None, **kwargs) -> None:
+    def __init__(self, input_file_path, output_file_path, properties=None, **kwargs) -> None:
         properties = properties or {}
 
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
 
-        self.io_dict = { 
-            'in': { 'input_file_path': input_file_path }, 
-            'out': { 'output_file_path': output_file_path } 
+        self.io_dict = {
+            'in': {'input_file_path': input_file_path},
+            'out': {'output_file_path': output_file_path}
         }
 
         self.binary_path = properties.get('binary_path', 'pdb_splitseg')
@@ -67,13 +65,11 @@ class Pdbsplitseg(BiobbObject):
     def launch(self) -> int:
         """Execute the :class:`Pdbsplitseg <biobb_pdb_tools.pdb_tools.pdb_splitseg>` object."""
 
-        if self.check_restart(): return 0
+        if self.check_restart():
+            return 0
         self.stage_files()
 
-        self.cmd = ['cd',self.stage_io_dict.get("unique_dir"),';',
-                    self.binary_path,
-                    self.stage_io_dict['in']['input_file_path']
-        ]
+        self.cmd = ['cd', self.stage_io_dict.get("unique_dir"), ';', self.binary_path, self.stage_io_dict['in']['input_file_path']]
 
         print(self.cmd)
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
@@ -94,6 +90,7 @@ class Pdbsplitseg(BiobbObject):
             with zipfile.ZipFile(output_zip_path, 'w') as zipf:
                 zipf.write(self.stage_io_dict['in']['input_file_path'], os.path.basename(self.stage_io_dict['in']['input_file_path']))
             pass
+
         self.copy_to_host()
         self.tmp_files.extend([
             self.stage_io_dict.get("unique_dir"),
@@ -103,12 +100,13 @@ class Pdbsplitseg(BiobbObject):
 
         return self.return_code
 
-def biobb_pdb_splitseg(input_file_path: str, output_file_path: str,  properties: dict = None, **kwargs) -> int:
+
+def biobb_pdb_splitseg(input_file_path: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
     """Create :class:`Pdbsplitseg <biobb_pdb_tools.pdb_tools.pdb_splitseg>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_splitseg.launch>` method."""
 
-    return Pdbsplitseg(input_file_path=input_file_path,output_file_path=output_file_path,
-                    properties=properties, **kwargs).launch()
+    return Pdbsplitseg(input_file_path=input_file_path, output_file_path=output_file_path, properties=properties, **kwargs).launch()
+
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
@@ -123,9 +121,8 @@ def main():
     args.config = args.config or "{}"
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
-    biobb_pdb_splitseg(input_file_path=args.input_file_path, 
-            output_file_path=args.output_file_path, 
-            properties=properties)
+    biobb_pdb_splitseg(input_file_path=args.input_file_path, output_file_path=args.output_file_path, properties=properties)
+
 
 if __name__ == '__main__':
     main()
