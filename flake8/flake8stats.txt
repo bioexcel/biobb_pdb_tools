@@ -1,5 +1,2 @@
-12    E225 missing whitespace around operator
 6     E231 missing whitespace after ','
-12    E302 expected 2 blank lines, found 1
-6     W291 trailing whitespace
 1     W292 no newline at end of file
