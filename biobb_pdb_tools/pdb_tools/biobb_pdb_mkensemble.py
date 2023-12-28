@@ -10,7 +10,6 @@ from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
-# 1. Rename class as required
 class Mkensemble(BiobbObject):
     """
     | biobb_pdb_tools Mkensemble
