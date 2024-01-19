@@ -2,7 +2,6 @@
 
 """Module containing the Pdbtofasta class and the command line interface."""
 import argparse
-import shutil
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -26,10 +25,10 @@ class Pdbtofasta(BiobbObject):
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta import Pdbtofasta
+            from biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta import biobb_pdb_tofasta
 
             prop = {
-                'multi': 'multi'
+                'multi': True
             }
             biobb_pdb_tofasta(input_file_path='/path/to/input.pdb',
                     output_file_path='/path/to/output.fasta',
@@ -58,7 +57,7 @@ class Pdbtofasta(BiobbObject):
         }
 
         self.binary_path = properties.get('binary_path', 'pdb_tofasta')
-        self.multi = properties.get('multi', False)
+        self.multi = properties.get('multi', True)
         self.properties = properties
 
         self.check_properties(properties)
@@ -71,18 +70,15 @@ class Pdbtofasta(BiobbObject):
         if self.check_restart():
             return 0
         self.stage_files()
-        self.tmp_folder = fu.create_unique_dir()
-        fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
-        shutil.copy(self.io_dict['in']['input_file_path'], self.tmp_folder)
 
         instructions = []
         if self.multi:
-            instructions.append('-' + str(self.multi))
+            instructions.append('-multi')
             fu.log('Appending optional boolean property', self.out_log, self.global_log)
 
-        self.cmd = [self.binary_path, ' '.join(instructions), self.io_dict['in']['input_file_path'], '>', self.io_dict['out']['output_file_path']]
+        self.cmd = [self.binary_path, ' '.join(instructions), self.stage_io_dict['in']['input_file_path'], '>', self.io_dict['out']['output_file_path']]
 
-        print(self.cmd)
+        fu.log(self.cmd, self.out_log, self.global_log)
 
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
 
@@ -90,8 +86,7 @@ class Pdbtofasta(BiobbObject):
         self.copy_to_host()
 
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
-            self.tmp_folder
+            self.stage_io_dict.get("unique_dir")
         ])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)

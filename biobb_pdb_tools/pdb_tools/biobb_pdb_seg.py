@@ -2,7 +2,6 @@
 
 """Module containing the Pdbseg class and the command line interface."""
 import argparse
-import shutil
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -70,26 +69,22 @@ class Pdbseg(BiobbObject):
         if self.check_restart():
             return 0
         self.stage_files()
-        self.tmp_folder = fu.create_unique_dir()
-        fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
-        shutil.copy(self.io_dict['in']['input_file_path'], self.tmp_folder)
 
         instructions = []
         if self.segment:
             instructions.append('-' + str(self.segment))
             fu.log('Appending optional boolean property', self.out_log, self.global_log)
 
-        self.cmd = [self.binary_path, ' '.join(instructions), self.io_dict['in']['input_file_path'], '>', self.io_dict['out']['output_file_path']]
+        self.cmd = [self.binary_path, ' '.join(instructions), self.stage_io_dict['in']['input_file_path'], '>', self.io_dict['out']['output_file_path']]
 
-        print(self.cmd)
+        fu.log(self.cmd, self.out_log, self.global_log)
 
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
         self.run_biobb()
         self.copy_to_host()
 
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
-            self.tmp_folder
+            self.stage_io_dict.get("unique_dir")
         ])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)

@@ -67,18 +67,14 @@ class Pdbsplitmodel(BiobbObject):
         if self.check_restart():
             return 0
         self.stage_files()
-        ''''self.tmp_folder = fu.create_unique_dir()
-        fu.log('Creating %s temporary folder' % self.tmp_folder, self.out_log)
-        shutil.copy(self.io_dict['in']['input_file_path'], self.tmp_folder)'''
 
         self.cmd = ['cd', self.stage_io_dict.get("unique_dir"), ';', self.binary_path, self.stage_io_dict['in']['input_file_path']]
 
-        print(self.cmd)
+        fu.log(self.cmd, self.out_log, self.global_log)
 
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
         self.run_biobb()
 
-        # pdb_files = glob.glob(os.path.join(self.stage_io_dict.get("unique_dir"), '*_*.pdb'))
         stem = Path(self.stage_io_dict['in']['input_file_path']).stem
         pdb_files = glob.glob(os.path.join(self.stage_io_dict.get("unique_dir"), stem + '_*.pdb'))
 
@@ -97,7 +93,7 @@ class Pdbsplitmodel(BiobbObject):
 
         self.copy_to_host()
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
+            self.stage_io_dict.get("unique_dir")
         ])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)

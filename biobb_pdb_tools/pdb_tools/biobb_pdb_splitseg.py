@@ -71,7 +71,7 @@ class Pdbsplitseg(BiobbObject):
 
         self.cmd = ['cd', self.stage_io_dict.get("unique_dir"), ';', self.binary_path, self.stage_io_dict['in']['input_file_path']]
 
-        print(self.cmd)
+        fu.log(self.cmd, self.out_log, self.global_log)
         fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
         self.run_biobb()
 
@@ -93,7 +93,7 @@ class Pdbsplitseg(BiobbObject):
 
         self.copy_to_host()
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
+            self.stage_io_dict.get("unique_dir")
         ])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
