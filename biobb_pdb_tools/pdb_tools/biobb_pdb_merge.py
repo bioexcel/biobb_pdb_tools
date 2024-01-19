@@ -8,6 +8,7 @@ from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 import os
 import zipfile
+from pathlib import Path
 
 
 class Pdbmerge(BiobbObject):
@@ -76,6 +77,11 @@ class Pdbmerge(BiobbObject):
             pdb_files = [file for file in os.listdir(folder_path) if file.lower().endswith('.pdb')]
 
             input_file_list = [os.path.join(folder_path, file) for file in pdb_files]
+
+            input_file_list = [Path(i) for i in input_file_list]
+            input_file_list = sorted(input_file_list, key=lambda i: i.stem.upper())
+            input_file_list = [str(i) for i in input_file_list]
+
             self.cmd = [self.binary_path, *input_file_list, '>', self.io_dict['out']['output_file_path']]
 
         else:
