@@ -55,7 +55,7 @@
                     "type": "string",
                     "default": "pdb_fetch",
                     "wf_prop": false,
-                    "description": "Downloads a structure in PDB format from the RCSB website."
+                    "description": "Path to the pdb_fetch executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

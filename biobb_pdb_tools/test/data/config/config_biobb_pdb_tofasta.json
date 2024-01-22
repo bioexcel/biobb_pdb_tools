@@ -1,5 +1,5 @@
 {
   "properties": {
-    "binary_path": "pdb_tofasta"
+    "multi": true
   }
 }

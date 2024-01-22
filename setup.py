@@ -33,7 +33,8 @@ setuptools.setup(
             "biobb_pdb_splitmodel = biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel:main",
             "biobb_pdb_splitseg = biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg:main",
             "biobb_pdb_tidy = biobb_pdb_tools.pdb_tools.biobb_pdb_tidy:main",
-            "biobb_pdb_tofasta = biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta:main"
+            "biobb_pdb_tofasta = biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta:main",
+            "biobb_pdb_uniqname = biobb_pdb_tools.pdb_tools.biobb_pdb_uniqname:main"
         ]
     },
     classifiers=(

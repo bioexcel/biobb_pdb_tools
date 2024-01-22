@@ -60,7 +60,7 @@
                     "type": "string",
                     "default": "pdb_splitseg",
                     "wf_prop": false,
-                    "description": "Splits a PDB file into several, each containing one segment."
+                    "description": "Path to the pdb_splitseg executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

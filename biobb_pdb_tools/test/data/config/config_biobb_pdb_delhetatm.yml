@@ -1,2 +1,2 @@
 properties:
-  binary_path: pdb_delhetatm
+  remove_tmp: false

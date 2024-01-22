@@ -60,7 +60,7 @@
                     "type": "string",
                     "default": "pdb_splitmodel",
                     "wf_prop": false,
-                    "description": "Splits a PDB file into several, each containing one MODEL."
+                    "description": "Path to the pdb_splitmodel executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

@@ -1,2 +1,2 @@
 properties:
-  binary_path: pdb_splitseg
+  remove_tmp: false

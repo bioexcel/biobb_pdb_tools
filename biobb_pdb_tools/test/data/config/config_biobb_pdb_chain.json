@@ -1,6 +1,5 @@
 {
   "properties": {
-    "chain": "A",
-    "binary_path": "pdb_chain"
+    "chain": "A"
   }
 }

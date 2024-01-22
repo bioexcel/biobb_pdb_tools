@@ -60,7 +60,7 @@
                     "type": "string",
                     "default": "pdb_chainxseg",
                     "wf_prop": false,
-                    "description": "Swaps the segment identifier for the chain identifier."
+                    "description": "Path to the pdb_chainxseg executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

@@ -57,16 +57,16 @@
             "type": "object",
             "properties": {
                 "number": {
-                    "type": "string",
-                    "default": "4",
+                    "type": "integer",
+                    "default": 4,
                     "wf_prop": false,
                     "description": "Number of the protein residue."
                 },
                 "binary_path": {
                     "type": "string",
-                    "default": "reres",
+                    "default": "pdb_reres",
                     "wf_prop": false,
-                    "description": "Renumbers the residues of the PDB file starting from a given number (default 1)."
+                    "description": "Path to the pdb_reres executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

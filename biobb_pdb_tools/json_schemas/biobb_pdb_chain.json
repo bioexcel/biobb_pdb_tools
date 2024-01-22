@@ -60,13 +60,13 @@
                     "type": "string",
                     "default": "A",
                     "wf_prop": false,
-                    "description": "Chain identifier that is modified (default is an empty chain)."
+                    "description": "Modifies the chain identifier column of a PDB file."
                 },
                 "binary_path": {
                     "type": "string",
                     "default": "pdb_chain",
                     "wf_prop": false,
-                    "description": "Modifies the chain identifier column of a PDB file."
+                    "description": "Path to the pdb_chain executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

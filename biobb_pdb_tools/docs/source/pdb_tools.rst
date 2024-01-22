@@ -99,3 +99,11 @@ pdb_tools.biobb_pdb_tofasta module
     :members:
     :undoc-members:
     :show-inheritance:
+
+pdb_tools.biobb_pdb_uniqname module
+------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_uniqname
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,6 +1,5 @@
 {
   "properties": {
-    "segment": "B",
-    "binary_path": "pdb_seg"
+    "segment": "B"
   }
 }

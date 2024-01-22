@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://bioexcel.eu/biobb_pdb_tools/json_schemas/1.0/biobb_pdb_mkensemble",
-    "name": "biobb_pdb_tools Mkensemble",
-    "title": "Merges several PDB files into one multi-model (ensemble) file.",
+    "$id": "http://bioexcel.eu/biobb_pdb_tools/json_schemas/1.0/biobb_pdb_uniqname",
+    "name": "biobb_pdb_tools Pdbuniqname",
+    "title": "Renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue.",
     "description": null,
     "type": "object",
     "info": {
@@ -23,33 +23,33 @@
     "properties": {
         "input_file_path": {
             "type": "string",
-            "description": "ZIP file of selected proteins",
+            "description": "PDB file",
             "filetype": "input",
-            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb",
-            "enum": [
-                ".*\\.zip$"
-            ],
-            "file_formats": [
-                {
-                    "extension": ".*\\.zip$",
-                    "description": "ZIP file of selected proteins",
-                    "edam": "format_3987"
-                }
-            ]
-        },
-        "output_file_path": {
-            "type": "string",
-            "description": "Multi-model (ensemble) PDB file with input PDBs merged",
-            "filetype": "output",
-            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "Multi-model (ensemble) PDB file with input PDBs merged",
-                    "edam": "format_3987"
+                    "description": "PDB file",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "output_file_path": {
+            "type": "string",
+            "description": "PDB file with all HETATM atoms renamed",
+            "filetype": "output",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "PDB file with all HETATM atoms renamed",
+                    "edam": "format_1476"
                 }
             ]
         },
@@ -58,9 +58,9 @@
             "properties": {
                 "binary_path": {
                     "type": "string",
-                    "default": "pdb_mkensemble",
+                    "default": "pdb_uniqname",
                     "wf_prop": false,
-                    "description": "Path to the pdb_mkensemble executable binary."
+                    "description": "Path to the pdb_uniqname executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

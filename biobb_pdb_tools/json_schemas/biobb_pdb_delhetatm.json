@@ -60,7 +60,7 @@
                     "type": "string",
                     "default": "pdb_delhetatm",
                     "wf_prop": false,
-                    "description": "Removes all HETATM records in the PDB file."
+                    "description": "Path to the pdb_delhetatm executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

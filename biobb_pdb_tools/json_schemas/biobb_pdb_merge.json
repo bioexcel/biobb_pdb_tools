@@ -17,40 +17,23 @@
         }
     },
     "required": [
-        "input_file_path1",
-        "input_file_path2",
+        "input_file_path",
         "output_file_path"
     ],
     "properties": {
-        "input_file_path1": {
+        "input_file_path": {
             "type": "string",
-            "description": "PDB file of selected protein",
+            "description": "ZIP file of selected protein",
             "filetype": "input",
             "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb",
             "enum": [
-                ".*\\.pdb$"
+                ".*\\.zip$"
             ],
             "file_formats": [
                 {
-                    "extension": ".*\\.pdb$",
-                    "description": "PDB file of selected protein",
-                    "edam": "format_1476"
-                }
-            ]
-        },
-        "input_file_path2": {
-            "type": "string",
-            "description": "PDB file for another selected protein",
-            "filetype": "input",
-            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge2.pdb",
-            "enum": [
-                ".*\\.pdb$"
-            ],
-            "file_formats": [
-                {
-                    "extension": ".*\\.pdb$",
-                    "description": "PDB file for another selected protein",
-                    "edam": "format_1476"
+                    "extension": ".*\\.zip$",
+                    "description": "ZIP file of selected protein",
+                    "edam": "format_3987"
                 }
             ]
         },
@@ -77,7 +60,7 @@
                     "type": "string",
                     "default": "pdb_merge",
                     "wf_prop": false,
-                    "description": "Example of executable binary property."
+                    "description": "Path to the pdb_merge executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",

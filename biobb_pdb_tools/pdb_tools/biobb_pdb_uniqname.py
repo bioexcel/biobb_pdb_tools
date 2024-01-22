@@ -8,9 +8,9 @@ from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
-class Uniqname(BiobbObject):
+class Pdbuniqname(BiobbObject):
     """
-    | biobb_pdb_tools Uniqname
+    | biobb_pdb_tools Pdbuniqname
     | Renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue.
 
     Args:
@@ -58,7 +58,7 @@ class Uniqname(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`Uniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` object."""
+        """Execute the :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` object."""
 
         if self.check_restart():
             return 0
@@ -83,9 +83,9 @@ class Uniqname(BiobbObject):
 
 
 def biobb_pdb_uniqname(input_file_path: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
-    """Create :class:`Uniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` class and
+    """Create :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_uniqname.launch>` method."""
-    return Uniqname(input_file_path=input_file_path, output_file_path=output_file_path, properties=properties, **kwargs).launch()
+    return Pdbuniqname(input_file_path=input_file_path, output_file_path=output_file_path, properties=properties, **kwargs).launch()
 
 
 def main():

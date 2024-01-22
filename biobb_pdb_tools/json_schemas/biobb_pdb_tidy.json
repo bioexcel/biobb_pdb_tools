@@ -57,8 +57,8 @@
             "type": "object",
             "properties": {
                 "strict": {
-                    "type": "string",
-                    "default": "strict",
+                    "type": "boolean",
+                    "default": false,
                     "wf_prop": false,
                     "description": "Does not add TER on chain breaks."
                 },
@@ -66,7 +66,7 @@
                     "type": "string",
                     "default": "pdb_tidy",
                     "wf_prop": false,
-                    "description": "Will remove all original TER/END statements from the file."
+                    "description": "Path to the pdb_tidy executable binary."
                 },
                 "remove_tmp": {
                     "type": "boolean",
