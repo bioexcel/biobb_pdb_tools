@@ -97,7 +97,7 @@
             "tool" : "pdb_uniqname", 
             "desc" : "Renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue.",
             "exec" : "biobb_pdb_uniqname",
-            "docs": "feme"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_uniqname"
         }
     ],
     "dep_pypi" : [
