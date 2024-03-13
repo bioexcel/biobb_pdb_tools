@@ -1,0 +1,18 @@
+{
+  "@context": "http://schema.org",
+  "@id": "https://github.com/bioexcel/biobb_pdb_tools",
+  "@type": "ItemList",
+  "name": "biobb_pdb_tools",
+  "itemListElement":[  
+    {
+      "@type": "SoftwareApplication",
+      "description": "A swiss army knife for manipulating and editing PDB files.",
+      "name": "pdb-tools",
+      "url": "https://www.bonvinlab.org/pdb-tools/",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "https://doi.org/10.12688/f1000research.17456.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "softwareVersion": "2.5.0"
+    }
+  ]
+}
