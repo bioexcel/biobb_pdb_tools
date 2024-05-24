@@ -1,6 +1,6 @@
 {
     "_id": "biobb_pdb_tools",
-    "desc": "Biobb PDB Tools is a swiss army knife for manipulating and editing PDB files.",
+    "desc": "Biobb PDB Tools is a swiss army knife for manipulating and editing PDB files",
     "github": "https://github.com/bioexcel/biobb_pdb_tools",
     "readthedocs": "https://biobb-pdb-tools.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pdb_tools",
