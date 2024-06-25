@@ -15,6 +15,7 @@ class Pdbmerge(BiobbObject):
     """
     | biobb_pdb_tools Pdbmerge
     | Merges several PDB files into one.
+    | This tool merges several PDB files into one. It can be used to merge several PDB files into one.
 
     Args:
         input_file_path (str): ZIP file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb>`_. Accepted formats: zip (edam:format_3987).
@@ -42,6 +43,7 @@ class Pdbmerge(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
 
     """
+
     def __init__(self, input_file_path, output_file_path, properties=None, **kwargs) -> None:
         properties = properties or {}
 

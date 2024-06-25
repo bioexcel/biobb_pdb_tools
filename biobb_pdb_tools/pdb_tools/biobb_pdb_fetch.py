@@ -12,6 +12,7 @@ class Pdbfetch(BiobbObject):
     """
     | biobb_pdb_tools Pdbfetch
     | Downloads a structure in PDB format from the RCSB website.
+    | This tool downloads a structure in PDB format from the RCSB website. It can be used to download a structure in PDB format from the RCSB website.
 
     Args:
         output_file_path (str): PDB file of the protein selected. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb>`_. Accepted formats: pdb (edam:format_1476).

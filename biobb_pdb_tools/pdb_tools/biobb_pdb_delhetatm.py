@@ -12,6 +12,7 @@ class Delhetatm(BiobbObject):
     """
     | biobb_pdb_tools Delhetatm
     | Removes all HETATM records in the PDB file.
+    | This tool removes all HETATM records in the PDB file. It can be used to remove all HETATM records from a PDB file.
 
     Args:
         input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).
@@ -39,6 +40,7 @@ class Delhetatm(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
 
     """
+
     def __init__(self, input_file_path, output_file_path, properties=None, **kwargs) -> None:
         properties = properties or {}
 

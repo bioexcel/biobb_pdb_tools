@@ -15,6 +15,7 @@ class Mkensemble(BiobbObject):
     """
     | biobb_pdb_tools Mkensemble
     | Merges several PDB files into one multi-model (ensemble) file.
+    | This tool merges several PDB files into one multi-model (ensemble) file. It can be used to merge several PDB files into one multi-model (ensemble) file.
 
     Args:
         input_file_path (str): ZIP file of selected proteins. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb>`_. Accepted formats: zip (edam:format_3987).

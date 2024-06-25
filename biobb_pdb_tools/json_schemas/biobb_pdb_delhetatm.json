@@ -3,7 +3,7 @@
     "$id": "http://bioexcel.eu/biobb_pdb_tools/json_schemas/1.0/biobb_pdb_delhetatm",
     "name": "biobb_pdb_tools Delhetatm",
     "title": "Removes all HETATM records in the PDB file.",
-    "description": null,
+    "description": "This tool removes all HETATM records in the PDB file. It can be used to remove all HETATM records from a PDB file.",
     "type": "object",
     "info": {
         "wrapped_software": {
