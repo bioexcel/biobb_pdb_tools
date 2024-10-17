@@ -2,6 +2,7 @@
 
 """Module containing the Pdbtofasta class and the command line interface."""
 import argparse
+from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -94,7 +95,7 @@ class Pdbtofasta(BiobbObject):
         return self.return_code
 
 
-def biobb_pdb_tofasta(input_file_path: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
+def biobb_pdb_tofasta(input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Pdbtofasta <biobb_pdb_tools.pdb_tools.pdb_tofasta>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_tofasta.launch>` method."""
 

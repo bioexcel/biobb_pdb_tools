@@ -2,6 +2,7 @@
 
 """Module containing the Pdbreres class and the command line interface."""
 import argparse
+from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -87,7 +88,7 @@ class Pdbreres(BiobbObject):
         self.copy_to_host()
 
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir")
+            self.stage_io_dict.get("unique_dir", "")
         ])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
@@ -95,7 +96,7 @@ class Pdbreres(BiobbObject):
         return self.return_code
 
 
-def biobb_pdb_reres(input_file_path: str, output_file_path: str, properties: dict = None, **kwargs) -> int:
+def biobb_pdb_reres(input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Pdbreres <biobb_pdb_tools.pdb_tools.pdb_reres>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_reres.launch>` method."""
 

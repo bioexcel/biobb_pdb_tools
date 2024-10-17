@@ -2,6 +2,7 @@
 
 """Module containing the Pdbfetch class and the command line interface."""
 import argparse
+from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -84,7 +85,7 @@ class Pdbfetch(BiobbObject):
         self.copy_to_host()
 
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir")
+            self.stage_io_dict.get("unique_dir", "")
         ])
         self.remove_tmp_files()
 
@@ -92,7 +93,7 @@ class Pdbfetch(BiobbObject):
         return self.return_code
 
 
-def biobb_pdb_fetch(output_file_path: str, properties: dict = None, **kwargs) -> int:
+def biobb_pdb_fetch(output_file_path: str, properties: Optional[dict] = None, **kwargs) -> int:
     """Create :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_fetch.launch>` method."""
     return Pdbfetch(output_file_path=output_file_path,
