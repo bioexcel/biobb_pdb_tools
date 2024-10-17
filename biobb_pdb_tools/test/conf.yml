@@ -1,5 +1,5 @@
 global_properties:
-  working_dir_path: /tmp/biobb_pdb_tools/pdb_tools
+  working_dir_path: /tmp/biobb/unitests
 
 biobb_pdb_fetch:
   paths:
