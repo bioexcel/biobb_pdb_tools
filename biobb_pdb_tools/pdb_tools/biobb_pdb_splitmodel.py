@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 
 """Module containing the Pdbsplitmodel class and the command line interface."""
+
 import argparse
-from typing import Optional
+import glob
+import os
+import zipfile
 from pathlib import Path
-from biobb_common.generic.biobb_object import BiobbObject
+from typing import Optional
+
 from biobb_common.configuration import settings
+from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
-import os
-import glob
-import zipfile
 
 
 class Pdbsplitmodel(BiobbObject):
@@ -46,17 +48,19 @@ class Pdbsplitmodel(BiobbObject):
 
     """
 
-    def __init__(self, input_file_path, output_file_path, properties=None, **kwargs) -> None:
+    def __init__(
+        self, input_file_path, output_file_path, properties=None, **kwargs
+    ) -> None:
         properties = properties or {}
 
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
         self.io_dict = {
-            'in': {'input_file_path': input_file_path},
-            'out': {'output_file_path': output_file_path}
+            "in": {"input_file_path": input_file_path},
+            "out": {"output_file_path": output_file_path},
         }
 
-        self.binary_path = properties.get('binary_path', 'pdb_splitmodel')
+        self.binary_path = properties.get("binary_path", "pdb_splitmodel")
         self.properties = properties
 
         self.check_properties(properties)
@@ -70,61 +74,109 @@ class Pdbsplitmodel(BiobbObject):
             return 0
         self.stage_files()
 
-        self.cmd = ['cd', self.stage_io_dict.get("unique_dir"), ';', self.binary_path, self.stage_io_dict['in']['input_file_path']]
+        self.cmd = [
+            "cd",
+            self.stage_io_dict.get("unique_dir", ""),
+            ";",
+            self.binary_path,
+            self.stage_io_dict["in"]["input_file_path"],
+        ]
 
-        fu.log(self.cmd, self.out_log, self.global_log)
+        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
 
-        fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
+        fu.log(
+            "Creating command line with instructions and required arguments",
+            self.out_log,
+            self.global_log,
+        )
         self.run_biobb()
 
-        stem = Path(self.stage_io_dict['in']['input_file_path']).stem
-        pdb_files = glob.glob(os.path.join(self.stage_io_dict.get("unique_dir"), stem + '_*.pdb'))
+        stem = Path(self.stage_io_dict["in"]["input_file_path"]).stem
+        pdb_files = glob.glob(
+            os.path.join(self.stage_io_dict.get("unique_dir", ""), stem + "_*.pdb")
+        )
 
         if len(pdb_files) > 1:
-            output_zip_path = os.path.join(self.stage_io_dict.get("unique_dir"), self.stage_io_dict['out']['output_file_path'])
-            fu.log('Saving %d pdb model files in a zip' % len(pdb_files), self.out_log, self.global_log)
-            with zipfile.ZipFile(output_zip_path, 'w') as zipf:
+            output_zip_path = os.path.join(
+                self.stage_io_dict.get("unique_dir", ""),
+                self.stage_io_dict["out"]["output_file_path"],
+            )
+            fu.log(
+                "Saving %d pdb model files in a zip" % len(pdb_files),
+                self.out_log,
+                self.global_log,
+            )
+            with zipfile.ZipFile(output_zip_path, "w") as zipf:
                 for pdb_file in pdb_files:
                     zipf.write(pdb_file, os.path.basename(pdb_file))
         else:
-            fu.log('The given input file has no models.', self.out_log, self.global_log)
-            output_zip_path = os.path.join(self.stage_io_dict.get("unique_dir"), self.stage_io_dict['out']['output_file_path'])
-            with zipfile.ZipFile(output_zip_path, 'w') as zipf:
-                zipf.write(self.stage_io_dict['in']['input_file_path'], os.path.basename(self.stage_io_dict['in']['input_file_path']))
+            fu.log("The given input file has no models.", self.out_log, self.global_log)
+            output_zip_path = os.path.join(
+                self.stage_io_dict.get("unique_dir", ""),
+                self.stage_io_dict["out"]["output_file_path"],
+            )
+            with zipfile.ZipFile(output_zip_path, "w") as zipf:
+                zipf.write(
+                    self.stage_io_dict["in"]["input_file_path"],
+                    os.path.basename(self.stage_io_dict["in"]["input_file_path"]),
+                )
             pass
 
         self.copy_to_host()
-        self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir", "")
-        ])
+        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code
 
 
-def biobb_pdb_splitmodel(input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs) -> int:
+def biobb_pdb_splitmodel(
+    input_file_path: str,
+    output_file_path: str,
+    properties: Optional[dict] = None,
+    **kwargs,
+) -> int:
     """Create :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_splitmodel.launch>` method."""
 
-    return Pdbsplitmodel(input_file_path=input_file_path, output_file_path=output_file_path, properties=properties, **kwargs).launch()
+    return Pdbsplitmodel(
+        input_file_path=input_file_path,
+        output_file_path=output_file_path,
+        properties=properties,
+        **kwargs,
+    ).launch()
 
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description='Splits a PDB file into several, each containing one MODEL.', formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=True, help='Configuration file')
+    parser = argparse.ArgumentParser(
+        description="Splits a PDB file into several, each containing one MODEL.",
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+    )
+    parser.add_argument("--config", required=True, help="Configuration file")
 
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_file_path', required=True, help='Description for the first input file path. Accepted formats: pdb.')
-    required_args.add_argument('--output_file_path', required=True, help='Description for the output file path. Accepted formats: zip.')
+    required_args = parser.add_argument_group("required arguments")
+    required_args.add_argument(
+        "--input_file_path",
+        required=True,
+        help="Description for the first input file path. Accepted formats: pdb.",
+    )
+    required_args.add_argument(
+        "--output_file_path",
+        required=True,
+        help="Description for the output file path. Accepted formats: zip.",
+    )
 
     args = parser.parse_args()
     args.config = args.config or "{}"
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
-    biobb_pdb_splitmodel(input_file_path=args.input_file_path, output_file_path=args.output_file_path, properties=properties)
+    biobb_pdb_splitmodel(
+        input_file_path=args.input_file_path,
+        output_file_path=args.output_file_path,
+        properties=properties,
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 """Module containing the Pdbfetch class and the command line interface."""
+
 import argparse
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+
 from biobb_common.configuration import settings
+from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
@@ -52,13 +54,11 @@ class Pdbfetch(BiobbObject):
 
         super().__init__(properties)
         self.locals_var_dict = locals().copy()
-        self.io_dict = {
-            'out': {'output_file_path': output_file_path}
-        }
+        self.io_dict = {"out": {"output_file_path": output_file_path}}
 
-        self.pdbid = properties.get('pdbid', '1aki')
-        self.binary_path = properties.get('binary_path', 'pdb_fetch')
-        self.biounit = properties.get('biounit', False)
+        self.pdbid = properties.get("pdbid", "1aki")
+        self.binary_path = properties.get("binary_path", "pdb_fetch")
+        self.biounit = properties.get("biounit", False)
         self.properties = properties
 
         self.check_properties(properties)
@@ -72,41 +72,59 @@ class Pdbfetch(BiobbObject):
             return 0
         instructions = []
         if self.biounit:
-            instructions.append('-biounit')
-            fu.log('Appending optional boolean property', self.out_log, self.global_log)
+            instructions.append("-biounit")
+            fu.log("Appending optional boolean property", self.out_log, self.global_log)
 
-        self.cmd = [self.binary_path, ' '.join(instructions), self.pdbid, '>', self.io_dict['out']['output_file_path']]
+        self.cmd = [
+            self.binary_path,
+            " ".join(instructions),
+            self.pdbid,
+            ">",
+            self.io_dict["out"]["output_file_path"],
+        ]
 
-        fu.log(self.cmd, self.out_log, self.global_log)
+        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
 
-        fu.log('Creating command line with instructions and required arguments', self.out_log, self.global_log)
+        fu.log(
+            "Creating command line with instructions and required arguments",
+            self.out_log,
+            self.global_log,
+        )
 
         self.run_biobb()
         self.copy_to_host()
 
-        self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir", "")
-        ])
+        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
         return self.return_code
 
 
-def biobb_pdb_fetch(output_file_path: str, properties: Optional[dict] = None, **kwargs) -> int:
+def biobb_pdb_fetch(
+    output_file_path: str, properties: Optional[dict] = None, **kwargs
+) -> int:
     """Create :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_fetch.launch>` method."""
-    return Pdbfetch(output_file_path=output_file_path,
-                    properties=properties, **kwargs).launch()
+    return Pdbfetch(
+        output_file_path=output_file_path, properties=properties, **kwargs
+    ).launch()
 
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description='Downloads a structure in PDB format from the RCSB website.', formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=True, help='Configuration file')
+    parser = argparse.ArgumentParser(
+        description="Downloads a structure in PDB format from the RCSB website.",
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+    )
+    parser.add_argument("--config", required=True, help="Configuration file")
 
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--output_file_path', required=True, help='Description for the output file path. Accepted formats: zip.')
+    required_args = parser.add_argument_group("required arguments")
+    required_args.add_argument(
+        "--output_file_path",
+        required=True,
+        help="Description for the output file path. Accepted formats: zip.",
+    )
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -115,5 +133,5 @@ def main():
     biobb_pdb_fetch(output_file_path=args.output_file_path, properties=properties)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pdb_tools",
-    version="4.2.0",
+    version="5.0.0",
     author="Biobb developers",
     author_email="agustin.garcia@irbbarcelona.org",
     description="Biobb_pdb_tools is a swiss army knife for manipulating and editing PDB files.",
@@ -15,12 +15,12 @@ setuptools.setup(
     url="https://github.com/bioexcel/biobb_pdb_tools",
     project_urls={
         "Documentation": "http://biobb-pdb-tools.readthedocs.io/en/latest/",
-        "Bioexcel": "https://bioexcel.eu/"
+        "Bioexcel": "https://bioexcel.eu/",
     },
-    packages=setuptools.find_packages(exclude=['docs', 'test']),
-    package_data={'biobb_pdb_tools': ['py.typed']},
-    install_requires=['biobb_common==4.2.0'],
-    python_requires='>=3.8',
+    packages=setuptools.find_packages(exclude=["docs", "test"]),
+    package_data={"biobb_pdb_tools": ["py.typed"]},
+    install_requires=["biobb_common==5.0.0"],
+    python_requires=">=3.9",
     entry_points={
         "console_scripts": [
             "biobb_pdb_chain = biobb_pdb_tools.pdb_tools.biobb_pdb_chain:main",
@@ -35,17 +35,15 @@ setuptools.setup(
             "biobb_pdb_splitseg = biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg:main",
             "biobb_pdb_tidy = biobb_pdb_tools.pdb_tools.biobb_pdb_tidy:main",
             "biobb_pdb_tofasta = biobb_pdb_tools.pdb_tools.biobb_pdb_tofasta:main",
-            "biobb_pdb_uniqname = biobb_pdb_tools.pdb_tools.biobb_pdb_uniqname:main"
+            "biobb_pdb_uniqname = biobb_pdb_tools.pdb_tools.biobb_pdb_uniqname:main",
         ]
     },
-    classifiers=(
+    classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: POSIX",
-        "Operating System :: Unix"
-    ),
+        "Operating System :: Unix",
+    ],
 )
