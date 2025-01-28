@@ -89,7 +89,7 @@ class Delhetatm(BiobbObject):
         self.run_biobb()
         self.copy_to_host()
 
-        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
+        # self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
@@ -110,6 +110,8 @@ def biobb_pdb_delhetatm(
         properties=properties,
         **kwargs,
     ).launch()
+
+    biobb_pdb_delhetatm.__doc__ = Delhetatm.__doc__
 
 
 def main():
