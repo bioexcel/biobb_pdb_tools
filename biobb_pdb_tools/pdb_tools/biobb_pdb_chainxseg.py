@@ -113,7 +113,7 @@ def biobb_pdb_chainxseg(
         **kwargs,
     ).launch()
 
-    biobb_pdb_chainxseg.__doc__ = Chainxseg.__doc__
+biobb_pdb_chainxseg.__doc__ = Chainxseg.__doc__
 
 
 def main():

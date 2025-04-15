@@ -110,7 +110,7 @@ def biobb_pdb_fetch(
         output_file_path=output_file_path, properties=properties, **kwargs
     ).launch()
 
-    biobb_pdb_fetch.__doc__ = Pdbfetch.__doc__
+biobb_pdb_fetch.__doc__ = Pdbfetch.__doc__
 
 
 def main():

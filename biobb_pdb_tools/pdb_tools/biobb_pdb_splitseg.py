@@ -150,7 +150,7 @@ def biobb_pdb_splitseg(
         **kwargs,
     ).launch()
 
-    biobb_pdb_splitseg.__doc__ = Pdbsplitseg.__doc__
+biobb_pdb_splitseg.__doc__ = Pdbsplitseg.__doc__
 
 
 def main():

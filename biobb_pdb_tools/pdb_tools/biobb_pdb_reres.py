@@ -124,7 +124,7 @@ def biobb_pdb_reres(
         **kwargs,
     ).launch()
 
-    biobb_pdb_reres.__doc__ = Pdbreres.__doc__
+biobb_pdb_reres.__doc__ = Pdbreres.__doc__
 
 
 def main():

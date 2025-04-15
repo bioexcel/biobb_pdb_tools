@@ -140,7 +140,7 @@ def biobb_pdb_mkensemble(
         **kwargs,
     ).launch()
 
-    biobb_pdb_mkensemble.__doc__ = Mkensemble.__doc__
+biobb_pdb_mkensemble.__doc__ = Mkensemble.__doc__
 
 
 def main():

@@ -146,7 +146,7 @@ def biobb_pdb_splitmodel(
         **kwargs,
     ).launch()
 
-    biobb_pdb_splitmodel.__doc__ = Pdbsplitmodel.__doc__
+biobb_pdb_splitmodel.__doc__ = Pdbsplitmodel.__doc__
 
 
 def main():

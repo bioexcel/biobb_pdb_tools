@@ -140,7 +140,7 @@ def biobb_pdb_merge(
         **kwargs,
     ).launch()
 
-    biobb_pdb_merge.__doc__ = Pdbmerge.__doc__
+biobb_pdb_merge.__doc__ = Pdbmerge.__doc__
 
 
 def main():

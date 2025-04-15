@@ -125,7 +125,7 @@ def biobb_pdb_tofasta(
         **kwargs,
     ).launch()
 
-    biobb_pdb_tofasta.__doc__ = Pdbtofasta.__doc__
+biobb_pdb_tofasta.__doc__ = Pdbtofasta.__doc__
 
 
 def main():

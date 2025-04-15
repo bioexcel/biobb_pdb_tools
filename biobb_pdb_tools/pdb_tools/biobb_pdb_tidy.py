@@ -124,7 +124,7 @@ def biobb_pdb_tidy(
         **kwargs,
     ).launch()
 
-    biobb_pdb_tidy.__doc__ = Pdbtidy.__doc__
+biobb_pdb_tidy.__doc__ = Pdbtidy.__doc__
 
 
 def main():

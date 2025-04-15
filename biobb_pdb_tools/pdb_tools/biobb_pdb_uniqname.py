@@ -111,7 +111,7 @@ def biobb_pdb_uniqname(
         **kwargs,
     ).launch()
 
-    biobb_pdb_uniqname.__doc__ = Pdbuniqname.__doc__
+biobb_pdb_uniqname.__doc__ = Pdbuniqname.__doc__
 
 
 def main():

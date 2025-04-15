@@ -124,7 +124,7 @@ def biobb_pdb_chain(
         **kwargs,
     ).launch()
 
-    biobb_pdb_chain.__doc__ = Pdbchain.__doc__
+biobb_pdb_chain.__doc__ = Pdbchain.__doc__
 
 
 def main():

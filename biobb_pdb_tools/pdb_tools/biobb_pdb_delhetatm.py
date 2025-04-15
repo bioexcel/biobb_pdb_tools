@@ -111,7 +111,7 @@ def biobb_pdb_delhetatm(
         **kwargs,
     ).launch()
 
-    biobb_pdb_delhetatm.__doc__ = Delhetatm.__doc__
+biobb_pdb_delhetatm.__doc__ = Delhetatm.__doc__
 
 
 def main():

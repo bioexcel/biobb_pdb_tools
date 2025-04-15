@@ -122,7 +122,7 @@ def biobb_pdb_seg(
         **kwargs,
     ).launch()
 
-    biobb_pdb_seg.__doc__ = Pdbseg.__doc__
+biobb_pdb_seg.__doc__ = Pdbseg.__doc__
 
 
 def main():
