@@ -23,6 +23,13 @@
             "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chainxseg"
         },
         {
+            "block": "Pdbselchain",
+            "tool": "pdb_selchain",
+            "desc": "Extracts one or more chains from a PDB file.",
+            "exec": "biobb_pdb_selchain",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selchain"
+        },
+        {
             "block": "Pdbdelhetatm",
             "tool": "pdb_delhetatm",
             "desc": "Removes all HETATM records in the PDB file.",

@@ -107,3 +107,11 @@ pdb_tools.biobb_pdb_uniqname module
     :members:
     :undoc-members:
     :show-inheritance:
+
+pdb_tools.biobb_pdb_selchain module
+-------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_selchain
+    :members:
+    :undoc-members:
+    :show-inheritance:
