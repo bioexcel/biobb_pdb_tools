@@ -90,7 +90,7 @@ class Chainxseg(BiobbObject):
 
         self.copy_to_host()
 
-        # self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
+        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
