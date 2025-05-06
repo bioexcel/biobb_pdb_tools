@@ -321,7 +321,7 @@ biobb_pdb_merge -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge1.pdb). Accepted formats: ZIP
+* **input_file_path** (*string*): ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.pdb). Accepted formats: ZIP
 * **output_file_path** (*string*): PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -339,7 +339,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_merge --config config_biobb_pdb_merge.yml --input_file_path input_pdb_merge1.pdb --output_file_path ref_pdb_merge.pdb
+biobb_pdb_merge --config config_biobb_pdb_merge.yml --input_file_path input_pdb_merge.pdb --output_file_path ref_pdb_merge.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_merge.json)
@@ -352,7 +352,7 @@ biobb_pdb_merge --config config_biobb_pdb_merge.yml --input_file_path input_pdb_
 ```
 #### Command line
 ```python
-biobb_pdb_merge --config config_biobb_pdb_merge.json --input_file_path input_pdb_merge1.pdb --output_file_path ref_pdb_merge.pdb
+biobb_pdb_merge --config config_biobb_pdb_merge.json --input_file_path input_pdb_merge.pdb --output_file_path ref_pdb_merge.pdb
 ```
 
 ## Biobb_pdb_mkensemble
@@ -379,7 +379,7 @@ biobb_pdb_mkensemble -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble1.pdb). Accepted formats: ZIP
+* **input_file_path** (*string*): ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.pdb). Accepted formats: ZIP
 * **output_file_path** (*string*): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -397,7 +397,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.yml --input_file_path input_pdb_mkensemble1.pdb --output_file_path ref_pdb_mkensemble.pdb
+biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.yml --input_file_path input_pdb_mkensemble.pdb --output_file_path ref_pdb_mkensemble.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_mkensemble.json)
@@ -410,7 +410,7 @@ biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.yml --input_file_path 
 ```
 #### Command line
 ```python
-biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.json --input_file_path input_pdb_mkensemble1.pdb --output_file_path ref_pdb_mkensemble.pdb
+biobb_pdb_mkensemble --config config_biobb_pdb_mkensemble.json --input_file_path input_pdb_mkensemble.pdb --output_file_path ref_pdb_mkensemble.pdb
 ```
 
 ## Biobb_pdb_fetch
