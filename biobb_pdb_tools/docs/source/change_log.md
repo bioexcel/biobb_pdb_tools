@@ -1,6 +1,12 @@
 
 # Biobb Pdb tools changelog
 
+## What's new in version [5.0.1](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.0.1)?
+ 
+ ### New features
+
+ * Add pdb_fixinsert, pdb_keepcoord, pdb_selaltloc, pdb_selchain and pdb_selres.
+
 ## What's new in version [5.0.0](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.0.0)?
 
 ### Changes

@@ -23,13 +23,6 @@
             "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chainxseg"
         },
         {
-            "block": "Pdbselchain",
-            "tool": "pdb_selchain",
-            "desc": "Extracts one or more chains from a PDB file.",
-            "exec": "biobb_pdb_selchain",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selchain"
-        },
-        {
             "block": "Pdbdelhetatm",
             "tool": "pdb_delhetatm",
             "desc": "Removes all HETATM records in the PDB file.",
@@ -42,6 +35,20 @@
             "desc": "Downloads a structure in PDB format from the RCSB website.",
             "exec": "biobb_pdb_fetch",
             "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fetch"
+        },
+        {
+            "block": "Pdbfixinsert",
+            "tool": "pdb_fixinsert",
+            "desc": "Deletes insertion codes and shifts the residue numbering of downstream residues.",
+            "exec": "biobb_pdb_fixinsert",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fixinsert"
+        },
+        {
+            "block": "Pdbkeepcoord",
+            "tool": "pdb_keepcoord",
+            "desc": "Removes all non-coordinate records from the file.",
+            "exec": "biobb_pdb_keepcoord",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_keepcoord"
         },
         {
             "block": "Pdbmerge",
@@ -70,6 +77,27 @@
             "desc": "Modifies the segment identifier column of a PDB file.",
             "exec": "biobb_pdb_seg",
             "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_seg"
+        },
+        {
+            "block": "Pdbselaltloc",
+            "tool": "pdb_selaltloc",
+            "desc": "Selects alternative locations from a PDB file.",
+            "exec": "biobb_pdb_selaltloc",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selaltloc"
+        },
+        {
+            "block": "Pdbselchain",
+            "tool": "pdb_selchain",
+            "desc": "Extracts one or more chains from a PDB file.",
+            "exec": "biobb_pdb_selchain",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selchain"
+        },
+        {
+            "block": "Pdbselres",
+            "tool": "pdb_selres",
+            "desc": "Selects residues by their index, piecewise or in a range.",
+            "exec": "biobb_pdb_selres",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selres"
         },
         {
             "block": "Pdbsplitmodel",
@@ -108,12 +136,12 @@
         }
     ],
     "dep_pypi": [
-        "install_requires=['biobb_common==5.0.1', 'pdb-tools==2.5.0']",
+        "install_requires=['biobb_common==5.0.0', 'pdb-tools==2.5.0']",
         "python_requires='>=3.9'"
     ],
     "dep_conda": [
         "python >=3.9",
-        "biobb_common ==5.0.1"
+        "biobb_common ==5.0.0"
     ],
     "keywords": [
         "pdb",
