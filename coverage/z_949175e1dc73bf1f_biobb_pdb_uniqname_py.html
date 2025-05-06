@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pdb_tools/pdb_tools/biobb_pdb_uniqname.py: 74%</title>
+    <title>Coverage for biobb_pdb_tools/pdb_tools/biobb_pdb_uniqname.py: 75%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
     <link rel="stylesheet" href="style_cb_8e611ae1.css" type="text/css">
     <script src="coverage_html_cb_6fb7b396.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pdb_tools/pdb_tools/biobb_pdb_uniqname.py</b>:
-            <span class="pc_cov">74%</span>
+            <span class="pc_cov">75%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">43 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">32<span class="text"> run</span></button>
+            <span class="text">44 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">33<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">11<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_ab2a91602608e5dd___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.12">coverage.py v7.6.12</a>,
-            created at 2025-03-12 09:30 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.8.0">coverage.py v7.8.0</a>,
+            created at 2025-05-06 09:53 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -100,7 +100,7 @@
     <p class="pln"><span class="n"><a id="t18" href="#t18">18</a></span><span class="t"><span class="str">    | This tool renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue in a PDB file. It can be used to rename atoms sequentially for each HETATM residue in a PDB file.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t19" href="#t19">19</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t20" href="#t20">20</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="str">        input_file_path (str): PDB file. File type: input. `Sample file &lt;https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="str">        input_file_path (str): PDB file. File type: input. `Sample file &lt;https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t"><span class="str">        output_file_path (str): PDB file with all HETATM atoms renamed. File type: output. `Sample file &lt;https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t"><span class="str">        properties (dic):</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t"><span class="str">            * **binary_path** (*str*) - ("pdb_uniqname") Path to the pdb_uniqname executable binary.</span>&nbsp;</span><span class="r"></span></p>
@@ -193,7 +193,7 @@
     <p class="pln"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">        <span class="op">**</span><span class="nam">kwargs</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">    <span class="op">)</span><span class="op">.</span><span class="nam">launch</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t113" href="#t113">113</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t">    <span class="nam">biobb_pdb_uniqname</span><span class="op">.</span><span class="nam">__doc__</span> <span class="op">=</span> <span class="nam">Pdbuniqname</span><span class="op">.</span><span class="nam">__doc__</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t"><span class="nam">biobb_pdb_uniqname</span><span class="op">.</span><span class="nam">__doc__</span> <span class="op">=</span> <span class="nam">Pdbuniqname</span><span class="op">.</span><span class="nam">__doc__</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t115" href="#t115">115</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t"><span class="key">def</span> <span class="nam">main</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -236,8 +236,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_ab2a91602608e5dd___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.6.12">coverage.py v7.6.12</a>,
-            created at 2025-03-12 09:30 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.8.0">coverage.py v7.8.0</a>,
+            created at 2025-05-06 09:53 +0000
         </p>
     </div>
 </footer>
