@@ -65,6 +65,43 @@ biobb_pdb_chain --config config_biobb_pdb_chain.yml --input_file_path 1AKI.pdb -
 biobb_pdb_chain --config config_biobb_pdb_chain.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_chain.pdb
 ```
 
+## Biobb_pdb_selaltloc
+Selects alternative locations from a PDB file.
+### Get help
+Command:
+```python
+biobb_pdb_selaltloc -h
+```
+    usage: biobb_pdb_selaltloc [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Selects alternative locations from a PDB file.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            PDB file. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            PDB file with selected alternative locations. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/9INS.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with selected alternative locations. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selaltloc.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **altloc** (*string*): (None) Specific alternative location label to select (e.g. "A")..
+* **binary_path** (*string*): (pdb_selaltloc) Path to the pdb_selaltloc executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+### JSON
+
 ## Biobb_pdb_splitmodel
 Splits a PDB file into several, each containing one MODEL.
 ### Get help
@@ -121,6 +158,124 @@ biobb_pdb_splitmodel --config config_biobb_pdb_splitmodel.yml --input_file_path 
 #### Command line
 ```python
 biobb_pdb_splitmodel --config config_biobb_pdb_splitmodel.json --input_file_path input_pdb_splitmodel.pdb --output_file_path ref_pdb_splitmodel.zip
+```
+
+## Biobb_pdb_fixinsert
+Deletes insertion codes and shifts the residue numbering of downstream residues.
+### Get help
+Command:
+```python
+biobb_pdb_fixinsert -h
+```
+    usage: biobb_pdb_fixinsert [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Deletes insertion codes and shifts the residue numbering of downstream residues.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            PDB file. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            PDB file with fixed insertion codes. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with fixed insertion codes. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fixinsert.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **residues** (*string*): (None) Specific residues to delete insertion codes for, format: "A9,B12" (chain and residue number)..
+* **binary_path** (*string*): (pdb_fixinsert) Path to the pdb_fixinsert executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fixinsert.yml)
+```python
+properties:
+  residues: B82
+
+```
+#### Command line
+```python
+biobb_pdb_fixinsert --config config_biobb_pdb_fixinsert.yml --input_file_path 1IGY.pdb --output_file_path ref_pdb_fixinsert.pdb
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fixinsert.json)
+```python
+{
+  "properties": {
+    "residues": "B82"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_fixinsert --config config_biobb_pdb_fixinsert.json --input_file_path 1IGY.pdb --output_file_path ref_pdb_fixinsert.pdb
+```
+
+## Biobb_pdb_selchain
+Extracts one or more chains from a PDB file.
+### Get help
+Command:
+```python
+biobb_pdb_selchain -h
+```
+    usage: biobb_pdb_selchain [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Extracts one or more chains from a PDB file.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            Description for the first input file path. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            Description for the output file path. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_selchain.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with selected chains. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selchain.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **chains** (*string*): (A) Chain or list of chains (comma separated) to extract from the PDB file..
+* **binary_path** (*string*): (pdb_selchain) Path to the pdb_selchain executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selchain.yml)
+```python
+properties:
+  chains: B
+
+```
+#### Command line
+```python
+biobb_pdb_selchain --config config_biobb_pdb_selchain.yml --input_file_path input_pdb_selchain.pdb --output_file_path ref_pdb_selchain.pdb
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selchain.json)
+```python
+{
+  "properties": {
+    "chains": "B"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_selchain --config config_biobb_pdb_selchain.json --input_file_path input_pdb_selchain.pdb --output_file_path ref_pdb_selchain.pdb
 ```
 
 ## Biobb_pdb_chainxseg
@@ -238,6 +393,42 @@ biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.yml --input_file_path 1A
 ```python
 biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
 ```
+
+## Biobb_pdb_keepcoord
+Removes all non-coordinate records from the file.
+### Get help
+Command:
+```python
+biobb_pdb_keepcoord -h
+```
+    usage: biobb_pdb_keepcoord [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Removes all non-coordinate records from the file. Keeps only MODEL, ENDMDL, END, ATOM, HETATM, CONECT records.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            PDB file. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            PDB file with only coordinate records. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with only coordinate records. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_keepcoord.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **binary_path** (*string*): (pdb_keepcoord) Path to the pdb_keepcoord executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+### JSON
 
 ## Biobb_pdb_splitseg
 Splits a PDB file into several, each containing one segment.
@@ -531,6 +722,65 @@ biobb_pdb_tidy --config config_biobb_pdb_tidy.yml --input_file_path 1AKI.pdb --o
 biobb_pdb_tidy --config config_biobb_pdb_tidy.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_tidy.pdb
 ```
 
+## Biobb_pdb_selres
+Selects residues by their index, piecewise or in a range.
+### Get help
+Command:
+```python
+biobb_pdb_selres -h
+```
+    usage: biobb_pdb_selres [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Selects residues by their index, piecewise or in a range.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            PDB file. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            PDB file with selected residues. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with selected residues. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selres.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **selection** (*string*): (None) Residue selection format: individual residues "1,2,4,6", range "1:10", multiple ranges "1:10,20:30", open ranges "1:", ":5", or intervals "::5", "1:10:5"..
+* **binary_path** (*string*): (pdb_selres) Path to the pdb_selres executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selres.yml)
+```python
+properties:
+  selection: '1:10:2'
+
+```
+#### Command line
+```python
+biobb_pdb_selres --config config_biobb_pdb_selres.yml --input_file_path 1IGY.pdb --output_file_path ref_pdb_selres.pdb
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selres.json)
+```python
+{
+  "properties": {
+    "selection": "1:10:2"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_selres --config config_biobb_pdb_selres.json --input_file_path 1IGY.pdb --output_file_path ref_pdb_selres.pdb
+```
+
 ## Biobb_pdb_seg
 Modifies the segment identifier column of a PDB file.
 ### Get help
@@ -705,4 +955,63 @@ biobb_pdb_uniqname --config config_biobb_pdb_uniqname.yml --input_file_path 1AKI
 #### Command line
 ```python
 biobb_pdb_uniqname --config config_biobb_pdb_uniqname.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
+```
+
+## Biobb_pdb_tofasta
+Extracts the residue sequence in a PDB file to FASTA format.
+### Get help
+Command:
+```python
+biobb_pdb_tofasta -h
+```
+    usage: biobb_pdb_tofasta [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    
+    Extracts the residue sequence in a PDB file to FASTA format.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_file_path INPUT_FILE_PATH
+                            Description for the first input file path. Accepted formats: pdb.
+      --output_file_path OUTPUT_FILE_PATH
+                            Description for the output file path. Accepted formats: fasta.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): FASTA file containing the aminoacids sequence. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb). Accepted formats: FASTA, FA
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **multi** (*boolean*): (True) Splits the different chains into different records in the FASTA file..
+* **binary_path** (*string*): (pdb_tofasta) Path to the pdb_tofasta executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tofasta.yml)
+```python
+properties:
+  multi: true
+
+```
+#### Command line
+```python
+biobb_pdb_tofasta --config config_biobb_pdb_tofasta.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.pdb
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tofasta.json)
+```python
+{
+  "properties": {
+    "multi": true
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_tofasta --config config_biobb_pdb_tofasta.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.pdb
 ```
