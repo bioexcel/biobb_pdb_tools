@@ -36,6 +36,22 @@ pdb_tools.biobb_pdb_fetch module
     :undoc-members:
     :show-inheritance:
 
+pdb_tools.biobb_pdb_fixinsert module
+-------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_fixinsert
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pdb_tools.biobb_pdb_keepcord module
+------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_keepcord
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    
 pdb_tools.biobb_pdb_merge module
 ---------------------------------
 
@@ -64,6 +80,30 @@ pdb_tools.biobb_pdb_seg module
 ---------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_seg
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pdb_tools.biobb_pdb_setaltloc module
+---------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_setaltloc
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pdb_tools.biobb_pdb_selchain module
+-------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_selchain
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pdb_tools.biobb_pdb_selres module
+-------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_selres
     :members:
     :undoc-members:
     :show-inheritance:
@@ -104,14 +144,6 @@ pdb_tools.biobb_pdb_uniqname module
 ------------------------------------
 
 .. automodule:: pdb_tools.biobb_pdb_uniqname
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pdb_tools.biobb_pdb_selchain module
--------------------------------------
-
-.. automodule:: pdb_tools.biobb_pdb_selchain
     :members:
     :undoc-members:
     :show-inheritance:
