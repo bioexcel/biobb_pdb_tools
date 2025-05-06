@@ -134,3 +134,9 @@ biobb_pdb_keepcoord:
     input_file_path: file:test_data_dir/pdb_tools/1AKI.pdb
     output_file_path: output.pdb
     ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_keepcoord.pdb
+
+biobb_pdb_selaltloc:
+  paths:
+    input_file_path: file:test_data_dir/pdb_tools/9INS.pdb
+    output_file_path: output.pdb
+    ref_output_file_path: file:test_reference_dir/pdb_tools/ref_pdb_selaltloc.pdb
