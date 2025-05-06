@@ -19,7 +19,7 @@ class Pdbchain(BiobbObject):
     | This tool modifies the chain identifier column of a PDB file. It can be used to change the chain identifier of a PDB file or to remove the chain identifier from a PDB file.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with selected modified chain. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **chain** (*string*) - ('A') Modifies the chain identifier column of a PDB file.

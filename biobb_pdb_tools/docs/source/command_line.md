@@ -89,7 +89,7 @@ biobb_pdb_delhetatm -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with all HETATM records removed. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -107,7 +107,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.yml --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_delhetatm.json)
@@ -120,7 +120,7 @@ biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.yml --input_file_path in
 ```
 #### Command line
 ```python
-biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.json --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+biobb_pdb_delhetatm --config config_biobb_pdb_delhetatm.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
 ```
 
 ## Biobb_pdb_tidy
@@ -147,7 +147,7 @@ biobb_pdb_tidy -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file modified according to the specifications. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -166,7 +166,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_tidy --config config_biobb_pdb_tidy.yml --input_file_path input_pdb_tidy.pdb --output_file_path ref_pdb_tidy.pdb
+biobb_pdb_tidy --config config_biobb_pdb_tidy.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_tidy.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tidy.json)
@@ -179,7 +179,7 @@ biobb_pdb_tidy --config config_biobb_pdb_tidy.yml --input_file_path input_pdb_ti
 ```
 #### Command line
 ```python
-biobb_pdb_tidy --config config_biobb_pdb_tidy.json --input_file_path input_pdb_tidy.pdb --output_file_path ref_pdb_tidy.pdb
+biobb_pdb_tidy --config config_biobb_pdb_tidy.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_tidy.pdb
 ```
 
 ## Biobb_pdb_chain
@@ -206,7 +206,7 @@ biobb_pdb_chain -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chain.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with selected modified chain. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -225,7 +225,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_chain --config config_biobb_pdb_chain.yml --input_file_path input_pdb_chain.pdb --output_file_path ref_pdb_chain.pdb
+biobb_pdb_chain --config config_biobb_pdb_chain.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_chain.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chain.json)
@@ -238,7 +238,7 @@ biobb_pdb_chain --config config_biobb_pdb_chain.yml --input_file_path input_pdb_
 ```
 #### Command line
 ```python
-biobb_pdb_chain --config config_biobb_pdb_chain.json --input_file_path input_pdb_chain.pdb --output_file_path ref_pdb_chain.pdb
+biobb_pdb_chain --config config_biobb_pdb_chain.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_chain.pdb
 ```
 
 ## Biobb_pdb_seg
@@ -440,7 +440,7 @@ biobb_pdb_reres -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): Renumbered PDB file by number of redisue selected. File type: output. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -459,7 +459,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_reres --config config_biobb_pdb_reres.yml --input_file_path input_pdb_reres.pdb --output_file_path ref_pdb_reres.pdb
+biobb_pdb_reres --config config_biobb_pdb_reres.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_reres.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_reres.json)
@@ -472,7 +472,7 @@ biobb_pdb_reres --config config_biobb_pdb_reres.yml --input_file_path input_pdb_
 ```
 #### Command line
 ```python
-biobb_pdb_reres --config config_biobb_pdb_reres.json --input_file_path input_pdb_reres.pdb --output_file_path ref_pdb_reres.pdb
+biobb_pdb_reres --config config_biobb_pdb_reres.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_reres.pdb
 ```
 
 ## Biobb_pdb_splitseg
@@ -615,7 +615,7 @@ biobb_pdb_uniqname -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_delhetatm.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with all HETATM atoms renamed. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -633,7 +633,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_uniqname --config config_biobb_pdb_uniqname.yml --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+biobb_pdb_uniqname --config config_biobb_pdb_uniqname.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_uniqname.json)
@@ -646,7 +646,7 @@ biobb_pdb_uniqname --config config_biobb_pdb_uniqname.yml --input_file_path inpu
 ```
 #### Command line
 ```python
-biobb_pdb_uniqname --config config_biobb_pdb_uniqname.json --input_file_path input_pdb_delhetatm.pdb --output_file_path ref_pdb_delhetatm.pdb
+biobb_pdb_uniqname --config config_biobb_pdb_uniqname.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_delhetatm.pdb
 ```
 
 ## Biobb_pdb_chainxseg
@@ -673,7 +673,7 @@ biobb_pdb_chainxseg -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_chainxseg.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with exchanged segment and string identifier. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -691,7 +691,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.yml --input_file_path input_pdb_chainxseg.pdb --output_file_path ref_pdb_chainxseg.pdb
+biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_chainxseg.pdb
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chainxseg.json)
@@ -704,5 +704,5 @@ biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.yml --input_file_path in
 ```
 #### Command line
 ```python
-biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.json --input_file_path input_pdb_chainxseg.pdb --output_file_path ref_pdb_chainxseg.pdb
+biobb_pdb_chainxseg --config config_biobb_pdb_chainxseg.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_chainxseg.pdb
 ```

@@ -18,7 +18,7 @@ class Pdbtidy(BiobbObject):
     | This tool modifies the file to adhere (as much as possible) to the format specifications. It can be used to fix a PDB file that does not adhere to the format specifications.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): PDB file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file modified according to the specifications. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **strict** (*bool*) - (False) Does not add TER on chain breaks.

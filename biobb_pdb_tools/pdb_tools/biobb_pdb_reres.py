@@ -19,7 +19,7 @@ class Pdbreres(BiobbObject):
     | This tool renumbers the residues of the PDB file starting from a given number (default 1). It can be used to renumber the residues of a PDB file starting from a given number.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_reres.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): Renumbered PDB file by number of redisue selected. File type: output. `Sample file <https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **number** (*int*) - (4) Number of the protein residue.

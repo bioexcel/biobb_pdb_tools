@@ -18,7 +18,7 @@ class Pdbtofasta(BiobbObject):
     | This tool extracts the residue sequence in a PDB file to FASTA format. It can be used to extract the sequence of a PDB file to FASTA format.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tofasta.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): FASTA file containing the aminoacids sequence. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb>`_. Accepted formats: fasta (edam:format_1929), fa (edam:format_1929).
         properties (dic):
             * **multi** (*bool*) - (True) Splits the different chains into different records in the FASTA file.

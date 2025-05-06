@@ -25,7 +25,7 @@
             "type": "string",
             "description": "PDB file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_tidy.pdb",
+            "sample": "https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb",
             "enum": [
                 ".*\\.pdb$"
             ],
