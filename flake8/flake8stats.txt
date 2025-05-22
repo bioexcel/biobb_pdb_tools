@@ -1,4 +1,2 @@
-18    E305 expected 2 blank lines after class or function definition, found 1
-16    W291 trailing whitespace
-1     W292 no newline at end of file
-1     W293 blank line contains whitespace
+1     E305 expected 2 blank lines after class or function definition, found 1
+2     W504 line break after binary operator
