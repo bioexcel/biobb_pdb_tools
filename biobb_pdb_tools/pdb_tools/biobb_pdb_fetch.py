@@ -73,7 +73,8 @@ class Pdbfetch(BiobbObject):
         instructions = []
         if self.biounit:
             instructions.append("-biounit")
-            fu.log("Appending optional boolean property", self.out_log, self.global_log)
+            fu.log("Appending optional boolean property",
+                   self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -110,6 +111,7 @@ def biobb_pdb_fetch(
         output_file_path=output_file_path, properties=properties, **kwargs
     ).launch()
 
+
 biobb_pdb_fetch.__doc__ = Pdbfetch.__doc__
 
 
@@ -117,7 +119,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Downloads a structure in PDB format from the RCSB website.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 
@@ -132,7 +135,8 @@ def main():
     args.config = args.config or "{}"
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
-    biobb_pdb_fetch(output_file_path=args.output_file_path, properties=properties)
+    biobb_pdb_fetch(output_file_path=args.output_file_path,
+                    properties=properties)
 
 
 if __name__ == "__main__":

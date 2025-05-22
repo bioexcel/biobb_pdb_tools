@@ -93,7 +93,8 @@ class Pdbsplitmodel(BiobbObject):
 
         stem = Path(self.stage_io_dict["in"]["input_file_path"]).stem
         pdb_files = glob.glob(
-            os.path.join(self.stage_io_dict.get("unique_dir", ""), stem + "_*.pdb")
+            os.path.join(self.stage_io_dict.get(
+                "unique_dir", ""), stem + "_*.pdb")
         )
 
         if len(pdb_files) > 1:
@@ -110,7 +111,8 @@ class Pdbsplitmodel(BiobbObject):
                 for pdb_file in pdb_files:
                     zipf.write(pdb_file, os.path.basename(pdb_file))
         else:
-            fu.log("The given input file has no models.", self.out_log, self.global_log)
+            fu.log("The given input file has no models.",
+                   self.out_log, self.global_log)
             output_zip_path = os.path.join(
                 self.stage_io_dict.get("unique_dir", ""),
                 self.stage_io_dict["out"]["output_file_path"],
@@ -118,7 +120,8 @@ class Pdbsplitmodel(BiobbObject):
             with zipfile.ZipFile(output_zip_path, "w") as zipf:
                 zipf.write(
                     self.stage_io_dict["in"]["input_file_path"],
-                    os.path.basename(self.stage_io_dict["in"]["input_file_path"]),
+                    os.path.basename(
+                        self.stage_io_dict["in"]["input_file_path"]),
                 )
             pass
 
@@ -146,6 +149,7 @@ def biobb_pdb_splitmodel(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_splitmodel.__doc__ = Pdbsplitmodel.__doc__
 
 
@@ -153,7 +157,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Splits a PDB file into several, each containing one MODEL.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

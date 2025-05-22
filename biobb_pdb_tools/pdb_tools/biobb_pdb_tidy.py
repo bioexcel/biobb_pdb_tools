@@ -80,7 +80,8 @@ class Pdbtidy(BiobbObject):
         instructions = []
         if self.strict:
             instructions.append("-strict")
-            fu.log("Appending optional boolean property", self.out_log, self.global_log)
+            fu.log("Appending optional boolean property",
+                   self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -124,6 +125,7 @@ def biobb_pdb_tidy(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_tidy.__doc__ = Pdbtidy.__doc__
 
 
@@ -131,7 +133,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Modifies the file to adhere (as much as possible) to the format specifications.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

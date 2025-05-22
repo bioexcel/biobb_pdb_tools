@@ -80,7 +80,8 @@ class Pdbreres(BiobbObject):
         instructions = []
         if self.number:
             instructions.append("-" + str(self.number))
-            fu.log("Appending optional boolean property", self.out_log, self.global_log)
+            fu.log("Appending optional boolean property",
+                   self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -124,6 +125,7 @@ def biobb_pdb_reres(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_reres.__doc__ = Pdbreres.__doc__
 
 
@@ -131,7 +133,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Renumbers the residues of the PDB file starting from a given number (default 1).",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

@@ -86,10 +86,12 @@ class Mkensemble(BiobbObject):
                 if file.lower().endswith(".pdb")
             ]
 
-            input_file_list = [os.path.join(folder_path, file) for file in pdb_files]
+            input_file_list = [os.path.join(
+                folder_path, file) for file in pdb_files]
 
             input_file_list = [Path(i) for i in input_file_list]
-            input_file_list = sorted(input_file_list, key=lambda i: i.stem.upper())
+            input_file_list = sorted(
+                input_file_list, key=lambda i: i.stem.upper())
             input_file_list = [str(i) for i in input_file_list]
 
             self.cmd = [
@@ -139,6 +141,7 @@ def biobb_pdb_mkensemble(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_mkensemble.__doc__ = Mkensemble.__doc__
 
 
@@ -146,7 +149,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Merges several PDB files into one multi-model (ensemble) file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
     required_args = parser.add_argument_group("required arguments")

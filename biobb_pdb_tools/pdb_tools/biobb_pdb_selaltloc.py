@@ -85,7 +85,8 @@ class Pdbselaltloc(BiobbObject):
         instructions = []
         if self.altloc:
             instructions.append("-" + str(self.altloc))
-            fu.log("Selecting alternative location label: " + self.altloc, self.out_log, self.global_log)
+            fu.log("Selecting alternative location label: " +
+                   self.altloc, self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -128,6 +129,7 @@ def biobb_pdb_selaltloc(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_selaltloc.__doc__ = Pdbselaltloc.__doc__
 
 
@@ -135,7 +137,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Selects alternative locations from a PDB file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

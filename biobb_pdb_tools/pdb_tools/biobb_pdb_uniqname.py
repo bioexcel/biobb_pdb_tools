@@ -111,6 +111,7 @@ def biobb_pdb_uniqname(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_uniqname.__doc__ = Pdbuniqname.__doc__
 
 
@@ -118,7 +119,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Removes all HETATM records in the PDB file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
     required_args = parser.add_argument_group("required arguments")

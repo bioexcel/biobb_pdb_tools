@@ -82,7 +82,8 @@ class Pdbfixinsert(BiobbObject):
         instructions = []
         if self.residues:
             instructions.append("-" + str(self.residues))
-            fu.log("Appending specific residues to delete insertion codes for", self.out_log, self.global_log)
+            fu.log("Appending specific residues to delete insertion codes for",
+                   self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -125,6 +126,7 @@ def biobb_pdb_fixinsert(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_fixinsert.__doc__ = Pdbfixinsert.__doc__
 
 
@@ -132,7 +134,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Deletes insertion codes and shifts the residue numbering of downstream residues.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

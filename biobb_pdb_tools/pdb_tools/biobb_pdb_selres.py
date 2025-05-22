@@ -81,7 +81,8 @@ class Pdbselres(BiobbObject):
         instructions = []
         if self.selection:
             instructions.append("-" + str(self.selection))
-            fu.log("Selecting residues with pattern: " + self.selection, self.out_log, self.global_log)
+            fu.log("Selecting residues with pattern: " +
+                   self.selection, self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -124,6 +125,7 @@ def biobb_pdb_selres(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_selres.__doc__ = Pdbselres.__doc__
 
 
@@ -131,7 +133,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Selects residues by their index, piecewise or in a range.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

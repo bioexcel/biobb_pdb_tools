@@ -14,6 +14,6 @@ class TestPdbSelres():
     def test_pdb_selres(self):
         returncode = biobb_pdb_selres(properties=self.properties, **self.paths)
         assert fx.not_empty(self.paths['output_file_path'])
-        assert fx.equal(self.paths['output_file_path'], self.paths['ref_output_file_path'])
+        assert fx.equal(self.paths['output_file_path'],
+                        self.paths['ref_output_file_path'])
         assert fx.exe_success(returncode)
-    

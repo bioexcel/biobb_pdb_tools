@@ -113,6 +113,7 @@ def biobb_pdb_keepcoord(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_keepcoord.__doc__ = Pdbkeepcoord.__doc__
 
 
@@ -120,7 +121,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Removes all non-coordinate records from the file. Keeps only MODEL, ENDMDL, END, ATOM, HETATM, CONECT records.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

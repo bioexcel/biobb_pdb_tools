@@ -79,7 +79,8 @@ class Pdbseg(BiobbObject):
         instructions = []
         if self.segment:
             instructions.append("-" + str(self.segment))
-            fu.log("Appending optional boolean property", self.out_log, self.global_log)
+            fu.log("Appending optional boolean property",
+                   self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
@@ -122,6 +123,7 @@ def biobb_pdb_seg(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_seg.__doc__ = Pdbseg.__doc__
 
 
@@ -129,7 +131,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Modifies the segment identifier column of a PDB file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 

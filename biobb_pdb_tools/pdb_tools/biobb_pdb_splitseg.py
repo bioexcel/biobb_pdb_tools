@@ -93,7 +93,8 @@ class Pdbsplitseg(BiobbObject):
 
         stem = Path(self.stage_io_dict["in"]["input_file_path"]).stem
         pdb_files = glob.glob(
-            os.path.join(self.stage_io_dict.get("unique_dir", ""), stem + "_*.pdb")
+            os.path.join(self.stage_io_dict.get(
+                "unique_dir", ""), stem + "_*.pdb")
         )
 
         if len(pdb_files) > 1:
@@ -122,7 +123,8 @@ class Pdbsplitseg(BiobbObject):
             with zipfile.ZipFile(output_zip_path, "w") as zipf:
                 zipf.write(
                     self.stage_io_dict["in"]["input_file_path"],
-                    os.path.basename(self.stage_io_dict["in"]["input_file_path"]),
+                    os.path.basename(
+                        self.stage_io_dict["in"]["input_file_path"]),
                 )
             pass
 
@@ -150,6 +152,7 @@ def biobb_pdb_splitseg(
         **kwargs,
     ).launch()
 
+
 biobb_pdb_splitseg.__doc__ = Pdbsplitseg.__doc__
 
 
@@ -157,7 +160,8 @@ def main():
     """Command line execution of this building block. Please check the command line documentation."""
     parser = argparse.ArgumentParser(
         description="Splits a PDB file into several, each containing one segment.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
+        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
+            prog, width=99999),
     )
     parser.add_argument("--config", required=True, help="Configuration file")
 
