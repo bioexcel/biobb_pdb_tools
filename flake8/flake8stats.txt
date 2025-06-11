@@ -1,2 +1,0 @@
-1     E305 expected 2 blank lines after class or function definition, found 1
-2     W504 line break after binary operator
