@@ -81,8 +81,7 @@ class Pdbselres(BiobbObject):
         instructions = []
         if self.selection:
             instructions.append("-" + str(self.selection))
-            fu.log("Selecting residues with pattern: " +
-                   self.selection, self.out_log, self.global_log)
+            fu.log("Selecting residues with pattern: " + self.selection, self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,

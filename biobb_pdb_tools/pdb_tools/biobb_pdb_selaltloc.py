@@ -85,8 +85,7 @@ class Pdbselaltloc(BiobbObject):
         instructions = []
         if self.altloc:
             instructions.append("-" + str(self.altloc))
-            fu.log("Selecting alternative location label: " +
-                   self.altloc, self.out_log, self.global_log)
+            fu.log("Selecting alternative location label: " + self.altloc, self.out_log, self.global_log)
 
         self.cmd = [
             self.binary_path,
