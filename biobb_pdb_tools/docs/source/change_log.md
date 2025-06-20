@@ -1,6 +1,12 @@
 
 # Biobb Pdb tools changelog
 
+## What's new in version [5.1.0](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.1.0)?
+ 
+ ### New features
+
+ * [UPDATE]: Update to biobb_common 5.1.0
+
 ## What's new in version [5.0.1](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.0.1)?
  
  ### New features

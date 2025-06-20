@@ -4,9 +4,9 @@
     "github": "https://github.com/bioexcel/biobb_pdb_tools",
     "readthedocs": "https://biobb-pdb-tools.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pdb_tools",
-    "docker": "https://quay.io/repository/biocontainers/biobb_pdb_tools?tab=tags&tag=5.0.1--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pdb_tools:5.0.1--pyhdfd78af_0",
-    "version": "5.0.1",
+    "docker": "https://quay.io/repository/biocontainers/biobb_pdb_tools?tab=tags&tag=5.1.0--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pdb_tools:5.1.0--pyhdfd78af_0",
+    "version": "5.1.0",
     "tools": [
         {
             "block": "Pdbchain",
@@ -136,12 +136,12 @@
         }
     ],
     "dep_pypi": [
-        "install_requires=['biobb_common==5.0.0', 'pdb-tools==2.5.0']",
+        "install_requires=['biobb_common==5.1.0', 'pdb-tools==2.5.0']",
         "python_requires='>=3.9'"
     ],
     "dep_conda": [
         "python >=3.9",
-        "biobb_common ==5.0.0"
+        "biobb_common ==5.1.0"
     ],
     "keywords": [
         "pdb",
