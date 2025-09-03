@@ -2,10 +2,7 @@
 
 """Module containing the Chainxseg class and the command line interface."""
 
-import argparse
 from typing import Optional
-
-from biobb_common.configuration import settings
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
@@ -59,9 +56,7 @@ class Chainxseg(BiobbObject):
 
         self.binary_path = properties.get("binary_path", "pdb_chainxseg")
         self.properties = properties
-
-        self.check_properties(properties)
-        self.check_arguments()
+        self.check_init(properties)
 
     @launchlogger
     def launch(self) -> int:
@@ -90,7 +85,6 @@ class Chainxseg(BiobbObject):
 
         self.copy_to_host()
 
-        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
@@ -106,48 +100,11 @@ def biobb_pdb_chainxseg(
 ) -> int:
     """Create :class:`biobb_pdb_tools.pdb_tools.pdb_chainxseg>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_chainxseg.launch>` method."""
-    return Chainxseg(
-        input_file_path=input_file_path,
-        output_file_path=output_file_path,
-        properties=properties,
-        **kwargs,
-    ).launch()
+    return Chainxseg(**dict(locals())).launch()
 
 
+main = Chainxseg.get_main(biobb_pdb_chainxseg, "Swaps the segment identifier for the chain identifier.")
 biobb_pdb_chainxseg.__doc__ = Chainxseg.__doc__
-
-
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(
-        description="Swaps the segment identifier for the chain identifier.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
-            prog, width=99999),
-    )
-    parser.add_argument("--config", required=True, help="Configuration file")
-
-    required_args = parser.add_argument_group("required arguments")
-    required_args.add_argument(
-        "--input_file_path",
-        required=True,
-        help="Description for the first input file path. Accepted formats: pdb.",
-    )
-    required_args.add_argument(
-        "--output_file_path",
-        required=True,
-        help="Description for the output file path. Accepted formats: pdb.",
-    )
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    biobb_pdb_chainxseg(
-        input_file_path=args.input_file_path,
-        output_file_path=args.output_file_path,
-        properties=properties,
-    )
-
 
 if __name__ == "__main__":
     main()

@@ -2,16 +2,12 @@
 
 """Module containing the Pdbseg class and the command line interface."""
 
-import argparse
 from typing import Optional
-
-from biobb_common.configuration import settings
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
-# 1. Rename class as required
 class Pdbseg(BiobbObject):
     """
     | biobb_pdb_tools Pdbseg
@@ -99,8 +95,6 @@ class Pdbseg(BiobbObject):
         )
         self.run_biobb()
         self.copy_to_host()
-
-        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
@@ -116,48 +110,11 @@ def biobb_pdb_seg(
     """Create :class:`Pdbseg <biobb_pdb_tools.pdb_tools.pdb_seg>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_seg.launch>` method."""
 
-    return Pdbseg(
-        input_file_path=input_file_path,
-        output_file_path=output_file_path,
-        properties=properties,
-        **kwargs,
-    ).launch()
+    return Pdbseg(**dict(locals())).launch()
 
 
 biobb_pdb_seg.__doc__ = Pdbseg.__doc__
-
-
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(
-        description="Modifies the segment identifier column of a PDB file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
-            prog, width=99999),
-    )
-    parser.add_argument("--config", required=True, help="Configuration file")
-
-    required_args = parser.add_argument_group("required arguments")
-    required_args.add_argument(
-        "--input_file_path",
-        required=True,
-        help="Description for the first input file path. Accepted formats: pdb.",
-    )
-    required_args.add_argument(
-        "--output_file_path",
-        required=True,
-        help="Description for the output file path. Accepted formats: pdb.",
-    )
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    biobb_pdb_seg(
-        input_file_path=args.input_file_path,
-        output_file_path=args.output_file_path,
-        properties=properties,
-    )
-
+main = Pdbseg.get_main(biobb_pdb_seg, "Modifies the segment identifier column of a PDB file.")
 
 if __name__ == "__main__":
     main()

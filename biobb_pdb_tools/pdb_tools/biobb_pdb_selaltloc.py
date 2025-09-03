@@ -2,10 +2,7 @@
 
 """Module containing the Pdbselaltloc class and the command line interface."""
 
-import argparse
 from typing import Optional
-
-from biobb_common.configuration import settings
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
@@ -70,9 +67,7 @@ class Pdbselaltloc(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_selaltloc")
         self.altloc = properties.get("altloc", None)
         self.properties = properties
-
-        self.check_properties(properties)
-        self.check_arguments()
+        self.check_init(properties)
 
     @launchlogger
     def launch(self) -> int:
@@ -99,13 +94,10 @@ class Pdbselaltloc(BiobbObject):
 
         fu.log(
             "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
+            self.out_log, self.global_log)
 
         self.run_biobb()
         self.copy_to_host()
-        self.tmp_files.extend([self.stage_io_dict.get("unique_dir", "")])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
@@ -121,48 +113,11 @@ def biobb_pdb_selaltloc(
     """Create :class:`Pdbselaltloc <biobb_pdb_tools.pdb_tools.pdb_selaltloc>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selaltloc.launch>` method."""
 
-    return Pdbselaltloc(
-        input_file_path=input_file_path,
-        output_file_path=output_file_path,
-        properties=properties,
-        **kwargs,
-    ).launch()
+    return Pdbselaltloc(**dict(locals())).launch()
 
 
 biobb_pdb_selaltloc.__doc__ = Pdbselaltloc.__doc__
-
-
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(
-        description="Selects alternative locations from a PDB file.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(
-            prog, width=99999),
-    )
-    parser.add_argument("--config", required=True, help="Configuration file")
-
-    required_args = parser.add_argument_group("required arguments")
-    required_args.add_argument(
-        "--input_file_path",
-        required=True,
-        help="PDB file. Accepted formats: pdb.",
-    )
-    required_args.add_argument(
-        "--output_file_path",
-        required=True,
-        help="PDB file with selected alternative locations. Accepted formats: pdb.",
-    )
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    biobb_pdb_selaltloc(
-        input_file_path=args.input_file_path,
-        output_file_path=args.output_file_path,
-        properties=properties,
-    )
-
+main = Pdbselaltloc.get_main(biobb_pdb_selaltloc, "Selects alternative locations from a PDB file.")
 
 if __name__ == "__main__":
     main()
