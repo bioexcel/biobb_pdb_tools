@@ -15,7 +15,7 @@ class Pdbselres(BiobbObject):
     | Works by selecting residues based on their index. Can select individual residues, a range of residues, or residues at regular intervals.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with selected residues. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selres.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **selection** (*string*) - (None) Residue selection format: individual residues "1,2,4,6", range "1:10", multiple ranges "1:10,20:30", open ranges "1:", ":5", or intervals "::5", "1:10:5".

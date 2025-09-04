@@ -15,7 +15,7 @@ class Pdbkeepcoord(BiobbObject):
     | Keeps only MODEL, ENDMDL, END, ATOM, HETATM, CONECT records from a PDB file.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with only coordinate records. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_keepcoord.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_keepcoord") Path to the pdb_keepcoord executable binary.

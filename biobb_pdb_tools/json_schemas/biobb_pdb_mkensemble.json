@@ -23,7 +23,7 @@
     "properties": {
         "input_file_path": {
             "type": "string",
-            "description": "ZIP file of selected proteins",
+            "description": "Input ZIP file of selected proteins",
             "filetype": "input",
             "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.pdb",
             "enum": [
@@ -32,7 +32,7 @@
             "file_formats": [
                 {
                     "extension": ".*\\.zip$",
-                    "description": "ZIP file of selected proteins",
+                    "description": "Input ZIP file of selected proteins",
                     "edam": "format_3987"
                 }
             ]

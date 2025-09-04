@@ -23,7 +23,7 @@
     "properties": {
         "input_file_path": {
             "type": "string",
-            "description": "PDB file",
+            "description": "Input PDB file",
             "filetype": "input",
             "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb",
             "enum": [
@@ -32,7 +32,7 @@
             "file_formats": [
                 {
                     "extension": ".*\\.pdb$",
-                    "description": "PDB file",
+                    "description": "Input PDB file",
                     "edam": "format_1476"
                 }
             ]

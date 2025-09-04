@@ -13,24 +13,25 @@ Command:
 ```python
 biobb_pdb_chain -h
 ```
-    usage: biobb_pdb_chain [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_chain [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Modifies the chain identifier column of a PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with selected modified chain. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with selected modified chain. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -72,24 +73,25 @@ Command:
 ```python
 biobb_pdb_chainxseg -h
 ```
-    usage: biobb_pdb_chainxseg [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_chainxseg [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Swaps the segment identifier for the chain identifier.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with exchanged segment and string identifier. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with exchanged segment and string identifier. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -130,24 +132,25 @@ Command:
 ```python
 biobb_pdb_delhetatm -h
 ```
-    usage: biobb_pdb_delhetatm [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_delhetatm [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Removes all HETATM records in the PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with all HETATM records removed. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with all HETATM records removed. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -188,17 +191,18 @@ Command:
 ```python
 biobb_pdb_fetch -h
 ```
-    usage: biobb_pdb_fetch [-h] --config CONFIG --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_fetch [-h] [-c CONFIG] -o OUTPUT_FILE_PATH
     
     Downloads a structure in PDB format from the RCSB website.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: zip.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file of the protein selected. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -247,24 +251,25 @@ Command:
 ```python
 biobb_pdb_fixinsert -h
 ```
-    usage: biobb_pdb_fixinsert [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_fixinsert [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Deletes insertion codes and shifts the residue numbering of downstream residues.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            PDB file. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
                             PDB file with fixed insertion codes. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with fixed insertion codes. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fixinsert.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -311,7 +316,7 @@ biobb_pdb_keepcoord -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with only coordinate records. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_keepcoord.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -330,24 +335,25 @@ Command:
 ```python
 biobb_pdb_merge -h
 ```
-    usage: biobb_pdb_merge [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_merge [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Merges several PDB files into one.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: zip.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input ZIP file of selected protein. Accepted formats: zip.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.pdb). Accepted formats: ZIP
+* **input_file_path** (*string*): Input ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.pdb). Accepted formats: ZIP
 * **output_file_path** (*string*): PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -388,24 +394,25 @@ Command:
 ```python
 biobb_pdb_mkensemble -h
 ```
-    usage: biobb_pdb_mkensemble [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_mkensemble [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Merges several PDB files into one multi-model (ensemble) file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: zip.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input ZIP file of selected proteins. Accepted formats: zip.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            Multi-model (ensemble) PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.pdb). Accepted formats: ZIP
+* **input_file_path** (*string*): Input ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.pdb). Accepted formats: ZIP
 * **output_file_path** (*string*): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -446,24 +453,25 @@ Command:
 ```python
 biobb_pdb_reres -h
 ```
-    usage: biobb_pdb_reres [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_reres [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Renumbers the residues of the PDB file starting from a given number (default 1).
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            Renumbered PDB file by number of redisue selected. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): Renumbered PDB file by number of redisue selected. File type: output. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_reres.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -505,24 +513,25 @@ Command:
 ```python
 biobb_pdb_seg -h
 ```
-    usage: biobb_pdb_seg [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_seg [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Modifies the segment identifier column of a PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with segment identifier column modified. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_seg.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with segment identifier column modified. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_seg.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -564,24 +573,25 @@ Command:
 ```python
 biobb_pdb_selaltloc -h
 ```
-    usage: biobb_pdb_selaltloc [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_selaltloc [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Selects alternative locations from a PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            PDB file. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected alternative locations. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/9INS.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/9INS.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with selected alternative locations. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selaltloc.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -601,24 +611,25 @@ Command:
 ```python
 biobb_pdb_selchain -h
 ```
-    usage: biobb_pdb_selchain [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_selchain [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Extracts one or more chains from a PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with selected chains. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_selchain.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_selchain.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with selected chains. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selchain.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -660,24 +671,25 @@ Command:
 ```python
 biobb_pdb_selres -h
 ```
-    usage: biobb_pdb_selres [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_selres [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Selects residues by their index, piecewise or in a range.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            PDB file. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected residues. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1IGY.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with selected residues. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selres.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -719,24 +731,25 @@ Command:
 ```python
 biobb_pdb_splitmodel -h
 ```
-    usage: biobb_pdb_splitmodel [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_splitmodel [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Splits a PDB file into several, each containing one MODEL.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: zip.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            ZIP file containing all PDB files splited by protein model. Accepted formats: zip.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): ZIP file containing all PDB files splited by protein model. File type: output. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitmodel.zip). Accepted formats: ZIP
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -777,24 +790,25 @@ Command:
 ```python
 biobb_pdb_splitseg -h
 ```
-    usage: biobb_pdb_splitseg [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_splitseg [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Splits a PDB file into several, each containing one segment.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: zip.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            ZIP file containing all PDB files splited by protein segment. Accepted formats: zip.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitseg.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): ZIP file containing all PDB files splited by protein segment. File type: output. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_splitseg.zip). Accepted formats: ZIP
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -835,24 +849,25 @@ Command:
 ```python
 biobb_pdb_tidy -h
 ```
-    usage: biobb_pdb_tidy [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_tidy [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Modifies the file to adhere (as much as possible) to the format specifications.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file modified according to the specifications. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file modified according to the specifications. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tidy.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -894,24 +909,25 @@ Command:
 ```python
 biobb_pdb_tofasta -h
 ```
-    usage: biobb_pdb_tofasta [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_tofasta [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Extracts the residue sequence in a PDB file to FASTA format.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: fasta.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            FASTA file containing the aminoacids sequence. Accepted formats: fasta, fa.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): FASTA file containing the aminoacids sequence. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb). Accepted formats: FASTA, FA
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -953,24 +969,25 @@ Command:
 ```python
 biobb_pdb_uniqname -h
 ```
-    usage: biobb_pdb_uniqname [-h] --config CONFIG --input_file_path INPUT_FILE_PATH --output_file_path OUTPUT_FILE_PATH
+    usage: biobb_pdb_uniqname [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
     
     Removes all HETATM records in the PDB file.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      --input_file_path INPUT_FILE_PATH
-                            Description for the first input file path. Accepted formats: pdb.
-      --output_file_path OUTPUT_FILE_PATH
-                            Description for the output file path. Accepted formats: pdb.
+      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with all HETATM atoms renamed. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
 * **output_file_path** (*string*): PDB file with all HETATM atoms renamed. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition

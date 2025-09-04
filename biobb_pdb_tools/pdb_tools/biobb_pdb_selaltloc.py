@@ -15,7 +15,7 @@ class Pdbselaltloc(BiobbObject):
     | By default, selects the label with the highest occupancy value for each atom, but the user can define a specific altloc label to select. Selecting by highest occupancy removes all altloc labels for all atoms. If the user provides an option (e.g. -A), only atoms with conformers with an altloc A are processed by the script.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/9INS.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/9INS.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with selected alternative locations. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selaltloc.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **altloc** (*string*) - (None) Specific alternative location label to select (e.g. "A").

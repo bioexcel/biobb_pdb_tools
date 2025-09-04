@@ -15,7 +15,7 @@ class Chainxseg(BiobbObject):
     | This tool swaps the segment identifier for the chain identifier in a PDB file. It can be used to change the segment identifier of a PDB file or to remove the segment identifier from a PDB file.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with exchanged segment and string identifier. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chainxseg.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_chainxseg") Path to the pdb_chainxseg executable binary.

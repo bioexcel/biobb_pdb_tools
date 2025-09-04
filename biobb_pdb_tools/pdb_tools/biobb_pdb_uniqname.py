@@ -15,7 +15,7 @@ class Pdbuniqname(BiobbObject):
     | This tool renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue in a PDB file. It can be used to rename atoms sequentially for each HETATM residue in a PDB file.
 
     Args:
-        input_file_path (str): PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with all HETATM atoms renamed. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_delhetatm.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_uniqname") Path to the pdb_uniqname executable binary.
