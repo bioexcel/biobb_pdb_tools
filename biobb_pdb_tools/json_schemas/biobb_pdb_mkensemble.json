@@ -25,7 +25,7 @@
             "type": "string",
             "description": "Input ZIP file of selected proteins",
             "filetype": "input",
-            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.pdb",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.zip",
             "enum": [
                 ".*\\.zip$"
             ],

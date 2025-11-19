@@ -19,7 +19,7 @@ class Pdbmerge(BiobbObject):
     | This tool merges several PDB files into one. It can be used to merge several PDB files into one.
 
     Args:
-        input_file_path (str): Input ZIP file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.pdb>`_. Accepted formats: zip (edam:format_3987).
+        input_file_path (str): Input ZIP file of selected protein. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.zip>`_. Accepted formats: zip (edam:format_3987).
         output_file_path (str): PDB file with input PDBs merged. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **binary_path** (*str*) - ("pdb_merge") Path to the pdb_merge executable binary.
