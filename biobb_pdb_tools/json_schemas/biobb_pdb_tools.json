@@ -4,144 +4,163 @@
     "github": "https://github.com/bioexcel/biobb_pdb_tools",
     "readthedocs": "https://biobb-pdb-tools.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pdb_tools",
-    "docker": "https://quay.io/repository/biocontainers/biobb_pdb_tools?tab=tags&tag=5.1.1--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pdb_tools:5.1.1--pyhdfd78af_0",
-    "version": "5.1.1",
+    "docker": "https://quay.io/repository/biocontainers/biobb_pdb_tools?tab=tags&tag=5.1.0--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pdb_tools:5.1.0--pyhdfd78af_0",
+    "version": "5.1.0",
+    "rest": true,
     "tools": [
         {
             "block": "Pdbchain",
             "tool": "pdb_chain",
             "desc": "Modifies the chain identifier column of a PDB file.",
             "exec": "biobb_pdb_chain",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chain"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chain",
+            "rest": true
         },
         {
             "block": "Pdbchainxseg",
             "tool": "pdb_chainxseg",
             "desc": "Swaps the segment identifier for the chain identifier.",
             "exec": "biobb_pdb_chainxseg",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chainxseg"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_chainxseg",
+            "rest": true
         },
         {
             "block": "Pdbdelhetatm",
             "tool": "pdb_delhetatm",
             "desc": "Removes all HETATM records in the PDB file.",
             "exec": "biobb_pdb_delhetatm",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_delhetatm"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_delhetatm",
+            "rest": true
         },
         {
             "block": "Pdbfetch",
             "tool": "pdb_fetch",
             "desc": "Downloads a structure in PDB format from the RCSB website.",
             "exec": "biobb_pdb_fetch",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fetch"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fetch",
+            "rest": true
         },
         {
             "block": "Pdbfixinsert",
             "tool": "pdb_fixinsert",
             "desc": "Deletes insertion codes and shifts the residue numbering of downstream residues.",
             "exec": "biobb_pdb_fixinsert",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fixinsert"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_fixinsert",
+            "rest": true
         },
         {
             "block": "Pdbkeepcoord",
             "tool": "pdb_keepcoord",
             "desc": "Removes all non-coordinate records from the file.",
             "exec": "biobb_pdb_keepcoord",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_keepcoord"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_keepcoord",
+            "rest": true
         },
         {
             "block": "Pdbmerge",
             "tool": "pdb_merge",
             "desc": "Merges several PDB files into one.",
             "exec": "biobb_pdb_merge",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_merge"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_merge",
+            "rest": true
         },
         {
             "block": "Pdbmkensemble",
             "tool": "pdb_mkensemble",
             "desc": "Merges several PDB files into one multi-model (ensemble) file.",
             "exec": "biobb_pdb_mkensemble",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-mkensemble-module"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-mkensemble-module",
+            "rest": true
         },
         {
             "block": "Pdbreres",
             "tool": "pdb_reres",
             "desc": "Renumbers the residues of the PDB file starting from a given number (default 1).",
             "exec": "biobb_pdb_reres",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_reres"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_reres",
+            "rest": true
         },
         {
             "block": "Pdbseg",
             "tool": "pdb_seg",
             "desc": "Modifies the segment identifier column of a PDB file.",
             "exec": "biobb_pdb_seg",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_seg"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_seg",
+            "rest": true
         },
         {
             "block": "Pdbselaltloc",
             "tool": "pdb_selaltloc",
             "desc": "Selects alternative locations from a PDB file.",
             "exec": "biobb_pdb_selaltloc",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selaltloc"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selaltloc",
+            "rest": true
         },
         {
             "block": "Pdbselchain",
             "tool": "pdb_selchain",
             "desc": "Extracts one or more chains from a PDB file.",
             "exec": "biobb_pdb_selchain",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selchain"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selchain",
+            "rest": true
         },
         {
             "block": "Pdbselres",
             "tool": "pdb_selres",
             "desc": "Selects residues by their index, piecewise or in a range.",
             "exec": "biobb_pdb_selres",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selres"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selres",
+            "rest": true
         },
         {
             "block": "Pdbsplitmodel",
             "tool": "pdb_splitmodel",
             "desc": "Splits a PDB file into several, each containing one MODEL.",
             "exec": "biobb_pdb_splitmodel",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-splitmodel-module"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-splitmodel-module",
+            "rest": true
         },
         {
             "block": "Pdbsplitseg",
             "tool": "pdb_splitseg",
             "desc": "Splits a PDB file into several, each containing one segment.",
             "exec": "biobb_pdb_splitseg",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-splitseg-module"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-splitseg-module",
+            "rest": true
         },
         {
             "block": "Pdbtidy",
             "tool": "pdb_tidy",
             "desc": "Modifies the file to adhere (as much as possible) to the format specifications.",
             "exec": "biobb_pdb_tidy",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_tidy"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_tidy",
+            "rest": true
         },
         {
             "block": "Pdbtofasta",
             "tool": "pdb_tofasta",
             "desc": "Extracts the residue sequence in a PDB file to FASTA format.",
             "exec": "biobb_pdb_tofasta",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-tofasta-module"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#pdb-tools-biobb-pdb-tofasta-module",
+            "rest": true
         },
         {
             "block": "Pdbuniqname",
             "tool": "pdb_uniqname",
             "desc": "Renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue.",
             "exec": "biobb_pdb_uniqname",
-            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_uniqname"
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_uniqname",
+            "rest": true
         }
     ],
     "dep_pypi": [
-        "install_requires=['biobb_common==5.1.1', 'pdb-tools==2.5.0']",
+        "install_requires=['biobb_common==5.1.0', 'pdb-tools==2.5.0']",
         "python_requires='>=3.9'"
     ],
     "dep_conda": [
         "python >=3.9",
-        "biobb_common ==5.1.1"
+        "biobb_common ==5.1.0"
     ],
     "keywords": [
         "pdb",
