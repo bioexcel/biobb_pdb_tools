@@ -41,7 +41,7 @@
             "type": "string",
             "description": "FASTA file containing the aminoacids sequence",
             "filetype": "output",
-            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb",
+            "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.fasta",
             "enum": [
                 ".*\\.fasta$",
                 ".*\\.fa$"

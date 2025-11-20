@@ -928,7 +928,7 @@ Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
 * **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb). Accepted formats: PDB
-* **output_file_path** (*string*): FASTA file containing the aminoacids sequence. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.pdb). Accepted formats: FASTA, FA
+* **output_file_path** (*string*): FASTA file containing the aminoacids sequence. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_tofasta.fasta). Accepted formats: FASTA, FA
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -946,7 +946,7 @@ properties:
 ```
 #### Command line
 ```python
-biobb_pdb_tofasta --config config_biobb_pdb_tofasta.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.pdb
+biobb_pdb_tofasta --config config_biobb_pdb_tofasta.yml --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.fasta
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tofasta.json)
@@ -959,7 +959,7 @@ biobb_pdb_tofasta --config config_biobb_pdb_tofasta.yml --input_file_path 1AKI.p
 ```
 #### Command line
 ```python
-biobb_pdb_tofasta --config config_biobb_pdb_tofasta.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.pdb
+biobb_pdb_tofasta --config config_biobb_pdb_tofasta.json --input_file_path 1AKI.pdb --output_file_path ref_pdb_tofasta.fasta
 ```
 
 ## Biobb_pdb_uniqname
