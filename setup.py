@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pdb_tools",
-    version="5.1.1",
+    version="5.2.0",
     author="Biobb developers",
     author_email="agustin.garcia@irbbarcelona.org",
     description="Biobb_pdb_tools is a swiss army knife for manipulating and editing PDB files.",
@@ -19,8 +19,8 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=["docs", "test"]),
     package_data={"biobb_pdb_tools": ["py.typed"]},
-    install_requires=["biobb_common==5.1.1"],
-    python_requires=">=3.9",
+    install_requires=["biobb_common==5.2.0"],
+    python_requires=">=3.10",
     entry_points={
         "console_scripts": [
             "biobb_pdb_chain = biobb_pdb_tools.pdb_tools.biobb_pdb_chain:main",
@@ -45,7 +45,7 @@ setuptools.setup(
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: Apache Software License",
