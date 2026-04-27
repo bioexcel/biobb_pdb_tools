@@ -37,10 +37,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **chain** (*string*): (A) Modifies the chain identifier column of a PDB file..
-* **binary_path** (*string*): (pdb_chain) Path to the pdb_chain executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **chain** (*string*): (A) Modifies the chain identifier column of a PDB file.
+* **binary_path** (*string*): (pdb_chain) Path to the pdb_chain executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chain.yml)
 ```python
@@ -97,9 +97,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_chainxseg) Path to the pdb_chainxseg executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_chainxseg) Path to the pdb_chainxseg executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_chainxseg.yml)
 ```python
@@ -156,9 +156,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_delhetatm) Path to the pdb_delhetatm executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_delhetatm) Path to the pdb_delhetatm executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_delhetatm.yml)
 ```python
@@ -212,11 +212,11 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **pdbid** (*string*): (1aki) ID of the protein..
-* **biounit** (*string*): (False) Allows downloading the (first) biological structure if selected..
-* **binary_path** (*string*): (pdb_fetch) Path to the pdb_fetch executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **pdbid** (*string*): (1aki) ID of the protein.
+* **biounit** (*string*): (False) Allows downloading the (first) biological structure if selected.
+* **binary_path** (*string*): (pdb_fetch) Path to the pdb_fetch executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fetch.yml)
 ```python
@@ -275,10 +275,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **residues** (*string*): (None) Specific residues to delete insertion codes for, format: "A9,B12" (chain and residue number)..
-* **binary_path** (*string*): (pdb_fixinsert) Path to the pdb_fixinsert executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **residues** (*string*): (None) Specific residues to delete insertion codes for, format: "A9,B12" (chain and residue number).
+* **binary_path** (*string*): (pdb_fixinsert) Path to the pdb_fixinsert executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_fixinsert.yml)
 ```python
@@ -322,9 +322,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_keepcoord) Path to the pdb_keepcoord executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_keepcoord) Path to the pdb_keepcoord executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 ### JSON
 
@@ -359,9 +359,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_merge) Path to the pdb_merge executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_merge) Path to the pdb_merge executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_merge.yml)
 ```python
@@ -418,9 +418,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_mkensemble) Path to the pdb_mkensemble executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_mkensemble) Path to the pdb_mkensemble executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_mkensemble.yml)
 ```python
@@ -477,10 +477,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **number** (*integer*): (4) Number of the protein residue..
-* **binary_path** (*string*): (pdb_reres) Path to the pdb_reres executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **number** (*integer*): (4) Number of the protein residue.
+* **binary_path** (*string*): (pdb_reres) Path to the pdb_reres executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_reres.yml)
 ```python
@@ -537,10 +537,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **segment** (*string*): (B) Default is an empty segment..
-* **binary_path** (*string*): (pdb_seg) Path to the pdb_seg executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **segment** (*string*): (B) Default is an empty segment.
+* **binary_path** (*string*): (pdb_seg) Path to the pdb_seg executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_seg.yml)
 ```python
@@ -597,10 +597,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **altloc** (*string*): (None) Specific alternative location label to select (e.g. "A")..
-* **binary_path** (*string*): (pdb_selaltloc) Path to the pdb_selaltloc executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **altloc** (*string*): (None) Specific alternative location label to select (e.g. "A").
+* **binary_path** (*string*): (pdb_selaltloc) Path to the pdb_selaltloc executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 ### JSON
 
@@ -635,10 +635,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **chains** (*string*): (A) Chain or list of chains (comma separated) to extract from the PDB file..
-* **binary_path** (*string*): (pdb_selchain) Path to the pdb_selchain executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **chains** (*string*): (A) Chain or list of chains (comma separated) to extract from the PDB file.
+* **binary_path** (*string*): (pdb_selchain) Path to the pdb_selchain executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selchain.yml)
 ```python
@@ -695,10 +695,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **selection** (*string*): (None) Residue selection format: individual residues "1,2,4,6", range "1:10", multiple ranges "1:10,20:30", open ranges "1:", ":5", or intervals "::5", "1:10:5"..
-* **binary_path** (*string*): (pdb_selres) Path to the pdb_selres executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **selection** (*string*): (None) Residue selection format: individual residues "1,2,4,6", range "1:10", multiple ranges "1:10,20:30", open ranges "1:", ":5", or intervals "::5", "1:10:5".
+* **binary_path** (*string*): (pdb_selres) Path to the pdb_selres executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selres.yml)
 ```python
@@ -755,9 +755,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_splitmodel) Path to the pdb_splitmodel executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_splitmodel) Path to the pdb_splitmodel executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitmodel.yml)
 ```python
@@ -814,9 +814,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_splitseg) Path to the pdb_splitseg executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_splitseg) Path to the pdb_splitseg executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_splitseg.yml)
 ```python
@@ -873,10 +873,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **strict** (*boolean*): (False) Does not add TER on chain breaks..
-* **binary_path** (*string*): (pdb_tidy) Path to the pdb_tidy executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **strict** (*boolean*): (False) Does not add TER on chain breaks.
+* **binary_path** (*string*): (pdb_tidy) Path to the pdb_tidy executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tidy.yml)
 ```python
@@ -933,10 +933,10 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **multi** (*boolean*): (True) Splits the different chains into different records in the FASTA file..
-* **binary_path** (*string*): (pdb_tofasta) Path to the pdb_tofasta executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **multi** (*boolean*): (True) Splits the different chains into different records in the FASTA file.
+* **binary_path** (*string*): (pdb_tofasta) Path to the pdb_tofasta executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_tofasta.yml)
 ```python
@@ -993,9 +993,9 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **binary_path** (*string*): (pdb_uniqname) Path to the pdb_uniqname executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **binary_path** (*string*): (pdb_uniqname) Path to the pdb_uniqname executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_uniqname.yml)
 ```python
