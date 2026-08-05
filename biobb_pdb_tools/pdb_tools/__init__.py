@@ -12,6 +12,7 @@ __all__ = [
     "biobb_pdb_seg",
     "biobb_pdb_selaltloc",
     "biobb_pdb_selchain",
+    "biobb_pdb_selmodel",
     "biobb_pdb_selres",
     "biobb_pdb_splitmodel",
     "biobb_pdb_splitseg",

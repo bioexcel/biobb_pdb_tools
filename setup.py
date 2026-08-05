@@ -35,6 +35,7 @@ setuptools.setup(
             "biobb_pdb_seg = biobb_pdb_tools.pdb_tools.biobb_pdb_seg:main",
             "biobb_pdb_selaltloc = biobb_pdb_tools.pdb_tools.biobb_pdb_selaltloc:main",
             "biobb_pdb_selchain = biobb_pdb_tools.pdb_tools.biobb_pdb_selchain:main",
+            "biobb_pdb_selmodel = biobb_pdb_tools.pdb_tools.biobb_pdb_selmodel:main",
             "biobb_pdb_selres = biobb_pdb_tools.pdb_tools.biobb_pdb_selres:main",
             "biobb_pdb_splitmodel = biobb_pdb_tools.pdb_tools.biobb_pdb_splitmodel:main",
             "biobb_pdb_splitseg = biobb_pdb_tools.pdb_tools.biobb_pdb_splitseg:main",

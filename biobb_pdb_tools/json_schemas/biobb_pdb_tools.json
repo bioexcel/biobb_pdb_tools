@@ -106,6 +106,14 @@
             "rest": true
         },
         {
+            "block": "Pdbselmodel",
+            "tool": "pdb_selmodel",
+            "desc": "Extracts one or more models from a PDB file.",
+            "exec": "biobb_pdb_selmodel",
+            "docs": "https://biobb-pdb-tools.readthedocs.io/en/latest/pdb_tools.html#module-pdb_tools.biobb_pdb_selmodel",
+            "rest": true
+        },
+        {
             "block": "Pdbselres",
             "tool": "pdb_selres",
             "desc": "Selects residues by their index, piecewise or in a range.",

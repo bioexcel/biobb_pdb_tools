@@ -100,6 +100,14 @@ pdb_tools.biobb_pdb_selchain module
     :undoc-members:
     :show-inheritance:
 
+pdb_tools.biobb_pdb_selmodel module
+--------------------------------------
+
+.. automodule:: pdb_tools.biobb_pdb_selmodel
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 pdb_tools.biobb_pdb_selres module
 -------------------------------------
 
