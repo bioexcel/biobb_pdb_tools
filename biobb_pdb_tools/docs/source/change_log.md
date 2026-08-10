@@ -2,9 +2,11 @@
 
 ## [Unreleased]
 
-### Added
+## What's new in version [5.3.1](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.3.1)?
 
-- New `pdb_selmodel` building block: extracts one or more models from a PDB file.
+### Changes
+
+* New `pdb_selmodel` building block: extracts one or more models from a PDB file.
 
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
 

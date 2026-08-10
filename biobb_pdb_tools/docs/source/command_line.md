@@ -19,13 +19,12 @@ biobb_pdb_chain -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected modified chain. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -79,13 +78,12 @@ biobb_pdb_chainxseg -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with exchanged segment and string identifier. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -138,13 +136,12 @@ biobb_pdb_delhetatm -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with all HETATM records removed. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -197,11 +194,10 @@ biobb_pdb_fetch -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file of the protein selected. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -257,13 +253,12 @@ biobb_pdb_fixinsert -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with fixed insertion codes. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -341,13 +336,12 @@ biobb_pdb_merge -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input ZIP file of selected protein. Accepted formats: zip.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -400,13 +394,12 @@ biobb_pdb_mkensemble -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input ZIP file of selected proteins. Accepted formats: zip.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             Multi-model (ensemble) PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -459,13 +452,12 @@ biobb_pdb_reres -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             Renumbered PDB file by number of redisue selected. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -519,13 +511,12 @@ biobb_pdb_seg -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with segment identifier column modified. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -579,13 +570,12 @@ biobb_pdb_selaltloc -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected alternative locations. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -617,13 +607,12 @@ biobb_pdb_selchain -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected chains. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -664,6 +653,65 @@ biobb_pdb_selchain --config config_biobb_pdb_selchain.yml --input_file_path inpu
 biobb_pdb_selchain --config config_biobb_pdb_selchain.json --input_file_path input_pdb_selchain.pdb --output_file_path ref_pdb_selchain.pdb
 ```
 
+## Biobb_pdb_selmodel
+Extracts one or more models from a PDB file.
+### Get help
+Command:
+```python
+biobb_pdb_selmodel -h
+```
+    usage: biobb_pdb_selmodel [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
+    
+    Extracts one or more models from a PDB file.
+    
+    options:
+      -h, --help            show this help message and exit
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
+    
+    required arguments:
+      -i, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with selected models. Accepted formats: pdb.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_file_path** (*string*): Input PDB file. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_splitmodel.pdb). Accepted formats: PDB
+* **output_file_path** (*string*): PDB file with selected models. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_selmodel.pdb). Accepted formats: PDB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **models** (*string*): (1) Model or list of models (comma separated) to extract from the PDB file.
+* **binary_path** (*string*): (pdb_selmodel) Path to the pdb_selmodel executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selmodel.yml)
+```python
+properties:
+  models: 1,3
+
+```
+#### Command line
+```python
+biobb_pdb_selmodel --config config_biobb_pdb_selmodel.yml --input_file_path input_pdb_splitmodel.pdb --output_file_path ref_pdb_selmodel.pdb
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_pdb_tools/blob/master/biobb_pdb_tools/test/data/config/config_biobb_pdb_selmodel.json)
+```python
+{
+  "properties": {
+    "models": "1,3"
+  }
+}
+```
+#### Command line
+```python
+biobb_pdb_selmodel --config config_biobb_pdb_selmodel.json --input_file_path input_pdb_splitmodel.pdb --output_file_path ref_pdb_selmodel.pdb
+```
+
 ## Biobb_pdb_selres
 Selects residues by their index, piecewise or in a range.
 ### Get help
@@ -677,13 +725,12 @@ biobb_pdb_selres -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with selected residues. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -737,13 +784,12 @@ biobb_pdb_splitmodel -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             ZIP file containing all PDB files splited by protein model. Accepted formats: zip.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -796,13 +842,12 @@ biobb_pdb_splitseg -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             ZIP file containing all PDB files splited by protein segment. Accepted formats: zip.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -855,13 +900,12 @@ biobb_pdb_tidy -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file modified according to the specifications. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -915,13 +959,12 @@ biobb_pdb_tofasta -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             FASTA file containing the aminoacids sequence. Accepted formats: fasta, fa.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -975,13 +1018,12 @@ biobb_pdb_uniqname -h
     
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            This file can be a YAML file, JSON file or JSON string
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
     
     required arguments:
-      -i INPUT_FILE_PATH, --input_file_path INPUT_FILE_PATH
+      -i, --input_file_path INPUT_FILE_PATH
                             Input PDB file. Accepted formats: pdb.
-      -o OUTPUT_FILE_PATH, --output_file_path OUTPUT_FILE_PATH
+      -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with all HETATM atoms renamed. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
