@@ -137,7 +137,6 @@ def biobb_pdb_splitmodel(
 ) -> int:
     """Create :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` class and
     execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_splitmodel.launch>` method."""
-
     return Pdbsplitmodel(**dict(locals())).launch()
 
 
