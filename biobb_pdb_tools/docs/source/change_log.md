@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## What's new in version [5.3.2](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.3.2)?
+
+### Changes
+
+* [FIX] Correct the `biobb_pdb_keepcoord` console entry point so the command loads the existing module.
+* [FEATURE] Accept individual PDB files as well as ZIP archives in `pdb_merge` and `pdb_mkensemble`; update their input schemas and command-line documentation.
+
 ## What's new in version [5.3.1](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.3.1)?
 
 ### Changes
@@ -80,4 +87,3 @@ In version 4.1.0 the new biobb_pdb_tools package has been released.
 ### New features
 
 * First release
-

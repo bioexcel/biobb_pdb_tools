@@ -306,7 +306,19 @@ Command:
 ```python
 biobb_pdb_keepcoord -h
 ```
-    /bin/sh: 1: biobb_pdb_keepcoord: not found
+    usage: biobb_pdb_keepcoord [-h] [-c CONFIG] -i INPUT_FILE_PATH -o OUTPUT_FILE_PATH
+
+    Removes all non-coordinate records from the file. Keeps only MODEL, ENDMDL, END, ATOM, HETATM, CONECT records.
+
+    options:
+      -h, --help            show this help message and exit
+      -c, --config CONFIG   This file can be a YAML file, JSON file or JSON string
+
+    required arguments:
+      -i, --input_file_path INPUT_FILE_PATH
+                            Input PDB file. Accepted formats: pdb.
+      -o, --output_file_path OUTPUT_FILE_PATH
+                            PDB file with only coordinate records. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -340,14 +352,14 @@ biobb_pdb_merge -h
     
     required arguments:
       -i, --input_file_path INPUT_FILE_PATH
-                            Input ZIP file of selected protein. Accepted formats: zip.
+                            Input ZIP file of selected protein. Accepted formats: zip, pdb.
       -o, --output_file_path OUTPUT_FILE_PATH
                             PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): Input ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.zip). Accepted formats: ZIP
+* **input_file_path** (*string*): Input ZIP file of selected protein. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_merge.zip). Accepted formats: ZIP, PDB
 * **output_file_path** (*string*): PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_merge.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -398,14 +410,14 @@ biobb_pdb_mkensemble -h
     
     required arguments:
       -i, --input_file_path INPUT_FILE_PATH
-                            Input ZIP file of selected proteins. Accepted formats: zip.
+                            Input ZIP file of selected proteins. Accepted formats: zip, pdb.
       -o, --output_file_path OUTPUT_FILE_PATH
                             Multi-model (ensemble) PDB file with input PDBs merged. Accepted formats: pdb.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_file_path** (*string*): Input ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.zip). Accepted formats: ZIP
+* **input_file_path** (*string*): Input ZIP file of selected proteins. File type: input. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.zip). Accepted formats: ZIP, PDB
 * **output_file_path** (*string*): Multi-model (ensemble) PDB file with input PDBs merged. File type: output. [Sample file](https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_mkensemble.pdb). Accepted formats: PDB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition

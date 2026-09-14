@@ -27,13 +27,19 @@
             "filetype": "input",
             "sample": "https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/input_pdb_mkensemble.zip",
             "enum": [
-                ".*\\.zip$"
+                ".*\\.zip$",
+                ".*\\.pdb$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.zip$",
                     "description": "Input ZIP file of selected proteins",
                     "edam": "format_3987"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Input ZIP file of selected proteins",
+                    "edam": "format_1476"
                 }
             ]
         },

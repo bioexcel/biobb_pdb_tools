@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pdb_tools",
-    version="5.3.1",
+    version="5.3.2",
     author="Biobb developers",
     author_email="agustin.garcia@irbbarcelona.org",
     description="Biobb_pdb_tools is a swiss army knife for manipulating and editing PDB files.",
@@ -28,7 +28,7 @@ setuptools.setup(
             "biobb_pdb_delhetatm = biobb_pdb_tools.pdb_tools.biobb_pdb_delhetatm:main",
             "biobb_pdb_fetch = biobb_pdb_tools.pdb_tools.biobb_pdb_fetch:main",
             "biobb_pdb_fixinsert = biobb_pdb_tools.pdb_tools.biobb_pdb_fixinsert:main",
-            "biobb_pdb_keepcord = biobb_pdb_tools.pdb_tools.biobb_pdb_keepcord:main",
+            "biobb_pdb_keepcoord = biobb_pdb_tools.pdb_tools.biobb_pdb_keepcoord:main",
             "biobb_pdb_merge = biobb_pdb_tools.pdb_tools.biobb_pdb_merge:main",
             "biobb_pdb_mkensemble = biobb_pdb_tools.pdb_tools.biobb_pdb_mkensemble:main",
             "biobb_pdb_reres = biobb_pdb_tools.pdb_tools.biobb_pdb_reres:main",
