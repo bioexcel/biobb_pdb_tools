@@ -5,7 +5,6 @@
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 
 
 class Pdbfixinsert(BiobbObject):
@@ -64,16 +63,8 @@ class Pdbfixinsert(BiobbObject):
         self.residues = properties.get("residues", None)
         self.properties = properties
 
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`Pdbfixinsert <biobb_pdb_tools.pdb_tools.pdb_fixinsert>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         instructions = []
         if self.residues:

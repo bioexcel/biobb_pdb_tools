@@ -5,7 +5,6 @@
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 
 
 class Pdbtidy(BiobbObject):
@@ -62,15 +61,9 @@ class Pdbtidy(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_tidy")
         self.strict = properties.get("strict", False)
         self.properties = properties
-        self.check_init(properties)
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`Pdbtidy <biobb_pdb_tools.pdb_tools.pdb_tidy>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         instructions = []
         if self.strict:

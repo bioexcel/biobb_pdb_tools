@@ -5,7 +5,6 @@
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 
 
 class Pdbuniqname(BiobbObject):
@@ -56,15 +55,9 @@ class Pdbuniqname(BiobbObject):
 
         self.binary_path = properties.get("binary_path", "pdb_uniqname")
         self.properties = properties
-        self.check_init(properties)
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         self.cmd = [
             self.binary_path,

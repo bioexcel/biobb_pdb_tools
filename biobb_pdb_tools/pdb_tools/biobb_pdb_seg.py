@@ -5,7 +5,6 @@
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 
 
 class Pdbseg(BiobbObject):
@@ -61,16 +60,8 @@ class Pdbseg(BiobbObject):
         self.segment = properties.get("segment", False)
         self.properties = properties
 
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`Pdbseg <biobb_pdb_tools.pdb_tools.pdb_seg>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         instructions = []
         if self.segment:

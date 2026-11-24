@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 
 
 class Mkensemble(BiobbObject):
@@ -58,15 +57,9 @@ class Mkensemble(BiobbObject):
 
         self.binary_path = properties.get("binary_path", "pdb_mkensemble")
         self.properties = properties
-        self.check_init(properties)
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`Mkensemble <biobb_pdb_tools.pdb_tools.pdb_mkensemble>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         input_file_path = self.stage_io_dict["in"]["input_file_path"]
         folder_path = os.path.dirname(input_file_path)
