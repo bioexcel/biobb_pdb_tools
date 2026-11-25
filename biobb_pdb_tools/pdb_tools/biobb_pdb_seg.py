@@ -60,7 +60,7 @@ class Pdbseg(BiobbObject):
         self.segment = properties.get("segment", False)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbseg <biobb_pdb_tools.pdb_tools.pdb_seg>` object."""
 
         instructions = []
@@ -85,11 +85,6 @@ class Pdbseg(BiobbObject):
             self.global_log,
         )
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_seg(

@@ -59,7 +59,7 @@ class Pdbsplitmodel(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_splitmodel")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` object."""
 
         self.cmd = [
@@ -112,12 +112,6 @@ class Pdbsplitmodel(BiobbObject):
                         self.stage_io_dict["in"]["input_file_path"]),
                 )
             pass
-
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_splitmodel(

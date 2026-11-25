@@ -60,7 +60,7 @@ class Pdbsplitseg(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_splitseg")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbsplitseg <biobb_pdb_tools.pdb_tools.pdb_splitseg>` object."""
 
         self.cmd = [
@@ -115,12 +115,6 @@ class Pdbsplitseg(BiobbObject):
                         self.stage_io_dict["in"]["input_file_path"]),
                 )
             pass
-
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_splitseg(

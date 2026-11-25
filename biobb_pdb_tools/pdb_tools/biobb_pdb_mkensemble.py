@@ -58,7 +58,7 @@ class Mkensemble(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_mkensemble")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Mkensemble <biobb_pdb_tools.pdb_tools.pdb_mkensemble>` object."""
 
         input_file_path = self.stage_io_dict["in"]["input_file_path"]
@@ -96,11 +96,6 @@ class Mkensemble(BiobbObject):
         )
 
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_mkensemble(

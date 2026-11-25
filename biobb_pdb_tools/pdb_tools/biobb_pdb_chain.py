@@ -62,7 +62,7 @@ class Pdbchain(BiobbObject):
         self.chain = properties.get("chain", False)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbchain <biobb_pdb_tools.pdb_tools.pdb_chain>` object."""
 
         instructions = []
@@ -85,11 +85,6 @@ class Pdbchain(BiobbObject):
             self.out_log, self.global_log)
 
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_chain(

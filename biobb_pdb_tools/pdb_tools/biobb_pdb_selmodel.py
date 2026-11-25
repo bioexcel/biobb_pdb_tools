@@ -62,7 +62,7 @@ class Pdbselmodel(BiobbObject):
         self.models = properties.get("models", "1")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbselmodel <biobb_pdb_tools.pdb_tools.pdb_selmodel>` object."""
 
         instructions = []
@@ -87,11 +87,6 @@ class Pdbselmodel(BiobbObject):
         )
 
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_selmodel(

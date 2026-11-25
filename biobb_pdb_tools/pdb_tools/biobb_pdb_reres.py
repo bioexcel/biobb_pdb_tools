@@ -61,7 +61,7 @@ class Pdbreres(BiobbObject):
         self.number = properties.get("number")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbreres <biobb_pdb_tools.pdb_tools.pdb_reres>` object."""
 
         instructions = []
@@ -87,12 +87,6 @@ class Pdbreres(BiobbObject):
         )
 
         self.run_biobb()
-        self.copy_to_host()
-
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_reres(

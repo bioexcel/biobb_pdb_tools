@@ -60,7 +60,7 @@ class Pdbmerge(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_merge")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbmerge <biobb_pdb_tools.pdb_tools.pdb_merge>` object."""
 
         input_file_path = self.stage_io_dict["in"]["input_file_path"]
@@ -97,11 +97,6 @@ class Pdbmerge(BiobbObject):
             self.out_log, self.global_log)
 
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_merge(

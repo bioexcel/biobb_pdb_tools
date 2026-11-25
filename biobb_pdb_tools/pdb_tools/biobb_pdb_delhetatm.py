@@ -56,7 +56,7 @@ class Delhetatm(BiobbObject):
         self.binary_path = properties.get("binary_path", "pdb_delhetatm")
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Delhetatm <biobb_pdb_tools.pdb_tools.pdb_delhetatm>` object."""
 
         self.cmd = [
@@ -75,11 +75,6 @@ class Delhetatm(BiobbObject):
         )
 
         self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_delhetatm(

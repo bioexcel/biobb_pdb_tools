@@ -62,7 +62,7 @@ class Pdbtofasta(BiobbObject):
         self.multi = properties.get("multi", True)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`Pdbtofasta <biobb_pdb_tools.pdb_tools.pdb_tofasta>` object."""
 
         instructions = []
@@ -88,12 +88,6 @@ class Pdbtofasta(BiobbObject):
         )
 
         self.run_biobb()
-        self.copy_to_host()
-
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def biobb_pdb_tofasta(
