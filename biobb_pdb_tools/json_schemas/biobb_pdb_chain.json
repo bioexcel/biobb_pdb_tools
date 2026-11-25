@@ -58,7 +58,7 @@
             "properties": {
                 "chain": {
                     "type": "string",
-                    "default": "A",
+                    "default": null,
                     "wf_prop": false,
                     "description": "Modifies the chain identifier column of a PDB file."
                 },

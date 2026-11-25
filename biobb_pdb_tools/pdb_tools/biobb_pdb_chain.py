@@ -17,7 +17,7 @@ class Pdbchain(BiobbObject):
         input_file_path (str): Input PDB file. File type: input. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/data/pdb_tools/1AKI.pdb>`_. Accepted formats: pdb (edam:format_1476).
         output_file_path (str): PDB file with selected modified chain. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_chain.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
-            * **chain** (*string*) - ('A') Modifies the chain identifier column of a PDB file.
+            * **chain** (*string*) - (None) Modifies the chain identifier column of a PDB file.
             * **binary_path** (*str*) - ("pdb_chain") Path to the pdb_chain executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.

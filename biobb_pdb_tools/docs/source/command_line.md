@@ -37,7 +37,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **chain** (*string*): (A) Modifies the chain identifier column of a PDB file.
+* **chain** (*string*): (None) Modifies the chain identifier column of a PDB file.
 * **binary_path** (*string*): (pdb_chain) Path to the pdb_chain executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
