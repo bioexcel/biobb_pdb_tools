@@ -490,7 +490,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **number** (*integer*): (4) Number of the protein residue.
+* **number** (*integer*): (None) Number of the protein residue.
 * **binary_path** (*string*): (pdb_reres) Path to the pdb_reres executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
