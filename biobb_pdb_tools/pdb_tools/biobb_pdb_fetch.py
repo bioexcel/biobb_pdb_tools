@@ -46,16 +46,7 @@ class Pdbfetch(BiobbObject):
     """
 
     def __init__(self, output_file_path, properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-        self.io_dict = {"out": {"output_file_path": output_file_path}}
-
-        self.pdbid = properties.get("pdbid", "1aki")
-        self.binary_path = properties.get("binary_path", "pdb_fetch")
-        self.biounit = properties.get("biounit", False)
-        self.properties = properties
+        super().__init__(**locals())
 
     def stage_files(self) -> None:
         """The block does not use the sandbox: there are no files to stage."""

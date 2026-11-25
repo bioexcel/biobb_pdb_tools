@@ -47,18 +47,7 @@ class Pdbsplitseg(BiobbObject):
     def __init__(
         self, input_file_path, output_file_path, properties=None, **kwargs
     ) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        self.io_dict = {
-            "in": {"input_file_path": input_file_path},
-            "out": {"output_file_path": output_file_path},
-        }
-
-        self.binary_path = properties.get("binary_path", "pdb_splitseg")
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`Pdbsplitseg <biobb_pdb_tools.pdb_tools.pdb_splitseg>` object."""

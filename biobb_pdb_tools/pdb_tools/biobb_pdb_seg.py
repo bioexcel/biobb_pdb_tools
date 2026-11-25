@@ -48,17 +48,8 @@ class Pdbseg(BiobbObject):
     def __init__(
         self, input_file_path, output_file_path, properties=None, **kwargs
     ) -> None:
-        properties = properties or {}
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-        self.io_dict = {
-            "in": {"input_file_path": input_file_path},
-            "out": {"output_file_path": output_file_path},
-        }
+        super().__init__(**locals())
 
-        self.binary_path = properties.get("binary_path", "pdb_seg")
-        self.segment = properties.get("segment", False)
-        self.properties = properties
 
     def run(self) -> None:
         """Execute the :class:`Pdbseg <biobb_pdb_tools.pdb_tools.pdb_seg>` object."""

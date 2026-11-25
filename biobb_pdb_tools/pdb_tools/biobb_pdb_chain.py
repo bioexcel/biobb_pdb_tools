@@ -48,19 +48,8 @@ class Pdbchain(BiobbObject):
     def __init__(
         self, input_file_path, output_file_path, properties=None, **kwargs
     ) -> None:
-        properties = properties or {}
+        super().__init__(**locals())
 
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        self.io_dict = {
-            "in": {"input_file_path": input_file_path},
-            "out": {"output_file_path": output_file_path},
-        }
-
-        self.binary_path = properties.get("binary_path", "pdb_chain")
-        self.chain = properties.get("chain", False)
-        self.properties = properties
 
     def run(self) -> None:
         """Execute the :class:`Pdbchain <biobb_pdb_tools.pdb_tools.pdb_chain>` object."""
