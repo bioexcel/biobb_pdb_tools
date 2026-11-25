@@ -58,14 +58,14 @@ class Pdbreres(BiobbObject):
         }
 
         self.binary_path = properties.get("binary_path", "pdb_reres")
-        self.number = properties.get("number", False)
+        self.number = properties.get("number")
         self.properties = properties
 
     def run(self) -> int:
         """Execute the :class:`Pdbreres <biobb_pdb_tools.pdb_tools.pdb_reres>` object."""
 
         instructions = []
-        if self.number:
+        if self.number is not None:
             instructions.append("-" + str(self.number))
             fu.log("Appending optional boolean property",
                    self.out_log, self.global_log)
