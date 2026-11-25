@@ -85,7 +85,7 @@ class Pdbsplitseg(BiobbObject):
                 "unique_dir", ""), stem + "_*.pdb")
         )
 
-        if len(pdb_files) > 1:
+        if pdb_files:
             output_zip_path = os.path.join(
                 self.stage_io_dict.get("unique_dir", ""),
                 self.stage_io_dict["out"]["output_file_path"],
