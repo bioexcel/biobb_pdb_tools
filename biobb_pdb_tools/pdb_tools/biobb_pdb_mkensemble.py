@@ -85,7 +85,7 @@ class Mkensemble(BiobbObject):
             self.cmd += [*input_file_list]
         else:
             self.cmd += [self.stage_io_dict["in"]["input_file_path"]]
-        self.cmd += [">", self.io_dict["out"]["output_file_path"]]
+        self.cmd += [">", self.stage_io_dict["out"]["output_file_path"]]
 
         fu.log(" ".join(self.cmd), self.out_log, self.global_log)
 

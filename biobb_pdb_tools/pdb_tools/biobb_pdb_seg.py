@@ -74,7 +74,7 @@ class Pdbseg(BiobbObject):
             " ".join(instructions),
             self.stage_io_dict["in"]["input_file_path"],
             ">",
-            self.io_dict["out"]["output_file_path"],
+            self.stage_io_dict["out"]["output_file_path"],
         ]
 
         fu.log(" ".join(self.cmd), self.out_log, self.global_log)

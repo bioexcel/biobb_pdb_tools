@@ -86,10 +86,7 @@ class Pdbsplitseg(BiobbObject):
         )
 
         if pdb_files:
-            output_zip_path = os.path.join(
-                self.stage_io_dict.get("unique_dir", ""),
-                self.stage_io_dict["out"]["output_file_path"],
-            )
+            output_zip_path = self.sandbox_file("output_file_path")
             fu.log(
                 "Saving %d pdb segment files in a zip" % len(pdb_files),
                 self.out_log,
@@ -104,15 +101,12 @@ class Pdbsplitseg(BiobbObject):
                 self.out_log,
                 self.global_log,
             )
-            output_zip_path = os.path.join(
-                self.stage_io_dict.get("unique_dir", ""),
-                self.stage_io_dict["out"]["output_file_path"],
-            )
+            output_zip_path = self.sandbox_file("output_file_path")
             with zipfile.ZipFile(output_zip_path, "w") as zipf:
                 zipf.write(
-                    self.stage_io_dict["in"]["input_file_path"],
+                    self.sandbox_file("input_file_path"),
                     os.path.basename(
-                        self.stage_io_dict["in"]["input_file_path"]),
+                        self.sandbox_file("input_file_path")),
                 )
             pass
 
