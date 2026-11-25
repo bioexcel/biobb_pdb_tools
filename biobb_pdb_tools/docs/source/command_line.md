@@ -550,7 +550,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **segment** (*string*): (B) Default is an empty segment.
+* **segment** (*string*): (None) Default is an empty segment.
 * **binary_path** (*string*): (pdb_seg) Path to the pdb_seg executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
