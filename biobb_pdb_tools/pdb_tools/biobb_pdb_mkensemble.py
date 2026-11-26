@@ -58,11 +58,13 @@ class Mkensemble(BiobbObject):
         if zipfile.is_zipfile(input_file_path):
             with zipfile.ZipFile(input_file_path, "r") as zip_ref:
                 zip_ref.extractall(folder_path)
+                extracted_files = zip_ref.namelist()
 
+            # skip the macOS resource forks (__MACOSX/._name.pdb)
             pdb_files = [
                 file
-                for file in os.listdir(folder_path)
-                if file.lower().endswith(".pdb")
+                for file in extracted_files
+                if file.lower().endswith(".pdb") and not Path(file).name.startswith("._")
             ]
 
             input_file_list = [os.path.join(
