@@ -3,7 +3,7 @@
 """Module containing the Delhetatm class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -41,7 +41,7 @@ class Pdbuniqname(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -66,19 +66,7 @@ class Pdbuniqname(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_uniqname(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_uniqname.launch>` method."""
-    return Pdbuniqname(**dict(locals())).launch()
-
-
-biobb_pdb_uniqname.__doc__ = Pdbuniqname.__doc__
-main = Pdbuniqname.get_main(biobb_pdb_uniqname, "Removes all HETATM records in the PDB file.")
+biobb_pdb_uniqname = launcher(Pdbuniqname)
 
 if __name__ == "__main__":
-    main()
+    Pdbuniqname.main()

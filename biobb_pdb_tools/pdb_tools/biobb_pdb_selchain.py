@@ -3,7 +3,7 @@
 """Module containing the Pdbselchain class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbselchain(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -77,20 +77,7 @@ class Pdbselchain(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_selchain(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbselchain <biobb_pdb_tools.pdb_tools.pdb_selchain>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selchain.launch>` method."""
-
-    return Pdbselchain(**dict(locals())).launch()
-
-
-biobb_pdb_selchain.__doc__ = Pdbselchain.__doc__
-main = Pdbselchain.get_main(biobb_pdb_selchain, "Extracts one or more chains from a PDB file.")
+biobb_pdb_selchain = launcher(Pdbselchain)
 
 if __name__ == "__main__":
-    main()
+    Pdbselchain.main()

@@ -3,7 +3,7 @@
 """Module containing the Pdbtidy class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbtidy(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -78,21 +78,8 @@ class Pdbtidy(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_tidy(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbtidy <biobb_pdb_tools.pdb_tools.pdb_tidy>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_tidy.launch>` method."""
-
-    return Pdbtidy(**dict(locals())).launch()
-
-
-biobb_pdb_tidy.__doc__ = Pdbtidy.__doc__
-main = Pdbtidy.get_main(biobb_pdb_tidy, "Modifies the file to adhere (as much as possible) to the format specifications.")
+biobb_pdb_tidy = launcher(Pdbtidy)
 
 
 if __name__ == "__main__":
-    main()
+    Pdbtidy.main()

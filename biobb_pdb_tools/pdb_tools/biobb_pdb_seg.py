@@ -3,7 +3,7 @@
 """Module containing the Pdbseg class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbseg(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -78,20 +78,7 @@ class Pdbseg(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_seg(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbseg <biobb_pdb_tools.pdb_tools.pdb_seg>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_seg.launch>` method."""
-
-    return Pdbseg(**dict(locals())).launch()
-
-
-biobb_pdb_seg.__doc__ = Pdbseg.__doc__
-main = Pdbseg.get_main(biobb_pdb_seg, "Modifies the segment identifier column of a PDB file.")
+biobb_pdb_seg = launcher(Pdbseg)
 
 if __name__ == "__main__":
-    main()
+    Pdbseg.main()

@@ -3,7 +3,7 @@
 """Module containing the Pdbfetch class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -45,7 +45,7 @@ class Pdbfetch(BiobbObject):
 
     """
 
-    def __init__(self, output_file_path, properties=None, **kwargs) -> None:
+    def __init__(self, output_file_path: str, properties: Optional[dict] = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def stage_files(self) -> None:
@@ -79,16 +79,7 @@ class Pdbfetch(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_fetch(
-    output_file_path: str, properties: Optional[dict] = None, **kwargs
-) -> int:
-    """Create :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_fetch.launch>` method."""
-    return Pdbfetch(**dict(locals())).launch()
-
-
-main = Pdbfetch.get_main(biobb_pdb_fetch, "Downloads a structure in PDB format from the RCSB website.")
-biobb_pdb_fetch.__doc__ = Pdbfetch.__doc__
+biobb_pdb_fetch = launcher(Pdbfetch)
 
 if __name__ == "__main__":
-    main()
+    Pdbfetch.main()

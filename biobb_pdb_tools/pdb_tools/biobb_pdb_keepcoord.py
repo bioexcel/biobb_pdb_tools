@@ -3,7 +3,7 @@
 """Module containing the Pdbkeepcoord class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -42,7 +42,7 @@ class Pdbkeepcoord(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -67,20 +67,7 @@ class Pdbkeepcoord(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_keepcoord(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbkeepcoord <biobb_pdb_tools.pdb_tools.pdb_keepcoord>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_keepcoord.launch>` method."""
-
-    return Pdbkeepcoord(**dict(locals())).launch()
-
-
-biobb_pdb_keepcoord.__doc__ = Pdbkeepcoord.__doc__
-main = Pdbkeepcoord.get_main(biobb_pdb_keepcoord, "Removes all non-coordinate records from the file. Keeps only MODEL, ENDMDL, END, ATOM, HETATM, CONECT records.")
+biobb_pdb_keepcoord = launcher(Pdbkeepcoord)
 
 if __name__ == "__main__":
-    main()
+    Pdbkeepcoord.main()

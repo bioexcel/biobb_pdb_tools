@@ -3,7 +3,7 @@
 """Module containing the Pdbselaltloc class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -51,7 +51,7 @@ class Pdbselaltloc(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -80,20 +80,7 @@ class Pdbselaltloc(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_selaltloc(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbselaltloc <biobb_pdb_tools.pdb_tools.pdb_selaltloc>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selaltloc.launch>` method."""
-
-    return Pdbselaltloc(**dict(locals())).launch()
-
-
-biobb_pdb_selaltloc.__doc__ = Pdbselaltloc.__doc__
-main = Pdbselaltloc.get_main(biobb_pdb_selaltloc, "Selects alternative locations from a PDB file.")
+biobb_pdb_selaltloc = launcher(Pdbselaltloc)
 
 if __name__ == "__main__":
-    main()
+    Pdbselaltloc.main()

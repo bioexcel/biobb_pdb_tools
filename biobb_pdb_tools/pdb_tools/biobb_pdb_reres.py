@@ -3,7 +3,7 @@
 """Module containing the Pdbreres class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbreres(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -78,20 +78,7 @@ class Pdbreres(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_reres(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbreres <biobb_pdb_tools.pdb_tools.pdb_reres>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_reres.launch>` method."""
-
-    return Pdbreres(**dict(locals())).launch()
-
-
-biobb_pdb_reres.__doc__ = Pdbreres.__doc__
-main = Pdbreres.get_main(biobb_pdb_reres, "Renumbers the residues of the PDB file starting from a given number (default 1).")
+biobb_pdb_reres = launcher(Pdbreres)
 
 if __name__ == "__main__":
-    main()
+    Pdbreres.main()

@@ -3,7 +3,7 @@
 """Module containing the Pdbtofasta class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbtofasta(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -78,20 +78,7 @@ class Pdbtofasta(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_tofasta(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbtofasta <biobb_pdb_tools.pdb_tools.pdb_tofasta>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_tofasta.launch>` method."""
-
-    return Pdbtofasta(**dict(locals())).launch()
-
-
-biobb_pdb_tofasta.__doc__ = Pdbtofasta.__doc__
-main = Pdbtofasta.get_main(biobb_pdb_tofasta, "Extracts the residue sequence in a PDB file to FASTA format.")
+biobb_pdb_tofasta = launcher(Pdbtofasta)
 
 if __name__ == "__main__":
-    main()
+    Pdbtofasta.main()

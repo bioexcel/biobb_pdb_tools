@@ -3,7 +3,7 @@
 """Module containing the Pdbselres class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbselres(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -77,20 +77,7 @@ class Pdbselres(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_selres(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbselres <biobb_pdb_tools.pdb_tools.pdb_selres>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selres.launch>` method."""
-
-    return Pdbselres(**dict(locals())).launch()
-
-
-biobb_pdb_selres.__doc__ = Pdbselres.__doc__
-main = Pdbselres.get_main(biobb_pdb_selres, "Selects residues by their index, piecewise or in a range.")
+biobb_pdb_selres = launcher(Pdbselres)
 
 if __name__ == "__main__":
-    main()
+    Pdbselres.main()

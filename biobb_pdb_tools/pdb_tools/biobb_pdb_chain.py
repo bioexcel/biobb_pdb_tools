@@ -3,7 +3,7 @@
 """Module containing the Pdbchain class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbchain(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -76,19 +76,7 @@ class Pdbchain(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_chain(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbchain <biobb_pdb_tools.pdb_tools.pdb_chain>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_chain.launch>` method."""
-    return Pdbchain(**dict(locals())).launch()
-
-
-biobb_pdb_chain.__doc__ = Pdbchain.__doc__
-main = Pdbchain.get_main(biobb_pdb_chain, "Modifies the chain identifier column of a PDB file.")
+biobb_pdb_chain = launcher(Pdbchain)
 
 if __name__ == "__main__":
-    main()
+    Pdbchain.main()

@@ -7,7 +7,7 @@ import os
 import zipfile
 from pathlib import Path
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -45,7 +45,7 @@ class Pdbsplitmodel(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -98,19 +98,7 @@ class Pdbsplitmodel(BiobbObject):
             pass
 
 
-def biobb_pdb_splitmodel(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_splitmodel.launch>` method."""
-    return Pdbsplitmodel(**dict(locals())).launch()
-
-
-biobb_pdb_splitmodel.__doc__ = Pdbsplitmodel.__doc__
-main = Pdbsplitmodel.get_main(biobb_pdb_splitmodel, "Splits a PDB file into several, each containing one MODEL.")
+biobb_pdb_splitmodel = launcher(Pdbsplitmodel)
 
 if __name__ == "__main__":
-    main()
+    Pdbsplitmodel.main()

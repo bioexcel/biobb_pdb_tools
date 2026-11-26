@@ -3,7 +3,7 @@
 """Module containing the Pdbselmodel class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 
 
@@ -46,7 +46,7 @@ class Pdbselmodel(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
 
@@ -77,20 +77,7 @@ class Pdbselmodel(BiobbObject):
         self.run_biobb()
 
 
-def biobb_pdb_selmodel(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbselmodel <biobb_pdb_tools.pdb_tools.pdb_selmodel>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selmodel.launch>` method."""
-
-    return Pdbselmodel(**dict(locals())).launch()
-
-
-biobb_pdb_selmodel.__doc__ = Pdbselmodel.__doc__
-main = Pdbselmodel.get_main(biobb_pdb_selmodel, "Extracts one or more models from a PDB file.")
+biobb_pdb_selmodel = launcher(Pdbselmodel)
 
 if __name__ == "__main__":
-    main()
+    Pdbselmodel.main()
