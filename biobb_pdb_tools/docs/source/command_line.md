@@ -213,7 +213,7 @@ Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
 * **pdbid** (*string*): (1aki) ID of the protein.
-* **biounit** (*string*): (False) Allows downloading the (first) biological structure if selected.
+* **biounit** (*boolean*): (False) Allows downloading the (first) biological structure if selected.
 * **binary_path** (*string*): (pdb_fetch) Path to the pdb_fetch executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.

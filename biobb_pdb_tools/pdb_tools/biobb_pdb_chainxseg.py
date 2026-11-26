@@ -3,11 +3,11 @@
 """Module containing the Chainxseg class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_common.tools import file_utils as fu
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbToolsBase
 
 
-class Chainxseg(BiobbObject):
+class Chainxseg(PdbToolsBase):
     """
     | biobb_pdb_tools Pdbtidy
     | Swaps the segment identifier for the chain identifier.
@@ -44,26 +44,6 @@ class Chainxseg(BiobbObject):
         self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
-
-    def run(self) -> None:
-        """Execute the :class:`Chainxseg <biobb_pdb_tools.pdb_tools.pdb_chainxseg>` object."""
-
-        self.cmd = [
-            self.binary_path,
-            self.stage_io_dict["in"]["input_file_path"],
-            ">",
-            self.stage_io_dict["out"]["output_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
-        self.run_biobb()
 
 
 biobb_pdb_chainxseg = launcher(Chainxseg)

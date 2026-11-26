@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changes
+
+* [FIX] `biobb_pdb_fetch`: the `biounit` property is a boolean in the JSON schema and the documentation (it was a string with the default "False", and the string "False" downloads the biological unit).
+
 ## What's new in version [5.3.2](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.3.2)?
 
 ### Changes

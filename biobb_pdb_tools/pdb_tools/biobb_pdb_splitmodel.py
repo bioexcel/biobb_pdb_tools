@@ -2,16 +2,12 @@
 
 """Module containing the Pdbsplitmodel class and the command line interface."""
 
-import glob
-import os
-import zipfile
-from pathlib import Path
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_common.tools import file_utils as fu
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbSplitBase
 
 
-class Pdbsplitmodel(BiobbObject):
+class Pdbsplitmodel(PdbSplitBase):
     """
     | biobb_pdb_tools Pdbsplitmodel
     | Splits a PDB file into several, each containing one MODEL.
@@ -44,55 +40,12 @@ class Pdbsplitmodel(BiobbObject):
 
     """
 
+    split_by = "model"
+
     def __init__(
         self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
-
-    def run(self) -> None:
-        """Execute the :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` object."""
-
-        self.cmd = [
-            self.binary_path,
-            self.stage_io_dict["in"]["input_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-        self.run_biobb()
-
-        stem = Path(self.stage_io_dict["in"]["input_file_path"]).stem
-        pdb_files = glob.glob(
-            os.path.join(self.stage_io_dict.get(
-                "unique_dir", ""), stem + "_*.pdb")
-        )
-
-        if pdb_files:
-            output_zip_path = self.sandbox_file("output_file_path")
-            fu.log(
-                "Saving %d pdb model files in a zip" % len(pdb_files),
-                self.out_log,
-                self.global_log,
-            )
-            with zipfile.ZipFile(output_zip_path, "w") as zipf:
-                for pdb_file in pdb_files:
-                    zipf.write(pdb_file, os.path.basename(pdb_file))
-        else:
-            fu.log("The given input file has no models.",
-                   self.out_log, self.global_log)
-            output_zip_path = self.sandbox_file("output_file_path")
-            with zipfile.ZipFile(output_zip_path, "w") as zipf:
-                zipf.write(
-                    self.sandbox_file("input_file_path"),
-                    os.path.basename(
-                        self.sandbox_file("input_file_path")),
-                )
-            pass
 
 
 biobb_pdb_splitmodel = launcher(Pdbsplitmodel)

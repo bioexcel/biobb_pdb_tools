@@ -4,7 +4,6 @@
 
 from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_common.tools import file_utils as fu
 
 
 class Pdbfetch(BiobbObject):
@@ -17,7 +16,7 @@ class Pdbfetch(BiobbObject):
         output_file_path (str): PDB file of the protein selected. File type: output. `Sample file <https://raw.githubusercontent.com/bioexcel/biobb_pdb_tools/master/biobb_pdb_tools/test/reference/pdb_tools/ref_pdb_fetch.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dic):
             * **pdbid** (*string*) - ('1aki') ID of the protein.
-            * **biounit** (*string*) - (False) Allows downloading the (first) biological structure if selected.
+            * **biounit** (*bool*) - (False) Allows downloading the (first) biological structure if selected.
             * **binary_path** (*str*) - ("pdb_fetch") Path to the pdb_fetch executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -52,30 +51,11 @@ class Pdbfetch(BiobbObject):
         """The block does not use the sandbox: there are no files to stage."""
 
     def run(self) -> None:
-        """Execute the :class:`Pdbfetch <biobb_pdb_tools.pdb_tools.pdb_fetch>` object."""
-
-        instructions = []
+        """Run pdb_fetch with the PDB code and the output file as its stdout."""
+        self.cmd = [self.binary_path]
         if self.biounit:
-            instructions.append("-biounit")
-            fu.log("Appending optional boolean property",
-                   self.out_log, self.global_log)
-
-        self.cmd = [
-            self.binary_path,
-            " ".join(instructions),
-            self.pdbid,
-            ">",
-            self.io_dict["out"]["output_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
+            self.cmd.append("-biounit")
+        self.cmd += [self.pdbid, ">", self.io_dict["out"]["output_file_path"]]
         self.run_biobb()
 
 

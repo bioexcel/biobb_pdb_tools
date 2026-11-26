@@ -46,8 +46,8 @@
                     "description": "ID of the protein."
                 },
                 "biounit": {
-                    "type": "string",
-                    "default": "False",
+                    "type": "boolean",
+                    "default": false,
                     "wf_prop": false,
                     "description": "Allows downloading the (first) biological structure if selected."
                 },

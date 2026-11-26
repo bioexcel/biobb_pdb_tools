@@ -2,14 +2,12 @@
 
 """Module containing the Mkensemble class and the command line interface."""
 
-import zipfile
-from pathlib import Path
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_common.tools import file_utils as fu
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbToolsBase
 
 
-class Mkensemble(BiobbObject):
+class Mkensemble(PdbToolsBase):
     """
     | biobb_pdb_tools Mkensemble
     | Merges several PDB files into one multi-model (ensemble) file.
@@ -42,48 +40,12 @@ class Mkensemble(BiobbObject):
 
     """
 
+    zip_input = True
+
     def __init__(
         self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
-
-    def run(self) -> None:
-        """Execute the :class:`Mkensemble <biobb_pdb_tools.pdb_tools.pdb_mkensemble>` object."""
-
-        input_file_path = self.sandbox_file("input_file_path")
-
-        self.cmd = [self.binary_path]
-        if zipfile.is_zipfile(input_file_path):
-            # extracted in the sandbox, where the command runs: the command uses the names in the zip
-            with zipfile.ZipFile(input_file_path, "r") as zip_ref:
-                zip_ref.extractall(self.stage_io_dict["unique_dir"])
-                extracted_files = zip_ref.namelist()
-
-            # skip the macOS resource forks (__MACOSX/._name.pdb)
-            pdb_files = [
-                file
-                for file in extracted_files
-                if file.lower().endswith(".pdb") and not Path(file).name.startswith("._")
-            ]
-
-            input_file_list = [Path(i) for i in pdb_files]
-            input_file_list = sorted(
-                input_file_list, key=lambda i: i.stem.upper())
-            input_file_list = [str(i) for i in input_file_list]
-            self.cmd += [*input_file_list]
-        else:
-            self.cmd += [self.stage_io_dict["in"]["input_file_path"]]
-        self.cmd += [">", self.stage_io_dict["out"]["output_file_path"]]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
-        self.run_biobb()
 
 
 biobb_pdb_mkensemble = launcher(Mkensemble)

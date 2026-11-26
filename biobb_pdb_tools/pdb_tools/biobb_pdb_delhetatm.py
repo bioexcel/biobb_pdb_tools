@@ -3,11 +3,11 @@
 """Module containing the Delhetatm class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_common.tools import file_utils as fu
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbToolsBase
 
 
-class Delhetatm(BiobbObject):
+class Delhetatm(PdbToolsBase):
     """
     | biobb_pdb_tools Delhetatm
     | Removes all HETATM records in the PDB file.
@@ -44,26 +44,6 @@ class Delhetatm(BiobbObject):
         self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
         super().__init__(**locals())
-
-    def run(self) -> None:
-        """Execute the :class:`Delhetatm <biobb_pdb_tools.pdb_tools.pdb_delhetatm>` object."""
-
-        self.cmd = [
-            self.binary_path,
-            self.stage_io_dict["in"]["input_file_path"],
-            ">",
-            self.stage_io_dict["out"]["output_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
-        self.run_biobb()
 
 
 biobb_pdb_delhetatm = launcher(Delhetatm)
