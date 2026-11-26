@@ -2,7 +2,6 @@
 
 """Module containing the Pdbmerge class and the command line interface."""
 
-import os
 import zipfile
 from pathlib import Path
 from typing import Optional
@@ -52,13 +51,13 @@ class Pdbmerge(BiobbObject):
     def run(self) -> None:
         """Execute the :class:`Pdbmerge <biobb_pdb_tools.pdb_tools.pdb_merge>` object."""
 
-        input_file_path = self.stage_io_dict["in"]["input_file_path"]
-        folder_path = os.path.dirname(input_file_path)
+        input_file_path = self.sandbox_file("input_file_path")
 
         self.cmd = [self.binary_path]
         if zipfile.is_zipfile(input_file_path):
+            # extracted in the sandbox, where the command runs: the command uses the names in the zip
             with zipfile.ZipFile(input_file_path, "r") as zip_ref:
-                zip_ref.extractall(folder_path)
+                zip_ref.extractall(self.stage_io_dict["unique_dir"])
                 extracted_files = zip_ref.namelist()
 
             # skip the macOS resource forks (__MACOSX/._name.pdb)
@@ -68,10 +67,7 @@ class Pdbmerge(BiobbObject):
                 if file.lower().endswith(".pdb") and not Path(file).name.startswith("._")
             ]
 
-            input_file_list = [os.path.join(
-                folder_path, file) for file in pdb_files]
-
-            input_file_list = [Path(i) for i in input_file_list]
+            input_file_list = [Path(i) for i in pdb_files]
             input_file_list = sorted(
                 input_file_list, key=lambda i: i.stem.upper())
             input_file_list = [str(i) for i in input_file_list]

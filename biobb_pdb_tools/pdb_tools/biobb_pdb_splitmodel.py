@@ -53,9 +53,6 @@ class Pdbsplitmodel(BiobbObject):
         """Execute the :class:`Pdbsplitmodel <biobb_pdb_tools.pdb_tools.pdb_splitmodel>` object."""
 
         self.cmd = [
-            "cd",
-            self.stage_io_dict.get("unique_dir", ""),
-            ";",
             self.binary_path,
             self.stage_io_dict["in"]["input_file_path"],
         ]
