@@ -3,12 +3,11 @@
 """Module containing the Pdbselmodel class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbToolsBase
 
 
-class Pdbselmodel(BiobbObject):
+class Pdbselmodel(PdbToolsBase):
     """
     | biobb_pdb_tools Pdbselmodel
     | Extracts one or more models from a PDB file.
@@ -46,75 +45,15 @@ class Pdbselmodel(BiobbObject):
 
     """
 
+    option_property = "models"
+
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        self.io_dict = {
-            "in": {"input_file_path": input_file_path},
-            "out": {"output_file_path": output_file_path},
-        }
-
-        self.binary_path = properties.get("binary_path", "pdb_selmodel")
-        self.models = properties.get("models", "1")
-        self.properties = properties
-        self.check_init(properties)
-
-    @launchlogger
-    def launch(self) -> int:
-        """Execute the :class:`Pdbselmodel <biobb_pdb_tools.pdb_tools.pdb_selmodel>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
-
-        instructions = []
-        if self.models:
-            instructions.append("-" + str(self.models))
-            fu.log("Appending models to select", self.out_log, self.global_log)
-
-        self.cmd = [
-            self.binary_path,
-            " ".join(instructions),
-            self.stage_io_dict["in"]["input_file_path"],
-            ">",
-            self.io_dict["out"]["output_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
-        self.run_biobb()
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
+        super().__init__(**locals())
 
 
-def biobb_pdb_selmodel(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbselmodel <biobb_pdb_tools.pdb_tools.pdb_selmodel>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_selmodel.launch>` method."""
-
-    return Pdbselmodel(**dict(locals())).launch()
-
-
-biobb_pdb_selmodel.__doc__ = Pdbselmodel.__doc__
-main = Pdbselmodel.get_main(biobb_pdb_selmodel, "Extracts one or more models from a PDB file.")
+biobb_pdb_selmodel = launcher(Pdbselmodel)
 
 if __name__ == "__main__":
-    main()
+    Pdbselmodel.main()

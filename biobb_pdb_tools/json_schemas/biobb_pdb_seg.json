@@ -58,7 +58,7 @@
             "properties": {
                 "segment": {
                     "type": "string",
-                    "default": "B",
+                    "default": null,
                     "wf_prop": false,
                     "description": "Default is an empty segment."
                 },

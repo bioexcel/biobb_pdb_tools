@@ -37,7 +37,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **chain** (*string*): (A) Modifies the chain identifier column of a PDB file.
+* **chain** (*string*): (None) Modifies the chain identifier column of a PDB file.
 * **binary_path** (*string*): (pdb_chain) Path to the pdb_chain executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
@@ -213,7 +213,7 @@ Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
 * **pdbid** (*string*): (1aki) ID of the protein.
-* **biounit** (*string*): (False) Allows downloading the (first) biological structure if selected.
+* **biounit** (*boolean*): (False) Allows downloading the (first) biological structure if selected.
 * **binary_path** (*string*): (pdb_fetch) Path to the pdb_fetch executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
@@ -490,7 +490,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **number** (*integer*): (4) Number of the protein residue.
+* **number** (*integer*): (None) Number of the protein residue.
 * **binary_path** (*string*): (pdb_reres) Path to the pdb_reres executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
@@ -550,7 +550,7 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **segment** (*string*): (B) Default is an empty segment.
+* **segment** (*string*): (None) Default is an empty segment.
 * **binary_path** (*string*): (pdb_seg) Path to the pdb_seg executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.

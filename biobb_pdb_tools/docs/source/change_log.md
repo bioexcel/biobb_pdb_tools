@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## What's new in version [5.4.0](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.4.0)?
+
+### Changes
+
+* [UPDATE] Update to biobb_common 5.4.0.
+* [FIX] `biobb_pdb_reres`: `number: 0` renumbers the residues from 0 (a 0 was ignored).
+* [FIX] `biobb_pdb_splitmodel` and `biobb_pdb_splitseg`: a PDB file with a single model or segment gives a zip with that one file (the input file was zipped, with the log "The given input file has no models"). The files in the output zip are sorted by name.
+* [FIX] `biobb_pdb_merge` and `biobb_pdb_mkensemble`: the macOS resource forks of a zip (`__MACOSX/._name.pdb`) are no longer taken as PDB files. `biobb_pdb_mkensemble` takes the PDB files listed in the zip, like `biobb_pdb_merge`, so PDB files in folders of the zip are included.
+* [DOCS] `biobb_pdb_chain`, `biobb_pdb_reres` and `biobb_pdb_seg`: the `chain`, `number` and `segment` defaults are None (the documented `A`, 4 and `B` were not used). The API documentation includes `biobb_pdb_keepcoord` and `biobb_pdb_selaltloc`, which were left out.
+* [FIX] `biobb_pdb_fetch`: the `biounit` property is a boolean in the JSON schema and the documentation (it was a string with the default "False", and the string "False" downloads the biological unit).
+* [UPDATE] Python 3.11 to 3.13.
+
 ## What's new in version [5.3.2](https://github.com/bioexcel/biobb_pdb_tools/releases/tag/v5.3.2)?
 
 ### Changes

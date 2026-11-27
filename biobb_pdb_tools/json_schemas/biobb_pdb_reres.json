@@ -58,7 +58,7 @@
             "properties": {
                 "number": {
                     "type": "integer",
-                    "default": 4,
+                    "default": null,
                     "wf_prop": false,
                     "description": "Number of the protein residue."
                 },

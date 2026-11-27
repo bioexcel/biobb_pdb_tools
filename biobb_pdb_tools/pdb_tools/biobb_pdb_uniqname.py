@@ -3,12 +3,11 @@
 """Module containing the Delhetatm class and the command line interface."""
 
 from typing import Optional
-from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
+from biobb_common.generic.biobb_object import launcher
+from biobb_pdb_tools.pdb_tools.common import PdbToolsBase
 
 
-class Pdbuniqname(BiobbObject):
+class Pdbuniqname(PdbToolsBase):
     """
     | biobb_pdb_tools Pdbuniqname
     | Renames atoms sequentially (C1, C2, O1, ...) for each HETATM residue.
@@ -42,67 +41,12 @@ class Pdbuniqname(BiobbObject):
     """
 
     def __init__(
-        self, input_file_path, output_file_path, properties=None, **kwargs
+        self, input_file_path: str, output_file_path: str, properties: Optional[dict] = None, **kwargs
     ) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        self.io_dict = {
-            "in": {"input_file_path": input_file_path},
-            "out": {"output_file_path": output_file_path},
-        }
-
-        self.binary_path = properties.get("binary_path", "pdb_uniqname")
-        self.properties = properties
-        self.check_init(properties)
-
-    @launchlogger
-    def launch(self) -> int:
-        """Execute the :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` object."""
-
-        if self.check_restart():
-            return 0
-        self.stage_files()
-
-        self.cmd = [
-            self.binary_path,
-            self.stage_io_dict["in"]["input_file_path"],
-            ">",
-            self.io_dict["out"]["output_file_path"],
-        ]
-
-        fu.log(" ".join(self.cmd), self.out_log, self.global_log)
-
-        fu.log(
-            "Creating command line with instructions and required arguments",
-            self.out_log,
-            self.global_log,
-        )
-
-        self.run_biobb()
-        self.copy_to_host()
-
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
+        super().__init__(**locals())
 
 
-def biobb_pdb_uniqname(
-    input_file_path: str,
-    output_file_path: str,
-    properties: Optional[dict] = None,
-    **kwargs,
-) -> int:
-    """Create :class:`Pdbuniqname <biobb_pdb_tools.pdb_tools.pdb_uniqname>` class and
-    execute the :meth:`launch() <biobb_pdb_tools.pdb_tools.pdb_uniqname.launch>` method."""
-    return Pdbuniqname(**dict(locals())).launch()
-
-
-biobb_pdb_uniqname.__doc__ = Pdbuniqname.__doc__
-main = Pdbuniqname.get_main(biobb_pdb_uniqname, "Removes all HETATM records in the PDB file.")
+biobb_pdb_uniqname = launcher(Pdbuniqname)
 
 if __name__ == "__main__":
-    main()
+    Pdbuniqname.main()

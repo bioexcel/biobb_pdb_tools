@@ -44,10 +44,10 @@ pdb_tools.biobb_pdb_fixinsert module
     :undoc-members:
     :show-inheritance:
 
-pdb_tools.biobb_pdb_keepcord module
+pdb_tools.biobb_pdb_keepcoord module
 ------------------------------------
 
-.. automodule:: pdb_tools.biobb_pdb_keepcord
+.. automodule:: pdb_tools.biobb_pdb_keepcoord
     :members:
     :undoc-members:
     :show-inheritance:
@@ -84,10 +84,10 @@ pdb_tools.biobb_pdb_seg module
     :undoc-members:
     :show-inheritance:
 
-pdb_tools.biobb_pdb_setaltloc module
----------------------------------
+pdb_tools.biobb_pdb_selaltloc module
+------------------------------------
 
-.. automodule:: pdb_tools.biobb_pdb_setaltloc
+.. automodule:: pdb_tools.biobb_pdb_selaltloc
     :members:
     :undoc-members:
     :show-inheritance:
